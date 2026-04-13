@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ======================
+// ENUMS
+// ======================
+
+enum UserRole {
+  ADMIN
+  CITIZEN
+  EMPLOYEE
+  DEPARTMENT_MANAGER
+}
+
+enum GazaCities {
+  GAZA
+  MIDDLE
+  KHAN
+  RAFAH
+  NORTH
+}
+
+enum OtpType {
+  password_reset
+  phone_verification
+}
+
+// ======================
+// USER
+// ======================
+
+model User {
+  id BigInt @id @default(autoincrement())
+
+  full_name     String
+  email         String
+  password_hash String
+
+  national_id String? @unique
+  employee_id String? @unique
+
+  phone   String?
+  address String?
+
+  city GazaCities
+
+  is_verified Boolean  @default(false)
+  role        UserRole
+
+  is_active Boolean @default(true)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  otpCodes   OtpCode[]
+
+  @@map("users")
+}
+
+// ======================
+// EMAIL VERIFICATION
+// ======================
+
+model OtpCode {
+  id BigInt @id @default(autoincrement())
+
+  userId   BigInt
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  codeHash String
+  type     OtpType
+  attempts Int     @default(0)
+
+  expiresAt  DateTime
+  consumedAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("otp_codes")
+}
