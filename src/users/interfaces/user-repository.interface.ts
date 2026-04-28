@@ -7,6 +7,9 @@ export interface IUserRepository {
   findAll(): Promise<User[]>;
   findById(id: bigint): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
+  findByPhone(phone: string): Promise<User | null>;
+  findByNationalId(nationalId: string): Promise<User | null>;
+  findByEmployeeId(employeeId: string): Promise<User | null>;
   update(id: bigint, data: Omit<Prisma.UserUpdateInput, 'id'>): Promise<User>;
   delete(id: bigint): Promise<User>;
 }

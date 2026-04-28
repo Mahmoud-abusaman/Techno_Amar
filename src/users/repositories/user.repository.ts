@@ -23,6 +23,18 @@ export class UserRepository implements IUserRepository {
     return this.prisma.user.findFirst({ where: { email } });
   }
 
+  async findByPhone(phone: string): Promise<User | null> {
+    return this.prisma.user.findFirst({ where: { phone } });
+  }
+
+  async findByNationalId(nationalId: string): Promise<User | null> {
+    return this.prisma.user.findFirst({ where: { national_id: nationalId } });
+  }
+
+  async findByEmployeeId(employeeId: string): Promise<User | null> {
+    return this.prisma.user.findFirst({ where: { employee_id: employeeId } });
+  }
+
   async update(id: bigint, data: Prisma.UserUpdateInput): Promise<User> {
     return this.prisma.user.update({ where: { id }, data });
   }
