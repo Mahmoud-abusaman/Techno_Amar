@@ -67,6 +67,9 @@
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },
+  "prisma": {
+    "seed": "npx tsc --module nodenext --moduleResolution nodenext --esModuleInterop true --target ES2023 --outDir dist-seed prisma/seed.ts && node dist-seed/prisma/seed.js"
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",

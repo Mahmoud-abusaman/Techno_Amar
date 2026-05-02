@@ -1,0 +1,60 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Inject,
+} from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserUseCase } from 'src/usecases/users/create-user.use-case';
+import { GetUserUseCase } from 'src/usecases/users/get-user.use-case';
+import { UpdateUserUseCase } from 'src/usecases/users/update-user.use-case';
+import { DeleteUserUseCase } from 'src/usecases/users/delete-user.use-case';
+import { GetAllUsersUseCase } from 'src/usecases/users/get-all-users.use-case';
+
+@ApiTags('users')
+@Controller('users')
+export class UsersController {
+  constructor(
+    @Inject(CreateUserUseCase) private readonly createUser: CreateUserUseCase,
+    @Inject(GetAllUsersUseCase) private readonly getAllUsers: GetAllUsersUseCase,
+    @Inject(GetUserUseCase) private readonly getUser: GetUserUseCase,
+    @Inject(UpdateUserUseCase) private readonly updateUser: UpdateUserUseCase,
+    @Inject(DeleteUserUseCase) private readonly deleteUser: DeleteUserUseCase,
+  ) {}
+
+  @Post()
+  @ApiOperation({ summary: 'Create a new user' })
+  create(@Body() dto: CreateUserDto) {
+    return this.createUser.execute(dto);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get all users' })
+  findAll() {
+    return this.getAllUsers.execute();
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a user by ID' })
+  findOne(@Param('id') id: string) {
+    return this.getUser.execute(BigInt(id));
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update a user' })
+  update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    return this.updateUser.execute(BigInt(id), dto);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a user' })
+  remove(@Param('id') id: string) {
+    return this.deleteUser.execute(BigInt(id));
+  }
+}
