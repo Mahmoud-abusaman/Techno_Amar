@@ -28,20 +28,20 @@ export class ForgotPasswordUseCase {
 
     if (!user) return { message: SAFE_MESSAGE };
 
+    // Cooldown check must block the response so the client gets the correct error.
+    const latest = await this.otpRepo.findLatestByUser(user.id, OtpType.password_reset);
+    if (latest) {
+      const secondsSinceLast = Math.floor((Date.now() - latest.createdAt.getTime()) / 1000);
+      if (secondsSinceLast < OTP_COOLDOWN_SECONDS) {
+        throw new BadRequestException(
+          `Please wait ${OTP_COOLDOWN_SECONDS - secondsSinceLast} seconds before requesting a new code.`,
+        );
+      }
+    }
+
     const queue = new SideEffectQueue();
 
     queue.add('Send OTP', async () => {
-      const latest = await this.otpRepo.findLatestByUser(user.id, OtpType.password_reset);
-
-      if (latest) {
-        const secondsSinceLast = Math.floor((Date.now() - latest.createdAt.getTime()) / 1000);
-        if (secondsSinceLast < OTP_COOLDOWN_SECONDS) {
-          throw new BadRequestException(
-            `Please wait ${OTP_COOLDOWN_SECONDS - secondsSinceLast} seconds before requesting a new code.`,
-          );
-        }
-      }
-
       const code = randomInt(10 ** OTP_LENGTH).toString().padStart(OTP_LENGTH, '0');
       const codeHash = await this.hashPort.hash(code);
       const expiresAt = new Date(Date.now() + OTP_EXPIRE_MINUTES * 60 * 1000);

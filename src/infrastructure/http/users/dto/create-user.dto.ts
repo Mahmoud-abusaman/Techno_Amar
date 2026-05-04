@@ -10,45 +10,45 @@ import {
 import { GazaCities, UserRole } from 'generated/prisma/enums';
 
 export class CreateUserDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'Ahmed Al-Masri' })
   @IsString()
   @IsNotEmpty()
-  full_name: string;
+  full_name!: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'ahmed.almasri@example.com', format: 'email' })
   @IsEmail()
-  email: string;
+  email!: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'SecurePass@2024', minLength: 6 })
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: '123456789' })
   @IsString()
   @IsOptional()
   national_id?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'EMP-00142' })
   @IsString()
   @IsOptional()
   employee_id?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: '+970591234567', format: 'phone' })
   @IsString()
   @IsOptional()
   phone?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: 'Al-Rimal, Gaza City' })
   @IsString()
   @IsOptional()
   address?: string;
 
-  @ApiProperty({ enum: GazaCities })
+  @ApiProperty({ enum: GazaCities, example: 'GAZA' })
   @IsEnum(GazaCities)
-  city: GazaCities;
+  city!: GazaCities;
 
-  @ApiProperty({ enum: UserRole })
+  @ApiProperty({ enum: UserRole, example: 'CITIZEN' })
   @IsEnum(UserRole)
-  role: UserRole;
+  role!: UserRole;
 }

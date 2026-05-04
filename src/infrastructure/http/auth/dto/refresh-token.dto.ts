@@ -2,15 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
 export class RefreshTokenDto {
-  @ApiProperty({ description: 'JWT refresh token', example: 'eyJhbGciOiJIUzI1NiIs...' })
+  @ApiProperty({ description: 'JWT refresh token', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhM2Y4YzJkMSIsImlhdCI6MTcxNjQwMDAwMH0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' })
   @IsString()
   refresh_token: string;
 }
 
 class UserResponseDto {
-  @ApiProperty({ example: '1' }) id: string;
+  @ApiProperty({ example: 'a3f8c2d1-4e5b-4f6a-9c7d-8e1f2a3b4c5d' }) id: string;
   @ApiProperty({ example: 'user@example.com' }) email: string;
-  @ApiProperty({ example: 'John Doe' }) full_name: string;
+  @ApiProperty({ example: 'Ahmed Al-Masri' }) full_name: string;
   @ApiProperty({ example: 'CITIZEN', enum: ['ADMIN', 'CITIZEN', 'EMPLOYEE', 'DEPARTMENT_MANAGER'] }) role: string;
 }
 

@@ -34,10 +34,18 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Login with email and password' })
-  @ApiBody({ type: LoginDto })
+  @ApiOperation({ summary: 'Login with email and password', description: 'Public. Returns access + refresh tokens.' })
+  @ApiBody({
+    type: LoginDto,
+    examples: {
+      admin: { summary: 'Admin', value: { email: 'admin@technoamar.ps', password: 'Admin@1234' } },
+      citizen: { summary: 'Citizen', value: { email: 'citizen@technoamar.ps', password: 'Citizen@1234' } },
+      employee: { summary: 'Employee', value: { email: 'employee@technoamar.ps', password: 'Employee@1234' } },
+      manager: { summary: 'Manager', value: { email: 'manager@technoamar.ps', password: 'Manager@1234' } },
+    },
+  })
   @ApiResponse({ status: 200, type: LoginResponseDto })
-  @ApiResponse({ status: 401, description: 'Invalid credentials' })
+  @ApiResponse({ status: 401, description: 'Invalid credentials or account disabled' })
   async login(@Body() dto: LoginDto) {
     const { tokens, user } = await this.loginUseCase.execute(dto);
     return {
@@ -50,10 +58,26 @@ export class AuthController {
 
   @Post('signup')
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Register a new user' })
-  @ApiBody({ type: SignupDto })
+  @ApiOperation({ summary: 'Register as a citizen (public)', description: 'Open to all. Always creates a CITIZEN account.' })
+  @ApiBody({
+    type: SignupDto,
+    examples: {
+      citizen: {
+        summary: 'Citizen registration',
+        value: {
+          full_name: 'Ahmed Al-Masri',
+          email: 'ahmed.almasri@example.com',
+          password: 'SecurePass@2024',
+          national_id: '987654321',
+          phone: '+970591234567',
+          address: 'Al-Rimal, Gaza City',
+          city: 'GAZA',
+        },
+      },
+    },
+  })
   @ApiResponse({ status: 201, type: SignupResponseDto })
-  @ApiResponse({ status: 409, description: 'Email already exists' })
+  @ApiResponse({ status: 409, description: 'A user with this national_id already exists' })
   async signup(@Body() dto: SignupDto) {
     const { tokens, user } = await this.signupUseCase.execute(dto);
     return {
@@ -66,7 +90,7 @@ export class AuthController {
 
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Refresh access token' })
+  @ApiOperation({ summary: 'Refresh access token', description: 'Public. Rotates refresh token on each call (old token is revoked).' })
   @ApiBody({ type: RefreshTokenDto })
   @ApiResponse({ status: 200, type: RefreshTokenResponseDto })
   @ApiResponse({ status: 401, description: 'Invalid or expired refresh token' })
@@ -82,19 +106,21 @@ export class AuthController {
 
   @Post('forgot-password')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Request password reset OTP' })
+  @ApiOperation({ summary: 'Request password reset OTP', description: 'Public. Accepts phone number, national ID, or employee ID. Always returns the same message to prevent user enumeration.' })
   @ApiBody({ type: ForgotPasswordRequestDto })
   @ApiResponse({ status: 200, type: ForgotPasswordResponseDto })
+  @ApiResponse({ status: 400, description: 'OTP cooldown active — wait before requesting again' })
   forgotPassword(@Body() dto: ForgotPasswordRequestDto) {
     return this.forgotPasswordUseCase.execute(dto);
   }
 
   @Post('verify-otp')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Verify OTP and get reset token' })
+  @ApiOperation({ summary: 'Verify OTP and get reset token', description: 'Public. Max 5 attempts per code. Returns a short-lived reset token to use in /reset-password.' })
   @ApiBody({ type: VerifyOtpDto })
   @ApiResponse({ status: 200, type: VerifyOtpResponseDto })
-  @ApiResponse({ status: 400, description: 'Invalid or expired OTP' })
+  @ApiResponse({ status: 400, description: 'Invalid code / expired / too many attempts' })
+  @ApiResponse({ status: 404, description: 'User not found' })
   async verifyOtp(@Body() dto: VerifyOtpDto) {
     const { resetToken, message } = await this.verifyOtpUseCase.execute(dto);
     return { reset_token: resetToken, message };
@@ -102,10 +128,11 @@ export class AuthController {
 
   @Post('reset-password')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Reset password using reset token' })
+  @ApiOperation({ summary: 'Reset password using reset token', description: 'Public. Use the reset_token from /verify-otp. Token is single-use.' })
   @ApiBody({ type: ResetPasswordDto })
   @ApiResponse({ status: 200, type: ResetPasswordResponseDto })
   @ApiResponse({ status: 401, description: 'Invalid or expired reset token' })
+  @ApiResponse({ status: 404, description: 'User not found' })
   resetPassword(@Body() dto: ResetPasswordDto) {
     return this.resetPasswordUseCase.execute(dto);
   }

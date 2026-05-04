@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import * as bcrypt from 'bcrypt';
 import {
   GazaCities,
@@ -9,7 +10,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 const adapter = new PrismaPg({
   connectionString:
     process.env.DATABASE_URL ||
-    'postgresql://postgres:postgres@localhost:5432/technoamar',
+    'postgresql://postgres:postgres@localhost:5432/techno_amar',
 });
 const prisma = new PrismaClient({ adapter });
 const SALT_ROUNDS = 10;
@@ -73,11 +74,15 @@ async function main() {
   for (const { password, ...data } of users) {
     const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
 
-    const exists = await prisma.user.findFirst({
-      where: { email: data.email },
-    });
+    const orClauses: any[] = [{ email: data.email }];
+    if (data.national_id) orClauses.push({ national_id: data.national_id });
+    if (data.employee_id) orClauses.push({ employee_id: data.employee_id });
+
+    const exists = await prisma.user.findFirst({ where: { OR: orClauses } });
     if (!exists) {
       await prisma.user.create({ data: { ...data, password_hash } });
+    } else {
+      await prisma.user.update({ where: { id: exists.id }, data: { ...data, password_hash } });
     }
 
     console.log(

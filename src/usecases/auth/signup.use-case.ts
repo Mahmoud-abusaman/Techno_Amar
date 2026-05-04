@@ -1,10 +1,11 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, ConflictException } from '@nestjs/common';
 import { IUserRepository } from 'src/domain/repositories/user-repository.interface';
 import { IHashPort } from 'src/domain/ports/hash.port';
 import { ITokenPairFactory } from 'src/domain/ports/token.port';
 import { TokenPair } from 'src/domain/value-objects/token-pair.value-object';
 import { UserEntity } from 'src/domain/entities/user.entity';
-import { CreateUserDto } from 'src/infrastructure/http/users/dto/create-user.dto';
+import { UserRole } from 'generated/prisma/enums';
+import { SignupDto } from 'src/infrastructure/http/auth/dto/signup.dto';
 
 export interface SignupResult {
   tokens: TokenPair;
@@ -19,12 +20,21 @@ export class SignupUseCase {
     @Inject(ITokenPairFactory) private readonly tokenPairFactory: ITokenPairFactory,
   ) {}
 
-  async execute(dto: CreateUserDto): Promise<SignupResult> {
+  async execute(dto: SignupDto): Promise<SignupResult> {
     const password_hash = await this.hashPort.hash(dto.password);
     const { password, ...rest } = dto;
 
-    // ConflictException propagates from repository via Prisma P2002 filter if email is duplicate.
-    const user = await this.userRepo.create({ ...rest, password_hash });
+    let user: UserEntity;
+    try {
+      user = await this.userRepo.create({ ...rest, role: UserRole.CITIZEN, password_hash });
+    } catch (err: any) {
+      if (err?.code === 'P2002') {
+        const field = err?.meta?.modelName === 'User' ? (err?.meta?.target?.[0] ?? 'identifier') : 'identifier';
+        throw new ConflictException(`A user with this ${field} already exists`);
+      }
+      throw err;
+    }
+
     const tokens = await this.tokenPairFactory.createPair(user);
 
     return {

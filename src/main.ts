@@ -18,6 +18,7 @@ async function bootstrap() {
     .setTitle('Techno Amar')
     .setVersion('1.0')
     .addTag('munacapility')
+    .addBearerAuth()
     .build();
 
   SwaggerModule.setup('api', app, () => SwaggerModule.createDocument(app, config));
