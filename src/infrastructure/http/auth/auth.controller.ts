@@ -1,12 +1,12 @@
 import { Controller, Post, Body, HttpCode, HttpStatus, Inject } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
 
-import { LoginUseCase } from 'src/usecases/auth/login.use-case';
-import { SignupUseCase } from 'src/usecases/auth/signup.use-case';
-import { RefreshTokensUseCase } from 'src/usecases/auth/refresh-tokens.use-case';
-import { ForgotPasswordUseCase } from 'src/usecases/auth/forgot-password.use-case';
-import { VerifyOtpUseCase } from 'src/usecases/auth/verify-otp.use-case';
-import { ResetPasswordUseCase } from 'src/usecases/auth/reset-password.use-case';
+import { LoginUseCase } from '@/usecases/auth/login.use-case';
+import { SignupUseCase } from '@/usecases/auth/signup.use-case';
+import { RefreshTokensUseCase } from '@/usecases/auth/refresh-tokens.use-case';
+import { ForgotPasswordUseCase } from '@/usecases/auth/forgot-password.use-case';
+import { VerifyOtpUseCase } from '@/usecases/auth/verify-otp.use-case';
+import { ResetPasswordUseCase } from '@/usecases/auth/reset-password.use-case';
 
 import { LoginDto, LoginResponseDto } from './dto/login.dto';
 import { SignupDto, SignupResponseDto } from './dto/signup.dto';
@@ -110,7 +110,7 @@ export class AuthController {
   @ApiBody({ type: ForgotPasswordRequestDto })
   @ApiResponse({ status: 200, type: ForgotPasswordResponseDto })
   @ApiResponse({ status: 400, description: 'OTP cooldown active — wait before requesting again' })
-  forgotPassword(@Body() dto: ForgotPasswordRequestDto) {
+  async forgotPassword(@Body() dto: ForgotPasswordRequestDto) {
     return this.forgotPasswordUseCase.execute(dto);
   }
 
@@ -133,7 +133,7 @@ export class AuthController {
   @ApiResponse({ status: 200, type: ResetPasswordResponseDto })
   @ApiResponse({ status: 401, description: 'Invalid or expired reset token' })
   @ApiResponse({ status: 404, description: 'User not found' })
-  resetPassword(@Body() dto: ResetPasswordDto) {
+  async resetPassword(@Body() dto: ResetPasswordDto) {
     return this.resetPasswordUseCase.execute(dto);
   }
 }

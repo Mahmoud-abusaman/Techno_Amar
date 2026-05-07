@@ -1,5 +1,5 @@
 import { UserEntity } from '../entities/user.entity';
-import { UserRole, GazaCities } from 'generated/prisma/enums';
+import { UserRole, GazaCities } from '@/generated/prisma/enums';
 
 export const IUserRepository = Symbol('IUserRepository');
 

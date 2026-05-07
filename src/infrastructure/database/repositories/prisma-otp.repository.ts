@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { OtpType } from 'generated/prisma/enums';
+import { OtpType } from '@/generated/prisma/enums';
 import { PrismaService } from '../prisma.service';
 import {
   IOtpRepository,
   CreateOtpData,
   RefreshOtpData,
-} from 'src/domain/repositories/otp-repository.interface';
-import { OtpCodeEntity } from 'src/domain/entities/otp-code.entity';
+} from '@domain/repositories/otp-repository.interface';
+import { OtpCodeEntity } from '@domain/entities/otp-code.entity';
 
 @Injectable()
 export class PrismaOtpRepository implements IOtpRepository {
@@ -33,7 +33,7 @@ export class PrismaOtpRepository implements IOtpRepository {
   async refresh(id: bigint, data: RefreshOtpData): Promise<void> {
     await this.prisma.otpCode.update({
       where: { id },
-      data: { ...data, attempts: 0, createdAt: new Date() },
+      data: { ...data, attempts: 0 },
     });
   }
 

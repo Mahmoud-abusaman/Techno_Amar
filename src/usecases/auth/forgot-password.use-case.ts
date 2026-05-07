@@ -1,14 +1,11 @@
 import { Injectable, Inject, BadRequestException } from '@nestjs/common';
-import { randomInt } from 'crypto';
-import { OtpType } from 'generated/prisma/enums';
-import { IUserRepository } from 'src/domain/repositories/user-repository.interface';
-import { IOtpRepository } from 'src/domain/repositories/otp-repository.interface';
-import { IHashPort } from 'src/domain/ports/hash.port';
-import { SideEffectQueue } from 'src/infrastructure/http/common/utils/side-effects';
-import { ForgotPasswordRequestDto } from 'src/infrastructure/http/auth/dto/forgot-password.dto';
+import { OtpType } from '@/generated/prisma/enums';
+import { IUserRepository } from '@domain/repositories/user-repository.interface';
+import { IOtpRepository } from '@domain/repositories/otp-repository.interface';
+import { IOtpService } from '@domain/ports/otp.port';
+import { SideEffectQueue } from '@infrastructure/http/common/utils/side-effects';
+import { ForgotPasswordRequestDto } from '@infrastructure/http/auth/dto/forgot-password.dto';
 
-const OTP_LENGTH = 4;
-const OTP_EXPIRE_MINUTES = 10;
 const OTP_COOLDOWN_SECONDS = 60;
 const SAFE_MESSAGE = 'If an account exists with this identifier, an OTP has been sent';
 
@@ -17,7 +14,7 @@ export class ForgotPasswordUseCase {
   constructor(
     @Inject(IUserRepository) private readonly userRepo: IUserRepository,
     @Inject(IOtpRepository) private readonly otpRepo: IOtpRepository,
-    @Inject(IHashPort) private readonly hashPort: IHashPort,
+    @Inject(IOtpService) private readonly otpService: IOtpService,
   ) {}
 
   async execute(dto: ForgotPasswordRequestDto): Promise<{ message: string }> {
@@ -42,17 +39,7 @@ export class ForgotPasswordUseCase {
     const queue = new SideEffectQueue();
 
     queue.add('Send OTP', async () => {
-      const code = randomInt(10 ** OTP_LENGTH).toString().padStart(OTP_LENGTH, '0');
-      const codeHash = await this.hashPort.hash(code);
-      const expiresAt = new Date(Date.now() + OTP_EXPIRE_MINUTES * 60 * 1000);
-
-      const active = await this.otpRepo.findActiveByUser(user.id, OtpType.password_reset);
-      if (active) {
-        await this.otpRepo.refresh(active.id, { codeHash, expiresAt });
-      } else {
-        await this.otpRepo.create({ userId: user.id, codeHash, type: OtpType.password_reset, expiresAt });
-      }
-
+      const code = await this.otpService.issue(user.id, OtpType.password_reset);
       // TODO: replace with injected SMS/notification service
       console.log(`[OTP] code for user ${user.id}: ${code}`);
     });

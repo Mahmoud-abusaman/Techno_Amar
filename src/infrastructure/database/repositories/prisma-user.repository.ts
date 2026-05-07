@@ -4,8 +4,8 @@ import {
   IUserRepository,
   CreateUserData,
   UpdateUserData,
-} from 'src/domain/repositories/user-repository.interface';
-import { UserEntity } from 'src/domain/entities/user.entity';
+} from '@domain/repositories/user-repository.interface';
+import { UserEntity } from '@domain/entities/user.entity';
 
 @Injectable()
 export class PrismaUserRepository implements IUserRepository {

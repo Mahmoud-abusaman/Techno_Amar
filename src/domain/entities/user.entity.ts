@@ -1,4 +1,4 @@
-import { UserRole, GazaCities } from 'generated/prisma/enums';
+import { UserRole, GazaCities } from '@/generated/prisma/enums';
 
 export class UserEntity {
   id: bigint;

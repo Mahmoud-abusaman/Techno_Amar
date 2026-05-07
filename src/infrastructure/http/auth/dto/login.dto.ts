@@ -16,7 +16,11 @@ class UserResponseDto {
   @ApiProperty({ example: 'a3f8c2d1-4e5b-4f6a-9c7d-8e1f2a3b4c5d' }) id: string;
   @ApiProperty({ example: 'user@example.com' }) email: string;
   @ApiProperty({ example: 'Ahmed Al-Masri' }) full_name: string;
-  @ApiProperty({ example: 'CITIZEN', enum: ['ADMIN', 'CITIZEN', 'EMPLOYEE', 'DEPARTMENT_MANAGER'] }) role: string;
+  @ApiProperty({
+    example: 'CITIZEN',
+    enum: ['ADMIN', 'CITIZEN', 'EMPLOYEE', 'DEPARTMENT_MANAGER'],
+  })
+  role: string;
 }
 
 export class LoginResponseDto {

@@ -1,5 +1,3 @@
-import { TokenPair } from '../value-objects/token-pair.value-object';
-
 export const IAccessTokenPort = Symbol('IAccessTokenPort');
 export const IRefreshTokenPort = Symbol('IRefreshTokenPort');
 export const ITokenPairFactory = Symbol('ITokenPairFactory');
@@ -22,16 +20,33 @@ export interface RefreshTokenPayload {
 }
 
 export interface IAccessTokenPort {
-  generate(payload: AccessTokenPayload, options?: TokenOptions): Promise<string>;
+  generate(
+    payload: AccessTokenPayload,
+    options?: TokenOptions,
+  ): Promise<string>;
   verify(token: string, secret?: string): Promise<AccessTokenPayload>;
 }
 
 export interface IRefreshTokenPort {
-  generate(payload: RefreshTokenPayload): Promise<{ token: string; expiresAt: Date }>;
+  generate(
+    payload: RefreshTokenPayload,
+  ): Promise<{ token: string; expiresAt: Date }>;
   verify(token: string): Promise<RefreshTokenPayload>;
   revoke(tokenId: string): Promise<void>;
 }
 
+export class TokenPair {
+  constructor(
+    public readonly accessToken: string,
+    public readonly refreshToken: string,
+    public readonly expiresAt: Date,
+  ) {}
+}
+
 export interface ITokenPairFactory {
-  createPair(user: { id: bigint; email: string; role: string }): Promise<TokenPair>;
+  createPair(user: {
+    id: bigint;
+    email: string;
+    role: string;
+  }): Promise<TokenPair>;
 }

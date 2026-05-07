@@ -1,8 +1,8 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
-import { IUserRepository } from 'src/domain/repositories/user-repository.interface';
-import { IRefreshTokenPort, ITokenPairFactory } from 'src/domain/ports/token.port';
-import { TokenPair } from 'src/domain/value-objects/token-pair.value-object';
-import { UserEntity } from 'src/domain/entities/user.entity';
+import { IUserRepository } from '@domain/repositories/user-repository.interface';
+import { IRefreshTokenPort, ITokenPairFactory } from '@domain/ports/token.port';
+import { TokenPair } from '@domain/ports/token.port';
+import { UserEntity } from '@domain/entities/user.entity';
 
 export interface RefreshTokensResult {
   tokens: TokenPair;

@@ -1,4 +1,4 @@
-import { OtpType } from 'generated/prisma/enums';
+import { OtpType } from '@/generated/prisma/enums';
 import { OtpCodeEntity } from '../entities/otp-code.entity';
 
 export const IOtpRepository = Symbol('IOtpRepository');
@@ -16,8 +16,14 @@ export type RefreshOtpData = {
 };
 
 export interface IOtpRepository {
-  findLatestByUser(userId: bigint, type: OtpType): Promise<OtpCodeEntity | null>;
-  findActiveByUser(userId: bigint, type: OtpType): Promise<OtpCodeEntity | null>;
+  findLatestByUser(
+    userId: bigint,
+    type: OtpType,
+  ): Promise<OtpCodeEntity | null>;
+  findActiveByUser(
+    userId: bigint,
+    type: OtpType,
+  ): Promise<OtpCodeEntity | null>;
   create(data: CreateOtpData): Promise<void>;
   refresh(id: bigint, data: RefreshOtpData): Promise<void>;
   incrementAttempts(id: bigint): Promise<void>;

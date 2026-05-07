@@ -1,8 +1,8 @@
 import { Injectable, Inject, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { IUserRepository } from 'src/domain/repositories/user-repository.interface';
-import { IHashPort } from 'src/domain/ports/hash.port';
-import { IPasswordResetTokenPort } from 'src/domain/ports/password-reset-token.port';
-import { ResetPasswordDto } from 'src/infrastructure/http/auth/dto/forgot-password.dto';
+import { IUserRepository } from '@domain/repositories/user-repository.interface';
+import { IHashPort } from '@domain/ports/hash.port';
+import { IPasswordResetTokenPort } from '@domain/ports/password-reset-token.port';
+import { ResetPasswordDto } from '@infrastructure/http/auth/dto/forgot-password.dto';
 
 @Injectable()
 export class ResetPasswordUseCase {

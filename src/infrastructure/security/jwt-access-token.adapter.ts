@@ -1,31 +1,36 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { type ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import {
   IAccessTokenPort,
   AccessTokenPayload,
   TokenOptions,
-} from 'src/domain/ports/token.port';
+} from '@domain/ports/token.port';
+import appConfiguration from '../config/app.configuration';
 
 @Injectable()
 export class JwtAccessTokenAdapter implements IAccessTokenPort {
   constructor(
     @Inject(JwtService) private readonly jwtService: JwtService,
-    @Inject(ConfigService) private readonly config: ConfigService,
+    @Inject(appConfiguration.KEY)
+    private readonly config: ConfigType<typeof appConfiguration>,
   ) {}
 
-  generate(payload: AccessTokenPayload, options?: TokenOptions): Promise<string> {
+  generate(
+    payload: AccessTokenPayload,
+    options?: TokenOptions,
+  ): Promise<string> {
     return this.jwtService.signAsync(payload, {
-      secret: options?.secret ?? this.config.get('app.jwt.secret'),
-      expiresIn: options?.expiresIn ?? this.config.get('app.jwt.accessTokenTtl'),
-      audience: options?.audience ?? this.config.get('app.jwt.audience'),
+      secret: options?.secret ?? this.config.jwt.secret,
+      expiresIn: options?.expiresIn ?? this.config.jwt.accessTokenTtl,
+      audience: options?.audience ?? this.config.jwt.audience,
     });
   }
 
   async verify(token: string, secret?: string): Promise<AccessTokenPayload> {
     try {
       return await this.jwtService.verifyAsync<AccessTokenPayload>(token, {
-        secret: secret ?? this.config.get('app.jwt.secret'),
+        secret: secret ?? this.config.jwt.secret,
       });
     } catch {
       throw new UnauthorizedException('Invalid token');

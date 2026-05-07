@@ -1,4 +1,4 @@
-import { OtpType } from 'generated/prisma/enums';
+import { OtpType } from '@/generated/prisma/enums';
 
 export class OtpCodeEntity {
   id: bigint;

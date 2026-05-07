@@ -1,11 +1,11 @@
 import { Injectable, Inject, ConflictException } from '@nestjs/common';
-import { IUserRepository } from 'src/domain/repositories/user-repository.interface';
-import { IHashPort } from 'src/domain/ports/hash.port';
-import { ITokenPairFactory } from 'src/domain/ports/token.port';
-import { TokenPair } from 'src/domain/value-objects/token-pair.value-object';
-import { UserEntity } from 'src/domain/entities/user.entity';
-import { UserRole } from 'generated/prisma/enums';
-import { SignupDto } from 'src/infrastructure/http/auth/dto/signup.dto';
+import { IUserRepository } from '@domain/repositories/user-repository.interface';
+import { IHashPort } from '@domain/ports/hash.port';
+import { ITokenPairFactory } from '@domain/ports/token.port';
+import { TokenPair } from '@domain/ports/token.port';
+import { UserEntity } from '@domain/entities/user.entity';
+import { UserRole } from '@/generated/prisma/enums';
+import { SignupDto } from '@infrastructure/http/auth/dto/signup.dto';
 
 export interface SignupResult {
   tokens: TokenPair;

@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { IAccessTokenPort, AccessTokenPayload } from 'src/domain/ports/token.port';
+import { IAccessTokenPort, AccessTokenPayload } from '@domain/ports/token.port';
 
 export const REQUEST_USER_KEY = 'user';
 

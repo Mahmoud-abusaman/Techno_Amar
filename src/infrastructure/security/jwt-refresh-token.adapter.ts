@@ -1,7 +1,7 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { IRefreshTokenPort, RefreshTokenPayload } from 'src/domain/ports/token.port';
+import { IRefreshTokenPort, RefreshTokenPayload } from '@domain/ports/token.port';
 
 @Injectable()
 export class JwtRefreshTokenAdapter implements IRefreshTokenPort {

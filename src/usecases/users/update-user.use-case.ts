@@ -1,7 +1,7 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-import { IUserRepository } from 'src/domain/repositories/user-repository.interface';
-import { IHashPort } from 'src/domain/ports/hash.port';
-import { UpdateUserDto } from 'src/infrastructure/http/users/dto/update-user.dto';
+import { IUserRepository } from '@domain/repositories/user-repository.interface';
+import { IHashPort } from '@domain/ports/hash.port';
+import { UpdateUserDto } from '@infrastructure/http/users/dto/update-user.dto';
 
 @Injectable()
 export class UpdateUserUseCase {

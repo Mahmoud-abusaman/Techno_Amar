@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
-import { AccessTokenPayload } from 'src/domain/ports/token.port';
+import { AccessTokenPayload } from '@domain/ports/token.port';
 import { REQUEST_USER_KEY } from '../guards/jwt-auth.guard';
 
 export const ActiveUser = createParamDecorator(

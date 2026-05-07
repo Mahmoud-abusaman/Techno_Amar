@@ -7,7 +7,7 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { GazaCities, UserRole } from 'generated/prisma/enums';
+import { GazaCities, UserRole } from '@/generated/prisma/enums';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'Ahmed Al-Masri' })

@@ -15,4 +15,8 @@ export default registerAs('app', () => ({
       process.env.JWT_PASSWORD_RESET_SECRET || 'password-reset-secret-change-me',
     passwordResetTtl: Number(process.env.JWT_PASSWORD_RESET_TTL || 600),
   },
+  otp: {
+    length: Number(process.env.OTP_LENGTH || 4),
+    expireMinutes: Number(process.env.OTP_EXPIRE_MINUTES || 10),
+  },
 }));

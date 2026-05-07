@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { IHashPort } from 'src/domain/ports/hash.port';
+import { IHashPort } from '@domain/ports/hash.port';
 
 const SALT_ROUNDS = 10;
 

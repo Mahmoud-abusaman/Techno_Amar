@@ -6,17 +6,23 @@ import {
   ITokenPairFactory,
   AccessTokenPayload,
   RefreshTokenPayload,
-} from 'src/domain/ports/token.port';
-import { TokenPair } from 'src/domain/value-objects/token-pair.value-object';
+  TokenPair,
+} from '@domain/ports/token.port';
 
 @Injectable()
 export class TokenPairFactory implements ITokenPairFactory {
   constructor(
-    @Inject(IAccessTokenPort) private readonly accessTokenPort: IAccessTokenPort,
-    @Inject(IRefreshTokenPort) private readonly refreshTokenPort: IRefreshTokenPort,
+    @Inject(IAccessTokenPort)
+    private readonly accessTokenPort: IAccessTokenPort,
+    @Inject(IRefreshTokenPort)
+    private readonly refreshTokenPort: IRefreshTokenPort,
   ) {}
 
-  async createPair(user: { id: bigint; email: string; role: string }): Promise<TokenPair> {
+  async createPair(user: {
+    id: bigint;
+    email: string;
+    role: string;
+  }): Promise<TokenPair> {
     const accessPayload: AccessTokenPayload = {
       sub: user.id.toString(),
       email: user.email,
@@ -28,10 +34,12 @@ export class TokenPairFactory implements ITokenPairFactory {
       tokenId: randomUUID(),
     };
 
-    const [accessToken, { token: refreshToken, expiresAt }] = await Promise.all([
-      this.accessTokenPort.generate(accessPayload),
-      this.refreshTokenPort.generate(refreshPayload),
-    ]);
+    const [accessToken, { token: refreshToken, expiresAt }] = await Promise.all(
+      [
+        this.accessTokenPort.generate(accessPayload),
+        this.refreshTokenPort.generate(refreshPayload),
+      ],
+    );
 
     return new TokenPair(accessToken, refreshToken, expiresAt);
   }

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import appConfiguration from 'src/infrastructure/config/app.configuration';
-import { PrismaModule } from 'src/infrastructure/database/prisma.module';
+import appConfiguration from '@infrastructure/config/app.configuration';
+import { PrismaModule } from '@infrastructure/database/prisma.module';
 import { AuthModule } from './auth.module';
 import { UsersModule } from './users.module';
 
