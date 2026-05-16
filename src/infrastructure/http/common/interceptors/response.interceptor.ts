@@ -11,8 +11,14 @@ import { Request, Response } from 'express';
 import { UnifiedApiResponse, PaginatedResult } from '../types/util.types';
 
 @Injectable()
-export class ResponseInterceptor<T> implements NestInterceptor<T, UnifiedApiResponse<T>> {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<UnifiedApiResponse<T>> {
+export class ResponseInterceptor<T> implements NestInterceptor<
+  T,
+  UnifiedApiResponse<T>
+> {
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler,
+  ): Observable<UnifiedApiResponse<T>> {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
@@ -47,13 +53,22 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, UnifiedApiResp
 
       if (
         data.constructor &&
-        (data.constructor.name === 'Decimal' || data.constructor.name === 'Prisma.Decimal')
+        (data.constructor.name === 'Decimal' ||
+          data.constructor.name === 'Prisma.Decimal')
       ) {
         return Number(data.toString());
       }
 
-      if (data.s !== undefined && data.e !== undefined && data.d !== undefined && Array.isArray(data.d)) {
-        if (typeof data.toString === 'function' && data.toString() !== '[object Object]') {
+      if (
+        data.s !== undefined &&
+        data.e !== undefined &&
+        data.d !== undefined &&
+        Array.isArray(data.d)
+      ) {
+        if (
+          typeof data.toString === 'function' &&
+          data.toString() !== '[object Object]'
+        ) {
           const val = data.toString();
           return isNaN(Number(val)) ? data : Number(val);
         }
