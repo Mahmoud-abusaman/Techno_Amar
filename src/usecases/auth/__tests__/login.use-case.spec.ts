@@ -64,16 +64,17 @@ describe('LoginUseCase', () => {
   });
 
   describe('execute', () => {
-    const dto = { email: 'ahmed@example.com', password: 'SecurePass@2024' };
+    const citizenDto = { identifier: '123456789', password: 'SecurePass@2024' };
+    const employeeDto = { identifier: 'EMP-001', password: 'SecurePass@2024' };
 
-    it('returns tokens and user on valid credentials', async () => {
+    it('returns tokens and user when citizen logs in with national_id', async () => {
       const user = makeUser();
       const tokens = makeTokenPair();
-      userRepo.findByEmail.mockResolvedValue(user);
+      userRepo.findByNationalId.mockResolvedValue(user);
       hashPort.compare.mockResolvedValue(true);
       tokenPairFactory.createPair.mockResolvedValue(tokens);
 
-      const result = await useCase.execute(dto);
+      const result = await useCase.execute(citizenDto);
 
       expect(result.tokens).toBe(tokens);
       expect(result.user).toEqual({
@@ -84,62 +85,70 @@ describe('LoginUseCase', () => {
       });
     });
 
-    it('throws UnauthorizedException when user does not exist', async () => {
-      userRepo.findByEmail.mockResolvedValue(null);
+    it('returns tokens and user when employee logs in with employee_id', async () => {
+      const user = makeUser({ employee_id: 'EMP-001', national_id: null, role: UserRole.EMPLOYEE });
+      const tokens = makeTokenPair();
+      userRepo.findByNationalId.mockResolvedValue(null);
+      userRepo.findByEmployeeId.mockResolvedValue(user);
+      hashPort.compare.mockResolvedValue(true);
+      tokenPairFactory.createPair.mockResolvedValue(tokens);
 
-      await expect(useCase.execute(dto)).rejects.toThrow(
+      const result = await useCase.execute(employeeDto);
+
+      expect(userRepo.findByNationalId).toHaveBeenCalledWith(employeeDto.identifier);
+      expect(userRepo.findByEmployeeId).toHaveBeenCalledWith(employeeDto.identifier);
+      expect(result.tokens).toBe(tokens);
+    });
+
+    it('throws UnauthorizedException when identifier matches no user', async () => {
+      userRepo.findByNationalId.mockResolvedValue(null);
+      userRepo.findByEmployeeId.mockResolvedValue(null);
+
+      await expect(useCase.execute(citizenDto)).rejects.toThrow(
         new UnauthorizedException('Invalid credentials'),
       );
       expect(hashPort.compare).not.toHaveBeenCalled();
     });
 
     it('throws UnauthorizedException when password is wrong', async () => {
-      userRepo.findByEmail.mockResolvedValue(makeUser());
+      userRepo.findByNationalId.mockResolvedValue(makeUser());
       hashPort.compare.mockResolvedValue(false);
 
-      await expect(useCase.execute(dto)).rejects.toThrow(
+      await expect(useCase.execute(citizenDto)).rejects.toThrow(
         new UnauthorizedException('Invalid credentials'),
       );
       expect(tokenPairFactory.createPair).not.toHaveBeenCalled();
     });
 
     it('throws UnauthorizedException when account is disabled', async () => {
-      userRepo.findByEmail.mockResolvedValue(makeUser({ is_active: false }));
+      userRepo.findByNationalId.mockResolvedValue(makeUser({ is_active: false }));
       hashPort.compare.mockResolvedValue(true);
 
-      await expect(useCase.execute(dto)).rejects.toThrow(
+      await expect(useCase.execute(citizenDto)).rejects.toThrow(
         new UnauthorizedException('Account is disabled'),
       );
       expect(tokenPairFactory.createPair).not.toHaveBeenCalled();
     });
 
-    it('calls findByEmail with the provided email', async () => {
-      userRepo.findByEmail.mockResolvedValue(null);
-
-      await expect(useCase.execute(dto)).rejects.toThrow(UnauthorizedException);
-
-      expect(userRepo.findByEmail).toHaveBeenCalledWith(dto.email);
-    });
-
-    it('calls hashPort.compare with plain password and stored hash', async () => {
-      userRepo.findByEmail.mockResolvedValue(makeUser());
-      hashPort.compare.mockResolvedValue(false);
-
-      await expect(useCase.execute(dto)).rejects.toThrow(UnauthorizedException);
-
-      expect(hashPort.compare).toHaveBeenCalledWith(dto.password, 'hashed_password');
-    });
-
     it('calls tokenPairFactory.createPair with the user', async () => {
       const user = makeUser();
       const tokens = makeTokenPair();
-      userRepo.findByEmail.mockResolvedValue(user);
+      userRepo.findByNationalId.mockResolvedValue(user);
       hashPort.compare.mockResolvedValue(true);
       tokenPairFactory.createPair.mockResolvedValue(tokens);
 
-      await useCase.execute(dto);
+      await useCase.execute(citizenDto);
 
       expect(tokenPairFactory.createPair).toHaveBeenCalledWith(user);
+    });
+
+    it('calls hashPort.compare with plain password and stored hash', async () => {
+      userRepo.findByNationalId.mockResolvedValue(makeUser());
+      hashPort.compare.mockResolvedValue(false);
+
+      await expect(useCase.execute(citizenDto)).rejects.toThrow(UnauthorizedException);
+
+      expect(hashPort.compare).toHaveBeenCalledWith(citizenDto.password, 'hashed_password');
     });
   });
 });

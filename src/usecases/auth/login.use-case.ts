@@ -20,7 +20,8 @@ export class LoginUseCase {
   ) {}
 
   async execute(dto: LoginDto): Promise<LoginResult> {
-    const user = await this.userRepo.findByEmail(dto.email);
+    let user = await this.userRepo.findByNationalId(dto.identifier);
+    if (!user) user = await this.userRepo.findByEmployeeId(dto.identifier);
 
     if (!user) throw new UnauthorizedException('Invalid credentials');
 

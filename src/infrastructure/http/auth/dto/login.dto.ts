@@ -1,10 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsString, MinLength } from 'class-validator';
 
 export class LoginDto {
-  @ApiProperty({ example: 'user@example.com' })
-  @IsEmail()
-  email: string;
+  @ApiProperty({
+    example: '987654321',
+    description: 'national_id for citizens, employee_id for employees/managers',
+  })
+  @IsString()
+  identifier: string;
 
   @ApiProperty({ example: 'password123', minLength: 6 })
   @IsString()
@@ -12,14 +15,11 @@ export class LoginDto {
   password: string;
 }
 
-class UserResponseDto {
-  @ApiProperty({ example: 'a3f8c2d1-4e5b-4f6a-9c7d-8e1f2a3b4c5d' }) id: string;
+export class UserResponseDto {
+  @ApiProperty({ example: '1' }) id: string;
   @ApiProperty({ example: 'user@example.com' }) email: string;
   @ApiProperty({ example: 'Ahmed Al-Masri' }) full_name: string;
-  @ApiProperty({
-    example: 'CITIZEN',
-    enum: ['ADMIN', 'CITIZEN', 'EMPLOYEE', 'DEPARTMENT_MANAGER'],
-  })
+  @ApiProperty({ example: 'CITIZEN', enum: ['ADMIN', 'CITIZEN', 'EMPLOYEE', 'DEPARTMENT_MANAGER'] })
   role: string;
 }
 

@@ -15,6 +15,7 @@ BigInt.prototype.toJSON = function () {
   return String(this);
 };
 
+console.log(process.env.NODE_ENV);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
@@ -33,7 +34,9 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
-  SwaggerModule.setup('api', app, () => SwaggerModule.createDocument(app, config));
+  SwaggerModule.setup('api', app, () =>
+    SwaggerModule.createDocument(app, config),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }
