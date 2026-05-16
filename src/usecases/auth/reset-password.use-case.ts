@@ -1,0 +1,31 @@
+import { Injectable, Inject, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { IUserRepository } from '@domain/repositories/user-repository.interface';
+import { IHashPort } from '@domain/ports/hash.port';
+import { IPasswordResetTokenPort } from '@domain/ports/password-reset-token.port';
+import { ResetPasswordDto } from '@infrastructure/http/auth/dto/forgot-password.dto';
+
+@Injectable()
+export class ResetPasswordUseCase {
+  constructor(
+    @Inject(IUserRepository) private readonly userRepo: IUserRepository,
+    @Inject(IHashPort) private readonly hashPort: IHashPort,
+    @Inject(IPasswordResetTokenPort) private readonly resetTokenPort: IPasswordResetTokenPort,
+  ) {}
+
+  async execute(dto: ResetPasswordDto): Promise<{ message: string }> {
+    let payload: Awaited<ReturnType<typeof this.resetTokenPort.verify>>;
+    try {
+      payload = await this.resetTokenPort.verify(dto.reset_token);
+    } catch {
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    const user = await this.userRepo.findById(BigInt(payload.sub));
+    if (!user) throw new NotFoundException('User not found');
+
+    const password_hash = await this.hashPort.hash(dto.new_password);
+    await this.userRepo.update(user.id, { password_hash });
+
+    return { message: 'Password has been reset successfully' };
+  }
+}
