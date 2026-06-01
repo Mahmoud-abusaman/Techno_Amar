@@ -22,11 +22,13 @@ export class TokenPairFactory implements ITokenPairFactory {
     id: bigint;
     email: string;
     role: string;
+    department_id?: bigint | null;
   }): Promise<TokenPair> {
     const accessPayload: AccessTokenPayload = {
       sub: user.id.toString(),
       email: user.email,
       role: user.role,
+      department_id: user.department_id != null ? user.department_id.toString() : null,
     };
 
     const refreshPayload: RefreshTokenPayload = {

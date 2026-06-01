@@ -7,6 +7,7 @@ const makePayload = (overrides: Partial<AccessTokenPayload> = {}): AccessTokenPa
   sub: '1',
   email: 'ahmed@example.com',
   role: 'CITIZEN',
+  department_id: null,
   ...overrides,
 });
 

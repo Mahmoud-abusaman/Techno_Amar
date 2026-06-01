@@ -44,7 +44,7 @@ describe('RolesGuard', () => {
 
     it('returns true when the user has the required role', () => {
       reflector.getAllAndOverride.mockReturnValue([UserRole.ADMIN]);
-      const ctx = makeContext({ sub: '1', email: 'admin@example.com', role: 'ADMIN' }, [UserRole.ADMIN]);
+      const ctx = makeContext({ sub: '1', email: 'admin@example.com', role: 'ADMIN', department_id: null }, [UserRole.ADMIN]);
 
       expect(guard.canActivate(ctx)).toBe(true);
     });
@@ -52,7 +52,7 @@ describe('RolesGuard', () => {
     it('returns true when the user has one of multiple allowed roles', () => {
       reflector.getAllAndOverride.mockReturnValue([UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER]);
       const ctx = makeContext(
-        { sub: '1', email: 'mgr@example.com', role: 'DEPARTMENT_MANAGER' },
+        { sub: '1', email: 'mgr@example.com', role: 'DEPARTMENT_MANAGER', department_id: '5' },
         [UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER],
       );
 
@@ -61,7 +61,7 @@ describe('RolesGuard', () => {
 
     it('throws ForbiddenException when user role does not match required roles', () => {
       reflector.getAllAndOverride.mockReturnValue([UserRole.ADMIN]);
-      const ctx = makeContext({ sub: '1', email: 'citizen@example.com', role: 'CITIZEN' }, [UserRole.ADMIN]);
+      const ctx = makeContext({ sub: '1', email: 'citizen@example.com', role: 'CITIZEN', department_id: null }, [UserRole.ADMIN]);
 
       expect(() => guard.canActivate(ctx)).toThrow(ForbiddenException);
       expect(() => guard.canActivate(ctx)).toThrow(/Access denied/);
@@ -78,7 +78,7 @@ describe('RolesGuard', () => {
 
     it('reads roles metadata from both handler and class', () => {
       reflector.getAllAndOverride.mockReturnValue([UserRole.ADMIN]);
-      const ctx = makeContext({ sub: '1', email: 'admin@example.com', role: 'ADMIN' }, [UserRole.ADMIN]);
+      const ctx = makeContext({ sub: '1', email: 'admin@example.com', role: 'ADMIN', department_id: null }, [UserRole.ADMIN]);
 
       guard.canActivate(ctx);
 

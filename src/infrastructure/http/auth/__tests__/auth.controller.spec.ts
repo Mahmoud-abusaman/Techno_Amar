@@ -31,6 +31,7 @@ const userStub = {
   email: 'ahmed@example.com',
   full_name: 'Ahmed Al-Masri',
   role: UserRole.CITIZEN,
+  department_id: null,
 };
 
 const tokenPairStub = {
@@ -90,7 +91,7 @@ describe('AuthController (integration)', () => {
   // -------------------------------------------------------------------------
 
   describe('POST /auth/login', () => {
-    const validBody = { email: 'ahmed@example.com', password: 'SecurePass@2024' };
+    const validBody = { identifier: 'ahmed@example.com', password: 'SecurePass@2024' };
 
     it('200 — returns tokens and user on valid credentials', async () => {
       loginUseCase.execute.mockResolvedValue(authResultStub as any);
@@ -125,7 +126,7 @@ describe('AuthController (integration)', () => {
         .expect(401);
     });
 
-    it('400 — rejects a missing email', async () => {
+    it('400 — rejects a missing identifier', async () => {
       await request(app.getHttpServer())
         .post('/auth/login')
         .send({ password: 'SecurePass@2024' })
@@ -134,10 +135,10 @@ describe('AuthController (integration)', () => {
       expect(loginUseCase.execute).not.toHaveBeenCalled();
     });
 
-    it('400 — rejects an invalid email format', async () => {
+    it('400 — rejects a non-string identifier', async () => {
       await request(app.getHttpServer())
         .post('/auth/login')
-        .send({ email: 'not-an-email', password: 'SecurePass@2024' })
+        .send({ identifier: 12345, password: 'SecurePass@2024' })
         .expect(400);
     });
 

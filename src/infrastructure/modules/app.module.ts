@@ -4,6 +4,9 @@ import appConfiguration from '@infrastructure/config/app.configuration';
 import { PrismaModule } from '@infrastructure/database/prisma.module';
 import { AuthModule } from './auth.module';
 import { UsersModule } from './users.module';
+import { OrgModule } from './org.module';
+import { CitizensModule } from './citizens.module';
+import { EmployeesModule } from './employees.module';
 
 @Module({
   imports: [
@@ -15,6 +18,9 @@ import { UsersModule } from './users.module';
     PrismaModule,
     AuthModule,
     UsersModule,
+    OrgModule,
+    CitizensModule,
+    EmployeesModule,
   ],
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { UserEntity } from '../entities/user.entity';
-import { UserRole, GazaCities } from '@/generated/prisma/enums';
+import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
 
 export const IUserRepository = Symbol('IUserRepository');
 
@@ -13,15 +13,25 @@ export type CreateUserData = {
   address?: string | null;
   city: GazaCities;
   role: UserRole;
+  account_status?: AccountStatus;
+  department_id?: bigint | null;
+  section_id?: bigint | null;
   is_verified?: boolean;
   is_active?: boolean;
 };
 
 export type UpdateUserData = Partial<Omit<CreateUserData, 'email'>>;
 
+export type FindUsersFilter = {
+  role?: UserRole;
+  department_id?: bigint;
+  section_id?: bigint;
+  is_active?: boolean;
+};
+
 export interface IUserRepository {
   create(data: CreateUserData): Promise<UserEntity>;
-  findAll(): Promise<UserEntity[]>;
+  findAll(filter?: FindUsersFilter): Promise<UserEntity[]>;
   findById(id: bigint): Promise<UserEntity | null>;
   findByEmail(email: string): Promise<UserEntity | null>;
   findByPhone(phone: string): Promise<UserEntity | null>;

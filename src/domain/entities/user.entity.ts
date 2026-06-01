@@ -1,4 +1,4 @@
-import { UserRole, GazaCities } from '@/generated/prisma/enums';
+import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
 
 export class UserEntity {
   id: bigint;
@@ -12,6 +12,9 @@ export class UserEntity {
   city: GazaCities;
   is_verified: boolean;
   role: UserRole;
+  account_status: AccountStatus;
+  department_id: bigint | null;
+  section_id: bigint | null;
   is_active: boolean;
   created_at: Date;
   updated_at: Date;

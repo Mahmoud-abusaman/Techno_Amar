@@ -4,6 +4,7 @@ import {
   IUserRepository,
   CreateUserData,
   UpdateUserData,
+  FindUsersFilter,
 } from '@domain/repositories/user-repository.interface';
 import { UserEntity } from '@domain/entities/user.entity';
 
@@ -15,8 +16,8 @@ export class PrismaUserRepository implements IUserRepository {
     return this.prisma.user.create({ data }) as Promise<UserEntity>;
   }
 
-  findAll(): Promise<UserEntity[]> {
-    return this.prisma.user.findMany() as Promise<UserEntity[]>;
+  findAll(filter?: FindUsersFilter): Promise<UserEntity[]> {
+    return this.prisma.user.findMany({ where: filter }) as Promise<UserEntity[]>;
   }
 
   findById(id: bigint): Promise<UserEntity | null> {

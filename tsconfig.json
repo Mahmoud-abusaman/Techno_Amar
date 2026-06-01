@@ -13,6 +13,7 @@
       "@/*": ["./*", "./src/*"],
       "@domain/*": ["./src/domain/*"],
       "@application/*": ["./src/application/*"],
+      "@usecases/*": ["./src/usecases/*"],
       "@infrastructure/*": ["./src/infrastructure/*"]
     },
     "incremental": true,

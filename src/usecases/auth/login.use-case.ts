@@ -8,7 +8,7 @@ import { LoginDto } from '@infrastructure/http/auth/dto/login.dto';
 
 export interface LoginResult {
   tokens: TokenPair;
-  user: Pick<UserEntity, 'id' | 'email' | 'full_name' | 'role'>;
+  user: Pick<UserEntity, 'id' | 'email' | 'full_name' | 'role' | 'department_id'>;
 }
 
 @Injectable()
@@ -34,7 +34,7 @@ export class LoginUseCase {
 
     return {
       tokens,
-      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
+      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role, department_id: user.department_id },
     };
   }
 }

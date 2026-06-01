@@ -6,6 +6,7 @@ export interface AccessTokenPayload {
   sub: string;
   email: string;
   role: string;
+  department_id: string | null;
 }
 
 export interface TokenOptions {
@@ -48,5 +49,6 @@ export interface ITokenPairFactory {
     id: bigint;
     email: string;
     role: string;
+    department_id?: bigint | null;
   }): Promise<TokenPair>;
 }
