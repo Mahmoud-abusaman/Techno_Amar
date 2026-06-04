@@ -18,6 +18,7 @@ BigInt.prototype.toJSON = function () {
 console.log(process.env.NODE_ENV);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(
