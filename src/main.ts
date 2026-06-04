@@ -1,14 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './infrastructure/modules/app.module';
+import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
-import { ResponseInterceptor } from './infrastructure/http/common/interceptors/response.interceptor';
+import { ResponseInterceptor } from '@shared/common/interceptors/response.interceptor';
 import {
   HttpExceptionFilter,
   PrismaExceptionFilter,
   ValidationExceptionFilter,
   UncaughtExceptionFilter,
-} from './infrastructure/http/common/filters/exception.filter';
+} from '@shared/common/filters/exception.filter';
 
 // @ts-expect-error BigInt serialization
 BigInt.prototype.toJSON = function () {
@@ -18,6 +18,7 @@ BigInt.prototype.toJSON = function () {
 console.log(process.env.NODE_ENV);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(
@@ -40,4 +41,4 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap();

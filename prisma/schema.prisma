@@ -57,7 +57,6 @@ model Department {
   updated_at  DateTime @updatedAt
 
   sections Section[]
-  users    User[]
 
   @@map("departments")
 }
@@ -99,9 +98,6 @@ model User {
 
   is_verified Boolean  @default(false)
   role        UserRole
-
-  department_id BigInt?
-  department    Department? @relation(fields: [department_id], references: [id])
 
   section_id BigInt?
   section    Section? @relation(fields: [section_id], references: [id])
