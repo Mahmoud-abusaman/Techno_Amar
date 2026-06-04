@@ -1,9 +1,14 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { ExecutionContext } from '@nestjs/common';
 import { JwtAuthGuard, REQUEST_USER_KEY } from '../jwt-auth.guard';
-import { IAccessTokenPort, AccessTokenPayload } from '@domain/ports/token.port';
+import {
+  IAccessTokenPort,
+  AccessTokenPayload,
+} from '@auth/domain/ports/token.port';
 
-const makePayload = (overrides: Partial<AccessTokenPayload> = {}): AccessTokenPayload => ({
+const makePayload = (
+  overrides: Partial<AccessTokenPayload> = {},
+): AccessTokenPayload => ({
   sub: '1',
   email: 'ahmed@example.com',
   role: 'CITIZEN',
@@ -11,7 +16,9 @@ const makePayload = (overrides: Partial<AccessTokenPayload> = {}): AccessTokenPa
   ...overrides,
 });
 
-const makeContext = (headers: Record<string, string> = {}): ExecutionContext => {
+const makeContext = (
+  headers: Record<string, string> = {},
+): ExecutionContext => {
   const request: any = { headers };
   return {
     switchToHttp: () => ({
@@ -76,7 +83,9 @@ describe('JwtAuthGuard', () => {
       accessTokenPort.verify.mockRejectedValue(new Error('jwt expired'));
       const ctx = makeContext({ authorization: 'Bearer expired.token' });
 
-      await expect(guard.canActivate(ctx)).rejects.toThrow(UnauthorizedException);
+      await expect(guard.canActivate(ctx)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('calls accessTokenPort.verify with the extracted token string', async () => {

@@ -1,11 +1,12 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-import { IDepartmentRepository } from '@domain/repositories/department-repository.interface';
-import { DepartmentEntity } from '@domain/entities/department.entity';
+import { IDepartmentRepository } from '@org/domain/repositories/department-repository.interface';
+import { DepartmentEntity } from '@org/domain/entities/department.entity';
 
 @Injectable()
 export class GetDepartmentUseCase {
   constructor(
-    @Inject(IDepartmentRepository) private readonly deptRepo: IDepartmentRepository,
+    @Inject(IDepartmentRepository)
+    private readonly deptRepo: IDepartmentRepository,
   ) {}
 
   async execute(id: bigint): Promise<DepartmentEntity> {

@@ -1,9 +1,9 @@
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { ResetPasswordUseCase } from '../reset-password.use-case';
-import { IUserRepository } from '@domain/repositories/user-repository.interface';
-import { IHashPort } from '@domain/ports/hash.port';
-import { IPasswordResetTokenPort } from '@domain/ports/password-reset-token.port';
-import { UserEntity } from '@domain/entities/user.entity';
+import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
+import { IHashPort } from '@auth/domain/ports/hash.port';
+import { IPasswordResetTokenPort } from '@auth/domain/ports/password-reset-token.port';
+import { UserEntity } from '@users/domain/entities/user.entity';
 import { UserRole, GazaCities } from '@/generated/prisma/enums';
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
@@ -23,7 +23,7 @@ const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
-  } as UserEntity);
+  }) as UserEntity;
 
 const VALID_RESET_TOKEN = 'valid.reset.token.jwt';
 const RESET_PAYLOAD = { sub: '1', type: 'password_reset' as const };
@@ -61,17 +61,24 @@ describe('ResetPasswordUseCase', () => {
   });
 
   describe('execute', () => {
-    const dto = { reset_token: VALID_RESET_TOKEN, new_password: 'NewPass@2024' };
+    const dto = {
+      reset_token: VALID_RESET_TOKEN,
+      new_password: 'NewPass@2024',
+    };
 
     it('resets the password and returns a success message', async () => {
       resetTokenPort.verify.mockResolvedValue(RESET_PAYLOAD);
       userRepo.findById.mockResolvedValue(makeUser());
       hashPort.hash.mockResolvedValue('new_hashed_password');
-      userRepo.update.mockResolvedValue(makeUser({ password_hash: 'new_hashed_password' }));
+      userRepo.update.mockResolvedValue(
+        makeUser({ password_hash: 'new_hashed_password' }),
+      );
 
       const result = await useCase.execute(dto);
 
-      expect(result).toEqual({ message: 'Password has been reset successfully' });
+      expect(result).toEqual({
+        message: 'Password has been reset successfully',
+      });
     });
 
     it('throws UnauthorizedException when the reset token is invalid', async () => {
@@ -118,11 +125,16 @@ describe('ResetPasswordUseCase', () => {
 
       await useCase.execute(dto);
 
-      expect(userRepo.update).toHaveBeenCalledWith(1n, { password_hash: 'new_hashed_password' });
+      expect(userRepo.update).toHaveBeenCalledWith(1n, {
+        password_hash: 'new_hashed_password',
+      });
     });
 
     it('looks up the user by bigint id parsed from the token subject', async () => {
-      resetTokenPort.verify.mockResolvedValue({ sub: '99', type: 'password_reset' });
+      resetTokenPort.verify.mockResolvedValue({
+        sub: '99',
+        type: 'password_reset',
+      });
       userRepo.findById.mockResolvedValue(makeUser({ id: 99n }));
       hashPort.hash.mockResolvedValue('new_hashed_password');
       userRepo.update.mockResolvedValue(makeUser());

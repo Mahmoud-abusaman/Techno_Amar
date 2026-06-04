@@ -12,7 +12,8 @@ export default registerAs('app', () => ({
     accessTokenTtl: Number(process.env.JWT_ACCESS_TOKEN_TTL || 900),
     refreshTokenTtl: Number(process.env.JWT_REFRESH_TOKEN_TTL || 604800),
     passwordResetSecret:
-      process.env.JWT_PASSWORD_RESET_SECRET || 'password-reset-secret-change-me',
+      process.env.JWT_PASSWORD_RESET_SECRET ||
+      'password-reset-secret-change-me',
     passwordResetTtl: Number(process.env.JWT_PASSWORD_RESET_TTL || 600),
   },
   otp: {

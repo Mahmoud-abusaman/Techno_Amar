@@ -1,9 +1,9 @@
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 import { VerifyOtpUseCase } from '../verify-otp.use-case';
-import { IUserRepository } from '@domain/repositories/user-repository.interface';
-import { IOtpService } from '@domain/ports/otp.port';
-import { IPasswordResetTokenPort } from '@domain/ports/password-reset-token.port';
-import { UserEntity } from '@domain/entities/user.entity';
+import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
+import { IOtpService } from '@auth/domain/ports/otp.port';
+import { IPasswordResetTokenPort } from '@auth/domain/ports/password-reset-token.port';
+import { UserEntity } from '@users/domain/entities/user.entity';
 import { UserRole, GazaCities, OtpType } from '@/generated/prisma/enums';
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
@@ -23,7 +23,7 @@ const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
-  } as UserEntity);
+  }) as UserEntity;
 
 describe('VerifyOtpUseCase', () => {
   let useCase: VerifyOtpUseCase;
@@ -69,7 +69,8 @@ describe('VerifyOtpUseCase', () => {
 
       expect(result).toEqual({
         resetToken: 'reset.token.jwt',
-        message: 'OTP verified successfully. Use the reset token to change your password.',
+        message:
+          'OTP verified successfully. Use the reset token to change your password.',
       });
     });
 
@@ -85,7 +86,9 @@ describe('VerifyOtpUseCase', () => {
 
     it('propagates BadRequestException from otpService when no active code exists', async () => {
       userRepo.findByPhone.mockResolvedValue(makeUser());
-      otpService.verify.mockRejectedValue(new BadRequestException('No active code found'));
+      otpService.verify.mockRejectedValue(
+        new BadRequestException('No active code found'),
+      );
 
       await expect(useCase.execute(dto)).rejects.toThrow(
         new BadRequestException('No active code found'),
@@ -94,7 +97,9 @@ describe('VerifyOtpUseCase', () => {
 
     it('propagates BadRequestException from otpService when code is expired', async () => {
       userRepo.findByPhone.mockResolvedValue(makeUser());
-      otpService.verify.mockRejectedValue(new BadRequestException('Code expired'));
+      otpService.verify.mockRejectedValue(
+        new BadRequestException('Code expired'),
+      );
 
       await expect(useCase.execute(dto)).rejects.toThrow(
         new BadRequestException('Code expired'),
@@ -114,7 +119,9 @@ describe('VerifyOtpUseCase', () => {
 
     it('propagates BadRequestException from otpService when code is invalid', async () => {
       userRepo.findByPhone.mockResolvedValue(makeUser());
-      otpService.verify.mockRejectedValue(new BadRequestException('Invalid code'));
+      otpService.verify.mockRejectedValue(
+        new BadRequestException('Invalid code'),
+      );
 
       await expect(useCase.execute(dto)).rejects.toThrow(
         new BadRequestException('Invalid code'),
@@ -129,7 +136,11 @@ describe('VerifyOtpUseCase', () => {
 
       await useCase.execute(dto);
 
-      expect(otpService.verify).toHaveBeenCalledWith(42n, '1234', OtpType.password_reset);
+      expect(otpService.verify).toHaveBeenCalledWith(
+        42n,
+        '1234',
+        OtpType.password_reset,
+      );
     });
 
     it('generates the reset token with the user id as string', async () => {
@@ -145,7 +156,9 @@ describe('VerifyOtpUseCase', () => {
 
     it('does not generate a reset token when OTP verification fails', async () => {
       userRepo.findByPhone.mockResolvedValue(makeUser());
-      otpService.verify.mockRejectedValue(new BadRequestException('Invalid code'));
+      otpService.verify.mockRejectedValue(
+        new BadRequestException('Invalid code'),
+      );
 
       await expect(useCase.execute(dto)).rejects.toThrow(BadRequestException);
 

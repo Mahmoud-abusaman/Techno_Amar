@@ -1,9 +1,12 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { RefreshTokensUseCase } from '../refresh-tokens.use-case';
-import { IUserRepository } from '@domain/repositories/user-repository.interface';
-import { IRefreshTokenPort, ITokenPairFactory } from '@domain/ports/token.port';
-import { UserEntity } from '@domain/entities/user.entity';
-import { TokenPair } from '@domain/ports/token.port';
+import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
+import {
+  IRefreshTokenPort,
+  ITokenPairFactory,
+} from '@auth/domain/ports/token.port';
+import { UserEntity } from '@users/domain/entities/user.entity';
+import { TokenPair } from '@auth/domain/ports/token.port';
 import { UserRole, GazaCities } from '@/generated/prisma/enums';
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
@@ -23,7 +26,7 @@ const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
-  } as UserEntity);
+  }) as UserEntity;
 
 const makeTokenPair = (): TokenPair => ({
   accessToken: 'new.access.token',
@@ -63,7 +66,11 @@ describe('RefreshTokensUseCase', () => {
       createPair: jest.fn(),
     };
 
-    useCase = new RefreshTokensUseCase(userRepo, refreshTokenPort, tokenPairFactory);
+    useCase = new RefreshTokensUseCase(
+      userRepo,
+      refreshTokenPort,
+      tokenPairFactory,
+    );
   });
 
   describe('execute', () => {
@@ -124,7 +131,9 @@ describe('RefreshTokensUseCase', () => {
 
       await useCase.execute(REFRESH_TOKEN);
 
-      expect(refreshTokenPort.revoke).toHaveBeenCalledWith(REFRESH_PAYLOAD.tokenId);
+      expect(refreshTokenPort.revoke).toHaveBeenCalledWith(
+        REFRESH_PAYLOAD.tokenId,
+      );
       expect(refreshTokenPort.revoke.mock.invocationCallOrder[0]).toBeLessThan(
         tokenPairFactory.createPair.mock.invocationCallOrder[0],
       );

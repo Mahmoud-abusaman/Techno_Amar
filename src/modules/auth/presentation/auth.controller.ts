@@ -1,12 +1,19 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Inject } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Inject,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { LoginUseCase } from '@/usecases/auth/login.use-case';
-import { SignupUseCase } from '@/usecases/auth/signup.use-case';
-import { RefreshTokensUseCase } from '@/usecases/auth/refresh-tokens.use-case';
-import { ForgotPasswordUseCase } from '@/usecases/auth/forgot-password.use-case';
-import { VerifyOtpUseCase } from '@/usecases/auth/verify-otp.use-case';
-import { ResetPasswordUseCase } from '@/usecases/auth/reset-password.use-case';
+import { LoginUseCase } from '@auth/application/login.use-case';
+import { SignupUseCase } from '@auth/application/signup.use-case';
+import { RefreshTokensUseCase } from '@auth/application/refresh-tokens.use-case';
+import { ForgotPasswordUseCase } from '@auth/application/forgot-password.use-case';
+import { VerifyOtpUseCase } from '@auth/application/verify-otp.use-case';
+import { ResetPasswordUseCase } from '@auth/application/reset-password.use-case';
 
 import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
@@ -31,10 +38,14 @@ export class AuthController {
   constructor(
     @Inject(LoginUseCase) private readonly loginUseCase: LoginUseCase,
     @Inject(SignupUseCase) private readonly signupUseCase: SignupUseCase,
-    @Inject(RefreshTokensUseCase) private readonly refreshTokensUseCase: RefreshTokensUseCase,
-    @Inject(ForgotPasswordUseCase) private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
-    @Inject(VerifyOtpUseCase) private readonly verifyOtpUseCase: VerifyOtpUseCase,
-    @Inject(ResetPasswordUseCase) private readonly resetPasswordUseCase: ResetPasswordUseCase,
+    @Inject(RefreshTokensUseCase)
+    private readonly refreshTokensUseCase: RefreshTokensUseCase,
+    @Inject(ForgotPasswordUseCase)
+    private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
+    @Inject(VerifyOtpUseCase)
+    private readonly verifyOtpUseCase: VerifyOtpUseCase,
+    @Inject(ResetPasswordUseCase)
+    private readonly resetPasswordUseCase: ResetPasswordUseCase,
   ) {}
 
   @Post('login')
@@ -46,7 +57,12 @@ export class AuthController {
       access_token: tokens.accessToken,
       refresh_token: tokens.refreshToken,
       expires_at: tokens.expiresAt,
-      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        full_name: user.full_name,
+        role: user.role,
+      },
     };
   }
 
@@ -59,7 +75,12 @@ export class AuthController {
       access_token: tokens.accessToken,
       refresh_token: tokens.refreshToken,
       expires_at: tokens.expiresAt,
-      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        full_name: user.full_name,
+        role: user.role,
+      },
     };
   }
 
@@ -67,12 +88,19 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @RefreshDocs()
   async refresh(@Body() dto: RefreshTokenDto) {
-    const { tokens, user } = await this.refreshTokensUseCase.execute(dto.refresh_token);
+    const { tokens, user } = await this.refreshTokensUseCase.execute(
+      dto.refresh_token,
+    );
     return {
       access_token: tokens.accessToken,
       refresh_token: tokens.refreshToken,
       expires_at: tokens.expiresAt,
-      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        full_name: user.full_name,
+        role: user.role,
+      },
     };
   }
 

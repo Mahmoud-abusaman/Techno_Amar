@@ -5,8 +5,8 @@ import {
   IAccessTokenPort,
   AccessTokenPayload,
   TokenOptions,
-} from '@domain/ports/token.port';
-import appConfiguration from '../config/app.configuration';
+} from '@auth/domain/ports/token.port';
+import appConfiguration from '@shared/config/app.configuration';
 
 @Injectable()
 export class JwtAccessTokenAdapter implements IAccessTokenPort {

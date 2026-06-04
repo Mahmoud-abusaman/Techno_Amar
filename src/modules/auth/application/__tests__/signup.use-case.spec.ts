@@ -1,12 +1,11 @@
 import { ConflictException } from '@nestjs/common';
-import { SignupUseCase } from '../signup.use-case';
-import { IUserRepository } from '@domain/repositories/user-repository.interface';
-import { IHashPort } from '@domain/ports/hash.port';
-import { ITokenPairFactory } from '@domain/ports/token.port';
-import { UserEntity } from '@domain/entities/user.entity';
-import { TokenPair } from '@domain/ports/token.port';
+import { SignupUseCase, SignupInput } from '../signup.use-case';
+import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
+import { IHashPort } from '@auth/domain/ports/hash.port';
+import { ITokenPairFactory } from '@auth/domain/ports/token.port';
+import { UserEntity } from '@users/domain/entities/user.entity';
+import { TokenPair } from '@auth/domain/ports/token.port';
 import { UserRole, GazaCities } from '@/generated/prisma/enums';
-import { SignupDto } from '@infrastructure/http/auth/dto/signup.dto';
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
   ({
@@ -25,7 +24,7 @@ const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
-  } as UserEntity);
+  }) as UserEntity;
 
 const makeTokenPair = (): TokenPair => ({
   accessToken: 'access.token.jwt',
@@ -33,17 +32,18 @@ const makeTokenPair = (): TokenPair => ({
   expiresAt: new Date(Date.now() + 900_000),
 });
 
-const makeSignupDto = (overrides: Partial<SignupDto> = {}): SignupDto =>
-  ({
-    full_name: 'Ahmed Al-Masri',
-    email: 'ahmed@example.com',
-    password: 'SecurePass@2024',
-    national_id: '123456789',
-    phone: '+970591234567',
-    address: 'Gaza City',
-    city: GazaCities.GAZA,
-    ...overrides,
-  } as SignupDto);
+const makeSignupInput = (
+  overrides: Partial<SignupInput> = {},
+): SignupInput => ({
+  full_name: 'Ahmed Al-Masri',
+  email: 'ahmed@example.com',
+  password: 'SecurePass@2024',
+  national_id: '123456789',
+  phone: '+970591234567',
+  address: 'Gaza City',
+  city: GazaCities.GAZA,
+  ...overrides,
+});
 
 describe('SignupUseCase', () => {
   let useCase: SignupUseCase;
@@ -78,7 +78,7 @@ describe('SignupUseCase', () => {
 
   describe('execute', () => {
     it('creates a user and returns tokens on valid input', async () => {
-      const dto = makeSignupDto();
+      const dto = makeSignupInput();
       const user = makeUser();
       const tokens = makeTokenPair();
 
@@ -98,7 +98,7 @@ describe('SignupUseCase', () => {
     });
 
     it('always creates the user with CITIZEN role regardless of input', async () => {
-      const dto = makeSignupDto();
+      const dto = makeSignupInput();
       const user = makeUser();
       const tokens = makeTokenPair();
 
@@ -114,7 +114,7 @@ describe('SignupUseCase', () => {
     });
 
     it('does not pass the plain-text password to the repository', async () => {
-      const dto = makeSignupDto();
+      const dto = makeSignupInput();
       hashPort.hash.mockResolvedValue('hashed_password');
       userRepo.create.mockResolvedValue(makeUser());
       tokenPairFactory.createPair.mockResolvedValue(makeTokenPair());
@@ -127,7 +127,7 @@ describe('SignupUseCase', () => {
     });
 
     it('hashes the password before creating the user', async () => {
-      const dto = makeSignupDto({ password: 'SecurePass@2024' });
+      const dto = makeSignupInput({ password: 'SecurePass@2024' });
       hashPort.hash.mockResolvedValue('hashed_password');
       userRepo.create.mockResolvedValue(makeUser());
       tokenPairFactory.createPair.mockResolvedValue(makeTokenPair());
@@ -138,7 +138,7 @@ describe('SignupUseCase', () => {
     });
 
     it('throws ConflictException on Prisma P2002 (duplicate national_id)', async () => {
-      const dto = makeSignupDto();
+      const dto = makeSignupInput();
       hashPort.hash.mockResolvedValue('hashed_password');
       const prismaError = Object.assign(new Error('Unique constraint'), {
         code: 'P2002',
@@ -152,7 +152,7 @@ describe('SignupUseCase', () => {
     });
 
     it('throws ConflictException on Prisma P2002 (duplicate email)', async () => {
-      const dto = makeSignupDto();
+      const dto = makeSignupInput();
       hashPort.hash.mockResolvedValue('hashed_password');
       const prismaError = Object.assign(new Error('Unique constraint'), {
         code: 'P2002',
@@ -164,16 +164,18 @@ describe('SignupUseCase', () => {
     });
 
     it('re-throws unknown errors from the repository', async () => {
-      const dto = makeSignupDto();
+      const dto = makeSignupInput();
       hashPort.hash.mockResolvedValue('hashed_password');
       const dbError = new Error('Database connection lost');
       userRepo.create.mockRejectedValue(dbError);
 
-      await expect(useCase.execute(dto)).rejects.toThrow('Database connection lost');
+      await expect(useCase.execute(dto)).rejects.toThrow(
+        'Database connection lost',
+      );
     });
 
     it('calls tokenPairFactory with the created user', async () => {
-      const dto = makeSignupDto();
+      const dto = makeSignupInput();
       const user = makeUser();
       hashPort.hash.mockResolvedValue('hashed_password');
       userRepo.create.mockResolvedValue(user);

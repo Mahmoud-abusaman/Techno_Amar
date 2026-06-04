@@ -12,17 +12,22 @@ import {
   HttpStatus,
   Query,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from '@auth/presentation/guards/jwt-auth.guard';
+import { RolesGuard } from '@auth/presentation/guards/roles.guard';
+import { Roles } from '@auth/presentation/decorators/roles.decorator';
 import { UserRole } from '@/generated/prisma/enums';
 import { CreateDepartmentDto, UpdateDepartmentDto } from './dto/department.dto';
-import { CreateDepartmentUseCase } from '@usecases/org/department/create-department.use-case';
-import { GetDepartmentsUseCase } from '@usecases/org/department/get-departments.use-case';
-import { GetDepartmentUseCase } from '@usecases/org/department/get-department.use-case';
-import { UpdateDepartmentUseCase } from '@usecases/org/department/update-department.use-case';
-import { DeleteDepartmentUseCase } from '@usecases/org/department/delete-department.use-case';
+import { CreateDepartmentUseCase } from '@org/application/department/create-department.use-case';
+import { GetDepartmentsUseCase } from '@org/application/department/get-departments.use-case';
+import { GetDepartmentUseCase } from '@org/application/department/get-department.use-case';
+import { UpdateDepartmentUseCase } from '@org/application/department/update-department.use-case';
+import { DeleteDepartmentUseCase } from '@org/application/department/delete-department.use-case';
 
 @ApiTags('departments')
 @ApiBearerAuth()
@@ -62,14 +67,19 @@ export class DepartmentsController {
   @Patch(':id')
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Update a department (Admin only)' })
-  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateDepartmentDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateDepartmentDto,
+  ) {
     return this.updateDepartment.execute(BigInt(id), dto);
   }
 
   @Delete(':id')
   @Roles(UserRole.ADMIN)
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Delete a department (Admin only, no active dependents)' })
+  @ApiOperation({
+    summary: 'Delete a department (Admin only, no active dependents)',
+  })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.deleteDepartment.execute(BigInt(id));
   }

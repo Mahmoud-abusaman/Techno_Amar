@@ -6,14 +6,18 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { IAccessTokenPort, AccessTokenPayload } from '@domain/ports/token.port';
+import {
+  IAccessTokenPort,
+  AccessTokenPayload,
+} from '@auth/domain/ports/token.port';
 
 export const REQUEST_USER_KEY = 'user';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor(
-    @Inject(IAccessTokenPort) private readonly accessTokenPort: IAccessTokenPort,
+    @Inject(IAccessTokenPort)
+    private readonly accessTokenPort: IAccessTokenPort,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

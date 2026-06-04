@@ -111,7 +111,6 @@ export const UserScalarFieldEnum = {
   city: 'city',
   is_verified: 'is_verified',
   role: 'role',
-  department_id: 'department_id',
   section_id: 'section_id',
   account_status: 'account_status',
   is_active: 'is_active',

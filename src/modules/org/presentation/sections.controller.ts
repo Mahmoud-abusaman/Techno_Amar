@@ -12,19 +12,24 @@ import {
   HttpStatus,
   Query,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../auth/guards/roles.guard';
-import { Roles } from '../auth/decorators/roles.decorator';
-import { ActiveUser } from '../auth/decorators/active-user.decorator';
-import { AccessTokenPayload } from '@domain/ports/token.port';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from '@auth/presentation/guards/jwt-auth.guard';
+import { RolesGuard } from '@auth/presentation/guards/roles.guard';
+import { Roles } from '@auth/presentation/decorators/roles.decorator';
+import { ActiveUser } from '@auth/presentation/decorators/active-user.decorator';
+import { AccessTokenPayload } from '@auth/domain/ports/token.port';
 import { UserRole } from '@/generated/prisma/enums';
 import { CreateSectionDto, UpdateSectionDto } from './dto/section.dto';
-import { CreateSectionUseCase } from '@usecases/org/section/create-section.use-case';
-import { GetSectionsUseCase } from '@usecases/org/section/get-sections.use-case';
-import { GetSectionUseCase } from '@usecases/org/section/get-section.use-case';
-import { UpdateSectionUseCase } from '@usecases/org/section/update-section.use-case';
-import { DeleteSectionUseCase } from '@usecases/org/section/delete-section.use-case';
+import { CreateSectionUseCase } from '@org/application/section/create-section.use-case';
+import { GetSectionsUseCase } from '@org/application/section/get-sections.use-case';
+import { GetSectionUseCase } from '@org/application/section/get-section.use-case';
+import { UpdateSectionUseCase } from '@org/application/section/update-section.use-case';
+import { DeleteSectionUseCase } from '@org/application/section/delete-section.use-case';
 
 @ApiTags('sections')
 @ApiBearerAuth()
@@ -41,13 +46,17 @@ export class SectionsController {
 
   @Post('departments/:departmentId')
   @Roles(UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER)
-  @ApiOperation({ summary: 'Create a section in a department (Admin or Manager of that dept)' })
+  @ApiOperation({
+    summary: 'Create a section in a department (Admin or Manager of that dept)',
+  })
   create(
     @Param('departmentId', ParseIntPipe) departmentId: number,
     @Body() dto: CreateSectionDto,
     @ActiveUser() actor: AccessTokenPayload,
   ) {
-    const actorDeptId = actor.department_id ? BigInt(actor.department_id) : null;
+    const actorDeptId = actor.department_id
+      ? BigInt(actor.department_id)
+      : null;
     return this.createSection.execute(
       { ...dto, department_id: BigInt(departmentId) },
       { actorRole: actor.role as UserRole, actorDepartmentId: actorDeptId },
@@ -84,7 +93,9 @@ export class SectionsController {
     @Body() dto: UpdateSectionDto,
     @ActiveUser() actor: AccessTokenPayload,
   ) {
-    const actorDeptId = actor.department_id ? BigInt(actor.department_id) : null;
+    const actorDeptId = actor.department_id
+      ? BigInt(actor.department_id)
+      : null;
     return this.updateSection.execute(BigInt(id), dto, {
       actorRole: actor.role as UserRole,
       actorDepartmentId: actorDeptId,
@@ -94,9 +105,17 @@ export class SectionsController {
   @Delete(':id')
   @Roles(UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER)
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Delete a section (Admin or Manager of that dept, no employees assigned)' })
-  remove(@Param('id', ParseIntPipe) id: number, @ActiveUser() actor: AccessTokenPayload) {
-    const actorDeptId = actor.department_id ? BigInt(actor.department_id) : null;
+  @ApiOperation({
+    summary:
+      'Delete a section (Admin or Manager of that dept, no employees assigned)',
+  })
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @ActiveUser() actor: AccessTokenPayload,
+  ) {
+    const actorDeptId = actor.department_id
+      ? BigInt(actor.department_id)
+      : null;
     return this.deleteSection.execute(BigInt(id), {
       actorRole: actor.role as UserRole,
       actorDepartmentId: actorDeptId,

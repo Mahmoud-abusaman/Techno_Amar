@@ -1,8 +1,17 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, MaxLength, IsBoolean } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  MaxLength,
+  IsBoolean,
+} from 'class-validator';
 
 export class CreateDepartmentDto {
-  @ApiProperty({ example: 'Civil Engineering', description: 'Unique department name' })
+  @ApiProperty({
+    example: 'Civil Engineering',
+    description: 'Unique department name',
+  })
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
@@ -25,7 +34,8 @@ export class UpdateDepartmentDto extends PartialType(CreateDepartmentDto) {
 export class DepartmentResponseDto {
   @ApiProperty({ example: '1' }) id: string;
   @ApiProperty({ example: 'Civil Engineering' }) name: string;
-  @ApiPropertyOptional({ example: 'Handles infrastructure and civil projects' }) description: string | null;
+  @ApiPropertyOptional({ example: 'Handles infrastructure and civil projects' })
+  description: string | null;
   @ApiProperty({ example: true }) is_active: boolean;
   @ApiProperty() created_at: Date;
   @ApiProperty() updated_at: Date;

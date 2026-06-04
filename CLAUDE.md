@@ -13,39 +13,43 @@ NestJS + Prisma + PostgreSQL backend for a smart municipality platform serving c
 - **Validation**: class-validator + class-transformer
 - **Docs**: Swagger (@nestjs/swagger)
 
-## Architecture: Clean / Hexagonal
+## Architecture: Modular Clean / Hexagonal
 
 ```
 src/
-├── domain/              # Pure business logic — no framework deps
-│   ├── entities/        # Plain TypeScript classes (UserEntity, etc.)
-│   ├── ports/           # Interfaces for external capabilities (IHashPort, ITokenPairFactory...)
-│   └── repositories/    # Repository interfaces (IUserRepository, IOtpRepository)
-├── usecases/            # One file per use case, each a @Injectable() class with execute()
-│   ├── auth/
-│   └── users/
-└── infrastructure/      # All framework & external concerns
-    ├── config/          # App configuration
-    ├── database/
-    │   ├── prisma.module.ts / prisma.service.ts
-    │   └── repositories/  # Prisma implementations of domain repository interfaces
-    ├── http/
-    │   ├── auth/          # Controller, DTOs, Guards, Decorators
-    │   ├── users/         # Controller, DTOs
-    │   └── common/        # Response interceptor, exception filter, shared DTOs
-    ├── modules/           # NestJS module wiring (app.module, auth.module, users.module)
-    └── security/          # Adapters: bcrypt, JWT variants, OTP, token-pair factory
+├── main.ts
+├── app.module.ts
+├── shared/
+│   ├── common/          # Interceptors, filters, shared utils/DTOs
+│   ├── database/        # PrismaModule, PrismaService
+│   └── config/          # App configuration
+└── modules/
+    ├── auth/
+    │   ├── domain/      # OTP entity, token/hash/otp ports, otp repo interface
+    │   ├── application/ # Login, signup, refresh, password reset use cases
+    │   ├── infrastructure/ # JWT/bcrypt/OTP adapters, Prisma OTP repo
+    │   ├── presentation/   # Controller, DTOs, guards, decorators
+    │   └── auth.module.ts
+    ├── users/
+    ├── org/
+    ├── citizens/
+    └── employees/
 ```
 
-**Key rule**: Domain layer has zero NestJS/Prisma imports. Use cases inject ports/repos by interface token.
+Each feature module owns its domain layer. Cross-module access goes through exported repository interfaces and NestJS module imports.
+
+**Key rule**: Domain layer has zero NestJS/Prisma imports. Application use cases inject ports/repos by interface token.
 
 ## Path Aliases (tsconfig.json)
 
 ```
 @/          → src/
-@domain/    → src/domain/
-@usecases/  → src/usecases/
-@infrastructure/ → src/infrastructure/
+@shared/    → src/shared/
+@auth/      → src/modules/auth/
+@users/     → src/modules/users/
+@org/       → src/modules/org/
+@citizens/  → src/modules/citizens/
+@employees/ → src/modules/employees/
 @/generated/ → generated/   (Prisma client)
 ```
 
@@ -81,8 +85,8 @@ Work module by module in this sequence:
 | Priority | Module | Status |
 |----------|--------|--------|
 | 1 | Auth & User Management | **Done (base)** — login, signup, JWT, OTP, RBAC guards |
-| 2 | Organizational Structure | Not started — departments, sections, employee assignment |
-| 3 | Citizen Profile | Not started |
+| 2 | Organizational Structure | **Done** — departments, sections |
+| 3 | Citizen Profile | **Done** — profile, verification, admin review |
 | 4 | Services Catalog | Not started — service_flow, flow_step, service |
 | 5 | Service Requests & Tasks | Not started — core workflow engine |
 | 6 | Notifications | Not started |
@@ -110,9 +114,9 @@ Work module by module in this sequence:
 
 ## Key Files
 
-- [src/infrastructure/modules/app.module.ts](src/infrastructure/modules/app.module.ts) — root module wiring
-- [src/infrastructure/http/common/interceptors/response.interceptor.ts](src/infrastructure/http/common/interceptors/response.interceptor.ts) — standard API response wrapper
-- [src/infrastructure/http/common/filters/exception.filter.ts](src/infrastructure/http/common/filters/exception.filter.ts) — global error handler
+- [src/app.module.ts](src/app.module.ts) — root module wiring
+- [src/shared/common/interceptors/response.interceptor.ts](src/shared/common/interceptors/response.interceptor.ts) — standard API response wrapper
+- [src/shared/common/filters/exception.filter.ts](src/shared/common/filters/exception.filter.ts) — global error handler
 - [prisma/schema.prisma](prisma/schema.prisma) — database schema source of truth
 
 ## Environment

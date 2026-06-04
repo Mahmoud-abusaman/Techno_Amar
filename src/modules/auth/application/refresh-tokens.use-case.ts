@@ -1,8 +1,11 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
-import { IUserRepository } from '@domain/repositories/user-repository.interface';
-import { IRefreshTokenPort, ITokenPairFactory } from '@domain/ports/token.port';
-import { TokenPair } from '@domain/ports/token.port';
-import { UserEntity } from '@domain/entities/user.entity';
+import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
+import {
+  IRefreshTokenPort,
+  ITokenPairFactory,
+} from '@auth/domain/ports/token.port';
+import { TokenPair } from '@auth/domain/ports/token.port';
+import { UserEntity } from '@users/domain/entities/user.entity';
 
 export interface RefreshTokensResult {
   tokens: TokenPair;
@@ -13,8 +16,10 @@ export interface RefreshTokensResult {
 export class RefreshTokensUseCase {
   constructor(
     @Inject(IUserRepository) private readonly userRepo: IUserRepository,
-    @Inject(IRefreshTokenPort) private readonly refreshTokenPort: IRefreshTokenPort,
-    @Inject(ITokenPairFactory) private readonly tokenPairFactory: ITokenPairFactory,
+    @Inject(IRefreshTokenPort)
+    private readonly refreshTokenPort: IRefreshTokenPort,
+    @Inject(ITokenPairFactory)
+    private readonly tokenPairFactory: ITokenPairFactory,
   ) {}
 
   async execute(refreshToken: string): Promise<RefreshTokensResult> {
@@ -36,7 +41,12 @@ export class RefreshTokensUseCase {
 
     return {
       tokens,
-      user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        full_name: user.full_name,
+        role: user.role,
+      },
     };
   }
 }

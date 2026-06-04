@@ -4,8 +4,8 @@ import { JwtService } from '@nestjs/jwt';
 import {
   IPasswordResetTokenPort,
   PasswordResetPayload,
-} from '@domain/ports/password-reset-token.port';
-import appConfiguration from '../config/app.configuration';
+} from '@auth/domain/ports/password-reset-token.port';
+import appConfiguration from '@shared/config/app.configuration';
 
 @Injectable()
 export class JwtPasswordResetTokenAdapter implements IPasswordResetTokenPort {
@@ -16,7 +16,10 @@ export class JwtPasswordResetTokenAdapter implements IPasswordResetTokenPort {
   ) {}
 
   generate(userId: string): Promise<string> {
-    const payload: PasswordResetPayload = { sub: userId, type: 'password_reset' };
+    const payload: PasswordResetPayload = {
+      sub: userId,
+      type: 'password_reset',
+    };
     return this.jwtService.signAsync(payload, {
       secret: this.config.jwt.passwordResetSecret,
       expiresIn: this.config.jwt.passwordResetTtl,
@@ -25,9 +28,12 @@ export class JwtPasswordResetTokenAdapter implements IPasswordResetTokenPort {
 
   async verify(token: string): Promise<PasswordResetPayload> {
     try {
-      const payload = await this.jwtService.verifyAsync<PasswordResetPayload>(token, {
-        secret: this.config.jwt.passwordResetSecret,
-      });
+      const payload = await this.jwtService.verifyAsync<PasswordResetPayload>(
+        token,
+        {
+          secret: this.config.jwt.passwordResetSecret,
+        },
+      );
 
       if (payload.type !== 'password_reset') {
         throw new UnauthorizedException('Invalid token type');

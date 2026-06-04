@@ -2,13 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AuthController } from '../auth.controller';
-import { LoginUseCase } from '@/usecases/auth/login.use-case';
-import { SignupUseCase } from '@/usecases/auth/signup.use-case';
-import { RefreshTokensUseCase } from '@/usecases/auth/refresh-tokens.use-case';
-import { ForgotPasswordUseCase } from '@/usecases/auth/forgot-password.use-case';
-import { VerifyOtpUseCase } from '@/usecases/auth/verify-otp.use-case';
-import { ResetPasswordUseCase } from '@/usecases/auth/reset-password.use-case';
-import { ResponseInterceptor } from '@infrastructure/http/common/interceptors/response.interceptor';
+import { LoginUseCase } from '@auth/application/login.use-case';
+import { SignupUseCase } from '@auth/application/signup.use-case';
+import { RefreshTokensUseCase } from '@auth/application/refresh-tokens.use-case';
+import { ForgotPasswordUseCase } from '@auth/application/forgot-password.use-case';
+import { VerifyOtpUseCase } from '@auth/application/verify-otp.use-case';
+import { ResetPasswordUseCase } from '@auth/application/reset-password.use-case';
+import { ResponseInterceptor } from '@shared/common/interceptors/response.interceptor';
 import {
   UnauthorizedException,
   ConflictException,
@@ -52,7 +52,9 @@ describe('AuthController (integration)', () => {
   let loginUseCase: jest.Mocked<Pick<LoginUseCase, 'execute'>>;
   let signupUseCase: jest.Mocked<Pick<SignupUseCase, 'execute'>>;
   let refreshTokensUseCase: jest.Mocked<Pick<RefreshTokensUseCase, 'execute'>>;
-  let forgotPasswordUseCase: jest.Mocked<Pick<ForgotPasswordUseCase, 'execute'>>;
+  let forgotPasswordUseCase: jest.Mocked<
+    Pick<ForgotPasswordUseCase, 'execute'>
+  >;
   let verifyOtpUseCase: jest.Mocked<Pick<VerifyOtpUseCase, 'execute'>>;
   let resetPasswordUseCase: jest.Mocked<Pick<ResetPasswordUseCase, 'execute'>>;
 
@@ -77,7 +79,9 @@ describe('AuthController (integration)', () => {
     }).compile();
 
     app = module.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+    app.useGlobalPipes(
+      new ValidationPipe({ whitelist: true, transform: true }),
+    );
     app.useGlobalInterceptors(new ResponseInterceptor());
     await app.init();
   });
@@ -91,7 +95,10 @@ describe('AuthController (integration)', () => {
   // -------------------------------------------------------------------------
 
   describe('POST /auth/login', () => {
-    const validBody = { identifier: 'ahmed@example.com', password: 'SecurePass@2024' };
+    const validBody = {
+      identifier: 'ahmed@example.com',
+      password: 'SecurePass@2024',
+    };
 
     it('200 — returns tokens and user on valid credentials', async () => {
       loginUseCase.execute.mockResolvedValue(authResultStub as any);
@@ -104,12 +111,18 @@ describe('AuthController (integration)', () => {
       expect(body.data).toMatchObject({
         access_token: ACCESS_TOKEN,
         refresh_token: REFRESH_TOKEN,
-        user: { email: userStub.email, full_name: userStub.full_name, role: userStub.role },
+        user: {
+          email: userStub.email,
+          full_name: userStub.full_name,
+          role: userStub.role,
+        },
       });
     });
 
     it('401 — propagates UnauthorizedException on invalid credentials', async () => {
-      loginUseCase.execute.mockRejectedValue(new UnauthorizedException('Invalid credentials'));
+      loginUseCase.execute.mockRejectedValue(
+        new UnauthorizedException('Invalid credentials'),
+      );
 
       await request(app.getHttpServer())
         .post('/auth/login')
@@ -118,7 +131,9 @@ describe('AuthController (integration)', () => {
     });
 
     it('401 — propagates UnauthorizedException when account is disabled', async () => {
-      loginUseCase.execute.mockRejectedValue(new UnauthorizedException('Account is disabled'));
+      loginUseCase.execute.mockRejectedValue(
+        new UnauthorizedException('Account is disabled'),
+      );
 
       await request(app.getHttpServer())
         .post('/auth/login')
@@ -298,7 +313,8 @@ describe('AuthController (integration)', () => {
   describe('POST /auth/forgot-password', () => {
     it('200 — returns the safe message', async () => {
       forgotPasswordUseCase.execute.mockResolvedValue({
-        message: 'If an account exists with this identifier, an OTP has been sent',
+        message:
+          'If an account exists with this identifier, an OTP has been sent',
       });
 
       const { body } = await request(app.getHttpServer())
@@ -313,7 +329,9 @@ describe('AuthController (integration)', () => {
 
     it('400 — propagates BadRequestException during cooldown', async () => {
       forgotPasswordUseCase.execute.mockRejectedValue(
-        new BadRequestException('Please wait 45 seconds before requesting a new code.'),
+        new BadRequestException(
+          'Please wait 45 seconds before requesting a new code.',
+        ),
       );
 
       await request(app.getHttpServer())
@@ -342,7 +360,8 @@ describe('AuthController (integration)', () => {
     it('200 — returns reset_token on valid OTP', async () => {
       verifyOtpUseCase.execute.mockResolvedValue({
         resetToken: RESET_TOKEN,
-        message: 'OTP verified successfully. Use the reset token to change your password.',
+        message:
+          'OTP verified successfully. Use the reset token to change your password.',
       });
 
       const { body } = await request(app.getHttpServer())
@@ -354,7 +373,9 @@ describe('AuthController (integration)', () => {
     });
 
     it('404 — propagates NotFoundException when user is not found', async () => {
-      verifyOtpUseCase.execute.mockRejectedValue(new NotFoundException('User not found'));
+      verifyOtpUseCase.execute.mockRejectedValue(
+        new NotFoundException('User not found'),
+      );
 
       await request(app.getHttpServer())
         .post('/auth/verify-otp')
@@ -363,7 +384,9 @@ describe('AuthController (integration)', () => {
     });
 
     it('400 — propagates BadRequestException on invalid or expired OTP', async () => {
-      verifyOtpUseCase.execute.mockRejectedValue(new BadRequestException('Invalid code'));
+      verifyOtpUseCase.execute.mockRejectedValue(
+        new BadRequestException('Invalid code'),
+      );
 
       await request(app.getHttpServer())
         .post('/auth/verify-otp')
@@ -393,7 +416,10 @@ describe('AuthController (integration)', () => {
   // -------------------------------------------------------------------------
 
   describe('POST /auth/reset-password', () => {
-    const validBody = { reset_token: RESET_TOKEN, new_password: 'NewPass@2024' };
+    const validBody = {
+      reset_token: RESET_TOKEN,
+      new_password: 'NewPass@2024',
+    };
 
     it('200 — returns success message on valid reset', async () => {
       resetPasswordUseCase.execute.mockResolvedValue({
@@ -420,7 +446,9 @@ describe('AuthController (integration)', () => {
     });
 
     it('404 — propagates NotFoundException when user does not exist', async () => {
-      resetPasswordUseCase.execute.mockRejectedValue(new NotFoundException('User not found'));
+      resetPasswordUseCase.execute.mockRejectedValue(
+        new NotFoundException('User not found'),
+      );
 
       await request(app.getHttpServer())
         .post('/auth/reset-password')

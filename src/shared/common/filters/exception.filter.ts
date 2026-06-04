@@ -60,7 +60,8 @@ export class PrismaExceptionFilter implements ExceptionFilter {
           break;
         case 'P2025':
           defaultError.statusCode = HttpStatus.NOT_FOUND;
-          defaultError.message = (exception.meta?.cause as string) || 'Record not found';
+          defaultError.message =
+            (exception.meta?.cause as string) || 'Record not found';
           break;
         case 'P2003':
           defaultError.statusCode = HttpStatus.CONFLICT;
@@ -84,7 +85,8 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       }
     } else if (exception instanceof Prisma.PrismaClientValidationError) {
       defaultError.message =
-        exception.message.split('\n').pop()?.trim() || 'Validation error in database operation';
+        exception.message.split('\n').pop()?.trim() ||
+        'Validation error in database operation';
     }
 
     return res.status(defaultError.statusCode).json(defaultError);
@@ -112,15 +114,19 @@ export class ValidationExceptionFilter implements ExceptionFilter {
         msg.toLowerCase().includes('please provide email or phone number') &&
         !msg.toLowerCase().includes('but not both'),
     );
-    const hasPasswordError = messages.some((msg) => msg.toLowerCase().includes('password'));
+    const hasPasswordError = messages.some((msg) =>
+      msg.toLowerCase().includes('password'),
+    );
     const isOnlyConflict =
-      conflictMessage && messages.every((msg) => msg.toLowerCase().includes('but not both'));
+      conflictMessage &&
+      messages.every((msg) => msg.toLowerCase().includes('but not both'));
 
     const isRegister = req.url.includes('/auth/register');
     const isLogin = req.url.includes('/auth/login');
     const isResetPassword = req.url.includes('/auth/reset-password');
     const isBodyReallyEmpty =
-      Object.keys(req.body || {}).length === 0 && (isLogin || isRegister || isResetPassword);
+      Object.keys(req.body || {}).length === 0 &&
+      (isLogin || isRegister || isResetPassword);
 
     const isBothMissing =
       isBodyReallyEmpty ||
@@ -182,7 +188,8 @@ export class UncaughtExceptionFilter implements ExceptionFilter {
     const req = ctx.getRequest<Request>();
 
     const status = HttpStatus.INTERNAL_SERVER_ERROR;
-    const message = exception instanceof Error ? exception.message : 'Internal server error';
+    const message =
+      exception instanceof Error ? exception.message : 'Internal server error';
 
     const errorResponse: ApiErrorResponse = {
       timestamp: new Date().toISOString(),

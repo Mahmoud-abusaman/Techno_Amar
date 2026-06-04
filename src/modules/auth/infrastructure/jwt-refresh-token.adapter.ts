@@ -1,7 +1,10 @@
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { IRefreshTokenPort, RefreshTokenPayload } from '@domain/ports/token.port';
+import {
+  IRefreshTokenPort,
+  RefreshTokenPayload,
+} from '@auth/domain/ports/token.port';
 
 @Injectable()
 export class JwtRefreshTokenAdapter implements IRefreshTokenPort {
@@ -10,11 +13,17 @@ export class JwtRefreshTokenAdapter implements IRefreshTokenPort {
     @Inject(ConfigService) private readonly config: ConfigService,
   ) {}
 
-  async generate(payload: RefreshTokenPayload): Promise<{ token: string; expiresAt: Date }> {
+  async generate(
+    payload: RefreshTokenPayload,
+  ): Promise<{ token: string; expiresAt: Date }> {
     const secret = this.config.get<string>('app.jwt.secret');
-    const expiresIn = this.config.get<number>('app.jwt.refreshTokenTtl') ?? 604800;
+    const expiresIn =
+      this.config.get<number>('app.jwt.refreshTokenTtl') ?? 604800;
 
-    const token = await this.jwtService.signAsync(payload, { secret, expiresIn });
+    const token = await this.jwtService.signAsync(payload, {
+      secret,
+      expiresIn,
+    });
 
     const expiresAt = new Date();
     expiresAt.setSeconds(expiresAt.getSeconds() + expiresIn);
@@ -25,7 +34,9 @@ export class JwtRefreshTokenAdapter implements IRefreshTokenPort {
   async verify(token: string): Promise<RefreshTokenPayload> {
     try {
       const secret = this.config.get<string>('app.jwt.secret');
-      return await this.jwtService.verifyAsync<RefreshTokenPayload>(token, { secret });
+      return await this.jwtService.verifyAsync<RefreshTokenPayload>(token, {
+        secret,
+      });
     } catch {
       throw new UnauthorizedException('Invalid refresh token');
     }

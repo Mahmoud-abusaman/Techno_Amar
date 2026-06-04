@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { ForgotPasswordUseCase } from '../forgot-password.use-case';
-import { IUserRepository } from '@domain/repositories/user-repository.interface';
-import { IOtpRepository } from '@domain/repositories/otp-repository.interface';
-import { IOtpService } from '@domain/ports/otp.port';
-import { UserEntity } from '@domain/entities/user.entity';
-import { OtpCodeEntity } from '@domain/entities/otp-code.entity';
+import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
+import { IOtpRepository } from '@auth/domain/repositories/otp-repository.interface';
+import { IOtpService } from '@auth/domain/ports/otp.port';
+import { UserEntity } from '@users/domain/entities/user.entity';
+import { OtpCodeEntity } from '@auth/domain/entities/otp-code.entity';
 import { UserRole, GazaCities, OtpType } from '@/generated/prisma/enums';
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
@@ -24,7 +24,7 @@ const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
-  } as UserEntity);
+  }) as UserEntity;
 
 const makeOtp = (overrides: Partial<OtpCodeEntity> = {}): OtpCodeEntity =>
   ({
@@ -37,9 +37,10 @@ const makeOtp = (overrides: Partial<OtpCodeEntity> = {}): OtpCodeEntity =>
     consumedAt: null,
     createdAt: new Date(),
     ...overrides,
-  } as OtpCodeEntity);
+  }) as OtpCodeEntity;
 
-const SAFE_MESSAGE = 'If an account exists with this identifier, an OTP has been sent';
+const SAFE_MESSAGE =
+  'If an account exists with this identifier, an OTP has been sent';
 const OTP_COOLDOWN_SECONDS = 60;
 
 const flushAsync = () => new Promise<void>((r) => setImmediate(r));
@@ -111,7 +112,9 @@ describe('ForgotPasswordUseCase', () => {
       otpRepo.findLatestByUser.mockResolvedValue(recentOtp);
 
       await expect(useCase.execute(dto)).rejects.toThrow(BadRequestException);
-      await expect(useCase.execute(dto)).rejects.toThrow(/Please wait \d+ seconds/);
+      await expect(useCase.execute(dto)).rejects.toThrow(
+        /Please wait \d+ seconds/,
+      );
     });
 
     it('allows a new OTP request after the cooldown period has elapsed', async () => {
@@ -159,13 +162,18 @@ describe('ForgotPasswordUseCase', () => {
       await useCase.execute(dto);
       await flushAsync();
 
-      expect(otpService.issue).toHaveBeenCalledWith(42n, OtpType.password_reset);
+      expect(otpService.issue).toHaveBeenCalledWith(
+        42n,
+        OtpType.password_reset,
+      );
     });
 
     it('includes the remaining cooldown seconds in the error message', async () => {
       userRepo.findByPhone.mockResolvedValue(makeUser());
       const secondsAgo = 30;
-      const recentOtp = makeOtp({ createdAt: new Date(Date.now() - secondsAgo * 1000) });
+      const recentOtp = makeOtp({
+        createdAt: new Date(Date.now() - secondsAgo * 1000),
+      });
       otpRepo.findLatestByUser.mockResolvedValue(recentOtp);
 
       const expectedRemaining = OTP_COOLDOWN_SECONDS - secondsAgo;
@@ -184,7 +192,13 @@ describe('ForgotPasswordUseCase', () => {
 
       let resolved = false;
       otpService.issue.mockImplementation(
-        () => new Promise((r) => setTimeout(() => { resolved = true; r('1234'); }, 500)),
+        () =>
+          new Promise((r) =>
+            setTimeout(() => {
+              resolved = true;
+              r('1234');
+            }, 500),
+          ),
       );
 
       const result = await useCase.execute(dto);

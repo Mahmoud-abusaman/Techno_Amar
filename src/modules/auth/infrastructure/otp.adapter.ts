@@ -2,10 +2,10 @@ import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { randomInt } from 'crypto';
 import { type ConfigType } from '@nestjs/config';
 import { OtpType } from '@/generated/prisma/enums';
-import { IOtpService } from '@domain/ports/otp.port';
-import { IHashPort } from '@domain/ports/hash.port';
-import { IOtpRepository } from '@domain/repositories/otp-repository.interface';
-import appConfiguration from '../config/app.configuration';
+import { IOtpService } from '@auth/domain/ports/otp.port';
+import { IHashPort } from '@auth/domain/ports/hash.port';
+import { IOtpRepository } from '@auth/domain/repositories/otp-repository.interface';
+import appConfiguration from '@shared/config/app.configuration';
 
 const OTP_MAX_ATTEMPTS = 5;
 

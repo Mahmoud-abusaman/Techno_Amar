@@ -7,7 +7,7 @@ import {
   AccessTokenPayload,
   RefreshTokenPayload,
   TokenPair,
-} from '@domain/ports/token.port';
+} from '@auth/domain/ports/token.port';
 
 @Injectable()
 export class TokenPairFactory implements ITokenPairFactory {
@@ -28,7 +28,8 @@ export class TokenPairFactory implements ITokenPairFactory {
       sub: user.id.toString(),
       email: user.email,
       role: user.role,
-      department_id: user.department_id != null ? user.department_id.toString() : null,
+      department_id:
+        user.department_id != null ? user.department_id.toString() : null,
     };
 
     const refreshPayload: RefreshTokenPayload = {
