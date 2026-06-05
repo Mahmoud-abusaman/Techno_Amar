@@ -3,7 +3,6 @@ import {
   Inject,
   NotFoundException,
   ConflictException,
-  ForbiddenException,
 } from '@nestjs/common';
 import {
   ISectionRepository,
@@ -11,12 +10,9 @@ import {
 } from '@org/domain/repositories/section-repository.interface';
 import { IDepartmentRepository } from '@org/domain/repositories/department-repository.interface';
 import { SectionEntity } from '@org/domain/entities/section.entity';
-import { UserRole } from '@/generated/prisma/enums';
+import { CreateSectionDto } from '../../presentation/dto/section.dto';
 
-export type CreateSectionContext = {
-  actorRole: UserRole;
-  actorDepartmentId: bigint | null;
-};
+
 
 @Injectable()
 export class CreateSectionUseCase {
@@ -28,20 +24,8 @@ export class CreateSectionUseCase {
   ) {}
 
   async execute(
-    data: CreateSectionData,
-    ctx: CreateSectionContext,
+    data: CreateSectionDto,
   ): Promise<SectionEntity> {
-    if (ctx.actorRole === UserRole.DEPARTMENT_MANAGER) {
-      if (
-        !ctx.actorDepartmentId ||
-        ctx.actorDepartmentId !== data.department_id
-      ) {
-        throw new ForbiddenException(
-          'Managers can only create sections in their own department',
-        );
-      }
-    }
-
     const dept = await this.deptRepo.findById(data.department_id);
     if (!dept)
       throw new NotFoundException(`Department ${data.department_id} not found`);

@@ -10,7 +10,6 @@ import { UserRole } from '@/generated/prisma/enums';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { REQUEST_USER_KEY } from './jwt-auth.guard';
 import { AccessTokenPayload } from '@auth/domain/ports/token.port';
-
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}

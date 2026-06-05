@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   Inject,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,11 +16,8 @@ import { GetUserUseCase } from '@users/application/get-user.use-case';
 import { UpdateUserUseCase } from '@users/application/update-user.use-case';
 import { DeleteUserUseCase } from '@users/application/delete-user.use-case';
 import { GetAllUsersUseCase } from '@users/application/get-all-users.use-case';
-import { JwtAuthGuard } from '@auth/presentation/guards/jwt-auth.guard';
-
 @ApiTags('users')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(

@@ -1,10 +1,12 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { ExecutionContext } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtAuthGuard, REQUEST_USER_KEY } from '../jwt-auth.guard';
 import {
   IAccessTokenPort,
   AccessTokenPayload,
 } from '@auth/domain/ports/token.port';
+import { IS_PUBLIC_KEY } from '../../decorators/public.decorator';
 
 const makePayload = (
   overrides: Partial<AccessTokenPayload> = {},
@@ -24,22 +26,40 @@ const makeContext = (
     switchToHttp: () => ({
       getRequest: () => request,
     }),
+    getHandler: () => ({}),
+    getClass: () => ({}),
   } as unknown as ExecutionContext;
 };
 
 describe('JwtAuthGuard', () => {
   let guard: JwtAuthGuard;
   let accessTokenPort: jest.Mocked<IAccessTokenPort>;
+  let reflector: jest.Mocked<Reflector>;
 
   beforeEach(() => {
     accessTokenPort = {
       generate: jest.fn(),
       verify: jest.fn(),
     };
-    guard = new JwtAuthGuard(accessTokenPort);
+    reflector = {
+      getAllAndOverride: jest.fn().mockReturnValue(false),
+    } as unknown as jest.Mocked<Reflector>;
+    guard = new JwtAuthGuard(accessTokenPort, reflector);
   });
 
   describe('canActivate', () => {
+    it('returns true without checking the token when the route is public', async () => {
+      reflector.getAllAndOverride.mockReturnValue(true);
+      const ctx = makeContext({});
+
+      await expect(guard.canActivate(ctx)).resolves.toBe(true);
+      expect(accessTokenPort.verify).not.toHaveBeenCalled();
+      expect(reflector.getAllAndOverride).toHaveBeenCalledWith(IS_PUBLIC_KEY, [
+        expect.anything(),
+        expect.anything(),
+      ]);
+    });
+
     it('returns true and attaches the payload to the request on a valid Bearer token', async () => {
       const payload = makePayload();
       accessTokenPort.verify.mockResolvedValue(payload);

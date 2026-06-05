@@ -1,12 +1,10 @@
 import {
   NotFoundException,
   ConflictException,
-  ForbiddenException,
 } from '@nestjs/common';
 import { UpdateSectionUseCase } from '../update-section.use-case';
 import { ISectionRepository } from '@org/domain/repositories/section-repository.interface';
 import { SectionEntity } from '@org/domain/entities/section.entity';
-import { UserRole } from '@/generated/prisma/enums';
 
 const makeSection = (
   overrides: Partial<SectionEntity> = {},
@@ -30,12 +28,6 @@ const makeRepo = (): jest.Mocked<ISectionRepository> => ({
   delete: jest.fn(),
 });
 
-const adminCtx = { actorRole: UserRole.ADMIN, actorDepartmentId: null };
-const managerCtx = {
-  actorRole: UserRole.DEPARTMENT_MANAGER,
-  actorDepartmentId: 10n,
-};
-
 describe('UpdateSectionUseCase', () => {
   let useCase: UpdateSectionUseCase;
   let repo: jest.Mocked<ISectionRepository>;
@@ -45,47 +37,24 @@ describe('UpdateSectionUseCase', () => {
     useCase = new UpdateSectionUseCase(repo);
   });
 
-  it('updates section when admin provides valid data', async () => {
+  it('updates section when valid data is provided', async () => {
     const existing = makeSection();
     const updated = makeSection({ name: 'Bridge Inspection' });
     repo.findById.mockResolvedValue(existing);
     repo.findByNameInDepartment.mockResolvedValue(null);
     repo.update.mockResolvedValue(updated);
 
-    const result = await useCase.execute(
-      1n,
-      { name: 'Bridge Inspection' },
-      adminCtx,
-    );
+    const result = await useCase.execute(1n, { name: 'Bridge Inspection' });
 
     expect(repo.update).toHaveBeenCalledWith(1n, { name: 'Bridge Inspection' });
     expect(result).toBe(updated);
-  });
-
-  it('allows manager to update section in their own department', async () => {
-    repo.findById.mockResolvedValue(makeSection());
-    repo.findByNameInDepartment.mockResolvedValue(null);
-    repo.update.mockResolvedValue(makeSection({ name: 'Updated' }));
-
-    await expect(
-      useCase.execute(1n, { name: 'Updated' }, managerCtx),
-    ).resolves.toBeDefined();
-  });
-
-  it('throws ForbiddenException when manager tries to update section in another department', async () => {
-    repo.findById.mockResolvedValue(makeSection({ department_id: 99n }));
-
-    await expect(
-      useCase.execute(1n, { name: 'Updated' }, managerCtx),
-    ).rejects.toThrow(ForbiddenException);
-    expect(repo.update).not.toHaveBeenCalled();
   });
 
   it('throws NotFoundException when section does not exist', async () => {
     repo.findById.mockResolvedValue(null);
 
     await expect(
-      useCase.execute(99n, { name: 'Updated' }, adminCtx),
+      useCase.execute(99n, { name: 'Updated' }),
     ).rejects.toThrow(NotFoundException);
   });
 
@@ -96,7 +65,7 @@ describe('UpdateSectionUseCase', () => {
     );
 
     await expect(
-      useCase.execute(1n, { name: 'Bridge Inspection' }, adminCtx),
+      useCase.execute(1n, { name: 'Bridge Inspection' }),
     ).rejects.toThrow(ConflictException);
     expect(repo.update).not.toHaveBeenCalled();
   });
@@ -106,7 +75,7 @@ describe('UpdateSectionUseCase', () => {
     repo.findById.mockResolvedValue(existing);
     repo.update.mockResolvedValue(existing);
 
-    await useCase.execute(1n, { name: 'Road Maintenance' }, adminCtx);
+    await useCase.execute(1n, { name: 'Road Maintenance' });
 
     expect(repo.findByNameInDepartment).not.toHaveBeenCalled();
   });

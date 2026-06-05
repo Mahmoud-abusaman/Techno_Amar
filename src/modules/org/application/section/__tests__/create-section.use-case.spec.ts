@@ -1,14 +1,13 @@
 import {
   NotFoundException,
   ConflictException,
-  ForbiddenException,
 } from '@nestjs/common';
 import { CreateSectionUseCase } from '../create-section.use-case';
 import { ISectionRepository } from '@org/domain/repositories/section-repository.interface';
 import { IDepartmentRepository } from '@org/domain/repositories/department-repository.interface';
 import { SectionEntity } from '@org/domain/entities/section.entity';
 import { DepartmentEntity } from '@org/domain/entities/department.entity';
-import { UserRole } from '@/generated/prisma/enums';
+import { CreateSectionDto } from '../../../presentation/dto/section.dto';
 
 const makeSection = (
   overrides: Partial<SectionEntity> = {},
@@ -53,10 +52,10 @@ const makeDeptRepo = (): jest.Mocked<IDepartmentRepository> => ({
   delete: jest.fn(),
 });
 
-const adminCtx = { actorRole: UserRole.ADMIN, actorDepartmentId: null };
-const managerCtx = {
-  actorRole: UserRole.DEPARTMENT_MANAGER,
-  actorDepartmentId: 10n,
+const dto: CreateSectionDto = {
+  department_id: 10n,
+  name: 'Road Maintenance',
+  description: 'Road maintenance section',
 };
 
 describe('CreateSectionUseCase', () => {
@@ -70,83 +69,29 @@ describe('CreateSectionUseCase', () => {
     useCase = new CreateSectionUseCase(sectionRepo, deptRepo);
   });
 
-  it('creates section when admin provides valid data', async () => {
+  it('creates section when valid data is provided', async () => {
     const section = makeSection();
     deptRepo.findById.mockResolvedValue(makeDept());
     sectionRepo.findByNameInDepartment.mockResolvedValue(null);
     sectionRepo.create.mockResolvedValue(section);
 
-    const result = await useCase.execute(
-      { department_id: 10n, name: 'Road Maintenance' },
-      adminCtx,
-    );
+    const result = await useCase.execute(dto);
 
     expect(result).toBe(section);
-  });
-
-  it('creates section when manager is in the same department', async () => {
-    deptRepo.findById.mockResolvedValue(makeDept());
-    sectionRepo.findByNameInDepartment.mockResolvedValue(null);
-    sectionRepo.create.mockResolvedValue(makeSection());
-
-    await expect(
-      useCase.execute(
-        { department_id: 10n, name: 'Road Maintenance' },
-        managerCtx,
-      ),
-    ).resolves.toBeDefined();
-  });
-
-  it('throws ForbiddenException when manager tries to create section in another department', async () => {
-    const otherDeptCtx = {
-      actorRole: UserRole.DEPARTMENT_MANAGER,
-      actorDepartmentId: 99n,
-    };
-
-    await expect(
-      useCase.execute(
-        { department_id: 10n, name: 'Road Maintenance' },
-        otherDeptCtx,
-      ),
-    ).rejects.toThrow(ForbiddenException);
-    expect(deptRepo.findById).not.toHaveBeenCalled();
-  });
-
-  it('throws ForbiddenException when manager has no department assigned', async () => {
-    const noDeptCtx = {
-      actorRole: UserRole.DEPARTMENT_MANAGER,
-      actorDepartmentId: null,
-    };
-
-    await expect(
-      useCase.execute(
-        { department_id: 10n, name: 'Road Maintenance' },
-        noDeptCtx,
-      ),
-    ).rejects.toThrow(ForbiddenException);
+    expect(sectionRepo.create).toHaveBeenCalledWith(dto);
   });
 
   it('throws NotFoundException when department does not exist', async () => {
     deptRepo.findById.mockResolvedValue(null);
 
-    await expect(
-      useCase.execute(
-        { department_id: 10n, name: 'Road Maintenance' },
-        adminCtx,
-      ),
-    ).rejects.toThrow(NotFoundException);
+    await expect(useCase.execute(dto)).rejects.toThrow(NotFoundException);
     expect(sectionRepo.create).not.toHaveBeenCalled();
   });
 
   it('throws ConflictException when department is inactive', async () => {
     deptRepo.findById.mockResolvedValue(makeDept({ is_active: false }));
 
-    await expect(
-      useCase.execute(
-        { department_id: 10n, name: 'Road Maintenance' },
-        adminCtx,
-      ),
-    ).rejects.toThrow(ConflictException);
+    await expect(useCase.execute(dto)).rejects.toThrow(ConflictException);
     expect(sectionRepo.create).not.toHaveBeenCalled();
   });
 
@@ -154,12 +99,7 @@ describe('CreateSectionUseCase', () => {
     deptRepo.findById.mockResolvedValue(makeDept());
     sectionRepo.findByNameInDepartment.mockResolvedValue(makeSection());
 
-    await expect(
-      useCase.execute(
-        { department_id: 10n, name: 'Road Maintenance' },
-        adminCtx,
-      ),
-    ).rejects.toThrow(ConflictException);
+    await expect(useCase.execute(dto)).rejects.toThrow(ConflictException);
     expect(sectionRepo.create).not.toHaveBeenCalled();
   });
 });

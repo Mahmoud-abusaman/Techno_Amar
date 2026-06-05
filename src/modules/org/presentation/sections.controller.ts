@@ -7,7 +7,6 @@ import {
   Body,
   Param,
   ParseIntPipe,
-  UseGuards,
   HttpCode,
   HttpStatus,
   Query,
@@ -18,11 +17,7 @@ import {
   ApiBearerAuth,
   ApiQuery,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@auth/presentation/guards/jwt-auth.guard';
-import { RolesGuard } from '@auth/presentation/guards/roles.guard';
 import { Roles } from '@auth/presentation/decorators/roles.decorator';
-import { ActiveUser } from '@auth/presentation/decorators/active-user.decorator';
-import { AccessTokenPayload } from '@auth/domain/ports/token.port';
 import { UserRole } from '@/generated/prisma/enums';
 import { CreateSectionDto, UpdateSectionDto } from './dto/section.dto';
 import { CreateSectionUseCase } from '@org/application/section/create-section.use-case';
@@ -33,7 +28,6 @@ import { DeleteSectionUseCase } from '@org/application/section/delete-section.us
 
 @ApiTags('sections')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('sections')
 export class SectionsController {
   constructor(
@@ -44,23 +38,13 @@ export class SectionsController {
     private readonly deleteSection: DeleteSectionUseCase,
   ) {}
 
-  @Post('departments/:departmentId')
-  @Roles(UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER)
-  @ApiOperation({
-    summary: 'Create a section in a department (Admin or Manager of that dept)',
-  })
+  @Post('')
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({ summary: 'Create a section in a department (Admin only)' })
   create(
-    @Param('departmentId', ParseIntPipe) departmentId: number,
     @Body() dto: CreateSectionDto,
-    @ActiveUser() actor: AccessTokenPayload,
   ) {
-    const actorDeptId = actor.department_id
-      ? BigInt(actor.department_id)
-      : null;
-    return this.createSection.execute(
-      { ...dto, department_id: BigInt(departmentId) },
-      { actorRole: actor.role as UserRole, actorDepartmentId: actorDeptId },
-    );
+    return this.createSection.execute(dto);
   }
 
   @Get()
@@ -86,39 +70,22 @@ export class SectionsController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER)
-  @ApiOperation({ summary: 'Update a section (Admin or Manager of that dept)' })
+  @Roles(UserRole.ADMIN)
+  @ApiOperation({ summary: 'Update a section (Admin only)' })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateSectionDto,
-    @ActiveUser() actor: AccessTokenPayload,
   ) {
-    const actorDeptId = actor.department_id
-      ? BigInt(actor.department_id)
-      : null;
-    return this.updateSection.execute(BigInt(id), dto, {
-      actorRole: actor.role as UserRole,
-      actorDepartmentId: actorDeptId,
-    });
+    return this.updateSection.execute(BigInt(id), dto);
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER)
+  @Roles(UserRole.ADMIN)
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
-    summary:
-      'Delete a section (Admin or Manager of that dept, no employees assigned)',
+    summary: 'Delete a section (Admin only, no employees assigned)',
   })
-  remove(
-    @Param('id', ParseIntPipe) id: number,
-    @ActiveUser() actor: AccessTokenPayload,
-  ) {
-    const actorDeptId = actor.department_id
-      ? BigInt(actor.department_id)
-      : null;
-    return this.deleteSection.execute(BigInt(id), {
-      actorRole: actor.role as UserRole,
-      actorDepartmentId: actorDeptId,
-    });
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.deleteSection.execute(BigInt(id));
   }
 }

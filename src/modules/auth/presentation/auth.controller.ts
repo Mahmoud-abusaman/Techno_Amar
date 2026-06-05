@@ -31,8 +31,10 @@ import {
   VerifyOtpDocs,
   ResetPasswordDocs,
 } from './auth.controller.doc';
+import { Public } from './decorators/public.decorator';
 
 @ApiTags('auth')
+@Public()
 @Controller('auth')
 export class AuthController {
   constructor(

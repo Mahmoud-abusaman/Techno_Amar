@@ -1,4 +1,5 @@
 import { Module, forwardRef } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
@@ -44,7 +45,7 @@ import { RolesGuard } from '@auth/presentation/guards/roles.guard';
       inject: [ConfigService],
     }),
     forwardRef(() => UsersModule),
-    forwardRef(() => OrgModule),
+     OrgModule,
   ],
   controllers: [AuthController],
   providers: [
@@ -69,6 +70,8 @@ import { RolesGuard } from '@auth/presentation/guards/roles.guard';
 
     JwtAuthGuard,
     RolesGuard,
+    { provide: APP_GUARD, useExisting: JwtAuthGuard },
+    { provide: APP_GUARD, useExisting: RolesGuard },
   ],
   exports: [
     IHashPort,
@@ -76,8 +79,6 @@ import { RolesGuard } from '@auth/presentation/guards/roles.guard';
     IRefreshTokenPort,
     IPasswordResetTokenPort,
     ITokenPairFactory,
-    JwtAuthGuard,
-    RolesGuard,
   ],
 })
 export class AuthModule {}

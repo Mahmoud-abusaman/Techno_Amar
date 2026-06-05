@@ -7,7 +7,6 @@ import {
   Body,
   Param,
   ParseIntPipe,
-  UseGuards,
   HttpCode,
   HttpStatus,
   Query,
@@ -18,8 +17,6 @@ import {
   ApiBearerAuth,
   ApiQuery,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@auth/presentation/guards/jwt-auth.guard';
-import { RolesGuard } from '@auth/presentation/guards/roles.guard';
 import { Roles } from '@auth/presentation/decorators/roles.decorator';
 import { UserRole } from '@/generated/prisma/enums';
 import { CreateDepartmentDto, UpdateDepartmentDto } from './dto/department.dto';
@@ -31,7 +28,6 @@ import { DeleteDepartmentUseCase } from '@org/application/department/delete-depa
 
 @ApiTags('departments')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('departments')
 export class DepartmentsController {
   constructor(
