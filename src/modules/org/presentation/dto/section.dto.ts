@@ -4,6 +4,7 @@ import {
   PartialType,
   OmitType,
 } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsString,
   IsNotEmpty,
@@ -13,6 +14,16 @@ import {
 } from 'class-validator';
 
 export class CreateSectionDto {
+  @ApiProperty({
+    example: '1',
+    description: 'Department ID',
+  })
+  @IsNotEmpty()
+  @IsString()
+  @Transform(({ value }) => BigInt(value))
+  department_id: bigint;
+
+
   @ApiProperty({
     example: 'Road Maintenance',
     description: 'Section name (unique within department)',

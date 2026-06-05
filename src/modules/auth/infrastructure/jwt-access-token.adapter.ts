@@ -1,4 +1,4 @@
-import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Inject, UnauthorizedException, Global } from '@nestjs/common';
 import { type ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import {
@@ -7,7 +7,7 @@ import {
   TokenOptions,
 } from '@auth/domain/ports/token.port';
 import appConfiguration from '@shared/config/app.configuration';
-
+@Global()
 @Injectable()
 export class JwtAccessTokenAdapter implements IAccessTokenPort {
   constructor(

@@ -25,7 +25,6 @@ import { DepartmentsController } from '@org/presentation/departments.controller'
 import { SectionsController } from '@org/presentation/sections.controller';
 
 @Module({
-  imports: [forwardRef(() => AuthModule)],
   controllers: [DepartmentsController, SectionsController],
   providers: [
     { provide: IDepartmentRepository, useClass: PrismaDepartmentRepository },
