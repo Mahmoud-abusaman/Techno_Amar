@@ -37,6 +37,46 @@ enum OtpType {
   phone_verification
 }
 
+enum AccountStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  INACTIVE
+  REJECTED
+}
+
+// ======================
+// ORGANIZATION
+// ======================
+
+model Department {
+  id          BigInt   @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  sections Section[]
+
+  @@map("departments")
+}
+
+model Section {
+  id            BigInt     @id @default(autoincrement())
+  department_id BigInt
+  department    Department @relation(fields: [department_id], references: [id])
+  name          String
+  description   String?
+  is_active     Boolean    @default(true)
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+
+  users User[]
+
+  @@unique([department_id, name])
+  @@map("sections")
+}
+
 // ======================
 // USER
 // ======================
@@ -59,13 +99,37 @@ model User {
   is_verified Boolean  @default(false)
   role        UserRole
 
-  is_active Boolean @default(true)
+  section_id BigInt?
+  section    Section? @relation(fields: [section_id], references: [id])
 
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  otpCodes   OtpCode[]
+  account_status AccountStatus @default(ACTIVE)
+  is_active      Boolean       @default(true)
+
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @updatedAt
+  otpCodes        OtpCode[]
+  citizen_profile CitizenProfile?
 
   @@map("users")
+}
+
+// ======================
+// CITIZEN PROFILE
+// ======================
+
+model CitizenProfile {
+  id            BigInt    @id @default(autoincrement())
+  user_id       BigInt    @unique
+  user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  date_of_birth DateTime?
+  // path to the uploaded verification document on disk
+  verification_document String?
+  rejection_reason      String?
+  verified_at           DateTime?
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @updatedAt
+
+  @@map("citizen_profiles")
 }
 
 // ======================

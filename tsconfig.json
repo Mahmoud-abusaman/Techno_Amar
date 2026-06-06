@@ -11,9 +11,12 @@
     "outDir": "./dist",
     "paths": {
       "@/*": ["./*", "./src/*"],
-      "@domain/*": ["./src/domain/*"],
-      "@application/*": ["./src/application/*"],
-      "@infrastructure/*": ["./src/infrastructure/*"]
+      "@shared/*": ["./src/shared/*"],
+      "@auth/*": ["./src/modules/auth/*"],
+      "@users/*": ["./src/modules/users/*"],
+      "@org/*": ["./src/modules/org/*"],
+      "@citizens/*": ["./src/modules/citizens/*"],
+      "@employees/*": ["./src/modules/employees/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

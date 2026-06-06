@@ -19,9 +19,13 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:migrate:dev": "dotenv -e .env.dev -- prisma migrate dev",
-    "db:seed:dev": "dotenv -e .env.dev -- prisma db seed",
     "db:migrate:prod": "dotenv -e .env -- prisma migrate deploy",
-    "db:push:dev": "dotenv -e .env.dev -- prisma db push"
+    "db:reset:dev": "dotenv -e .env.dev -- prisma migrate reset",
+    "db:reset:prod": "dotenv -e .env -- prisma migrate reset",
+    "db:seed:dev": "dotenv -e .env.dev -- prisma db seed",
+    "db:push:dev": "dotenv -e .env.dev -- prisma db push",
+    "db:studio:dev": "dotenv -e .env.dev -- prisma studio",
+    "db:studio:prod": "dotenv -e .env -- prisma studio"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -53,10 +57,12 @@
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
+    "@types/multer": "^2.1.0",
     "@types/node": "^22.10.7",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",
     "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
@@ -95,9 +101,12 @@
       "^generated/(.*)$": "<rootDir>/generated/$1",
       "^@/generated/(.*)$": "<rootDir>/generated/$1",
       "^@/(.*)$": "<rootDir>/src/$1",
-      "^@domain/(.*)$": "<rootDir>/src/domain/$1",
-      "^@usecases/(.*)$": "<rootDir>/src/usecases/$1",
-      "^@infrastructure/(.*)$": "<rootDir>/src/infrastructure/$1"
+      "^@shared/(.*)$": "<rootDir>/src/shared/$1",
+      "^@auth/(.*)$": "<rootDir>/src/modules/auth/$1",
+      "^@users/(.*)$": "<rootDir>/src/modules/users/$1",
+      "^@org/(.*)$": "<rootDir>/src/modules/org/$1",
+      "^@citizens/(.*)$": "<rootDir>/src/modules/citizens/$1",
+      "^@employees/(.*)$": "<rootDir>/src/modules/employees/$1"
     },
     "collectCoverageFrom": [
       "src/**/*.(t|j)s"

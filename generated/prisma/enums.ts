@@ -36,3 +36,13 @@ export const OtpType = {
 } as const
 
 export type OtpType = (typeof OtpType)[keyof typeof OtpType]
+
+
+export const AccountStatus = {
+  PENDING_VERIFICATION: 'PENDING_VERIFICATION',
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  REJECTED: 'REJECTED'
+} as const
+
+export type AccountStatus = (typeof AccountStatus)[keyof typeof AccountStatus]

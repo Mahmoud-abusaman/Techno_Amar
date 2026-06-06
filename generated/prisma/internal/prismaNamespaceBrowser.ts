@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -51,7 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Department: 'Department',
+  Section: 'Section',
   User: 'User',
+  CitizenProfile: 'CitizenProfile',
   OtpCode: 'OtpCode'
 } as const
 
@@ -71,6 +74,31 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const SectionScalarFieldEnum = {
+  id: 'id',
+  department_id: 'department_id',
+  name: 'name',
+  description: 'description',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SectionScalarFieldEnum = (typeof SectionScalarFieldEnum)[keyof typeof SectionScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   full_name: 'full_name',
@@ -83,12 +111,28 @@ export const UserScalarFieldEnum = {
   city: 'city',
   is_verified: 'is_verified',
   role: 'role',
+  section_id: 'section_id',
+  account_status: 'account_status',
   is_active: 'is_active',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CitizenProfileScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  date_of_birth: 'date_of_birth',
+  verification_document: 'verification_document',
+  rejection_reason: 'rejection_reason',
+  verified_at: 'verified_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type CitizenProfileScalarFieldEnum = (typeof CitizenProfileScalarFieldEnum)[keyof typeof CitizenProfileScalarFieldEnum]
 
 
 export const OtpCodeScalarFieldEnum = {

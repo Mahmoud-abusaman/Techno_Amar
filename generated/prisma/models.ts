@@ -8,6 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.js'
-export type * from './models/OtpCode.js'
-export type * from './commonInputTypes.js'
+export type * from './models/Department'
+export type * from './models/Section'
+export type * from './models/User'
+export type * from './models/CitizenProfile'
+export type * from './models/OtpCode'
+export type * from './commonInputTypes'
