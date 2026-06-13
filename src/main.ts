@@ -1,14 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './infrastructure/modules/app.module';
+import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
-import { ResponseInterceptor } from './infrastructure/http/common/interceptors/response.interceptor';
+import { ResponseInterceptor } from '@shared/common/interceptors/response.interceptor';
 import {
   HttpExceptionFilter,
   PrismaExceptionFilter,
   ValidationExceptionFilter,
   UncaughtExceptionFilter,
-} from './infrastructure/http/common/filters/exception.filter';
+} from '@shared/common/filters/exception.filter';
 
 // @ts-expect-error BigInt serialization
 BigInt.prototype.toJSON = function () {
@@ -30,8 +30,8 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Techno Amar')
+    .setDescription("smart munacapility system")
     .setVersion('1.0')
-    .addTag('munacapility')
     .addBearerAuth()
     .build();
 
@@ -41,4 +41,4 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap();

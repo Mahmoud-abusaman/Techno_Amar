@@ -14,12 +14,12 @@ import * as process from 'node:process'
 import * as path from 'node:path'
 
 import * as runtime from "@prisma/client/runtime/client"
-import * as $Enums from "./enums.js"
-import * as $Class from "./internal/class.js"
-import * as Prisma from "./internal/prismaNamespace.js"
+import * as $Enums from "./enums"
+import * as $Class from "./internal/class"
+import * as Prisma from "./internal/prismaNamespace"
 
-export * as $Enums from './enums.js'
-export * from "./enums.js"
+export * as $Enums from './enums'
+export * from "./enums"
 /**
  * ## Prisma Client
  * 
@@ -29,8 +29,8 @@ export * from "./enums.js"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Departments
+ * const departments = await prisma.department.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -40,12 +40,42 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
+ * Model Department
+ * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
+ * Model Section
+ * 
+ */
+export type Section = Prisma.SectionModel
+/**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
 /**
+ * Model CitizenProfile
+ * 
+ */
+export type CitizenProfile = Prisma.CitizenProfileModel
+/**
  * Model OtpCode
  * 
  */
 export type OtpCode = Prisma.OtpCodeModel
+/**
+ * Model Service
+ * 
+ */
+export type Service = Prisma.ServiceModel
+/**
+ * Model ServiceTask
+ * 
+ */
+export type ServiceTask = Prisma.ServiceTaskModel
+/**
+ * Model DamageAssessment
+ * 
+ */
+export type DamageAssessment = Prisma.DamageAssessmentModel

@@ -1,0 +1,341 @@
+
+Enum "user_role" {
+  "ADMIN"
+  "CITIZEN"
+  "EMPLOYEE"
+  "DEPARTMENT_MANAGER"
+}
+
+Enum "request_status" {
+  "SUBMITTED"
+  "WAITING_FOR_DOCUMENTS"
+  "IN_PROGRESS"
+  "ON_HOLD"
+  "APPROVED"
+  "REJECTED"
+  "COMPLETED"
+}
+
+Enum "task_status" {
+  "PENDING"
+  "WAITING_FOR_CITIZEN"
+  "ASSIGNED"
+  "IN_PROGRESS"
+  "RETURNED"
+  "COMPLETED"
+  "REJECTED"
+}
+
+Enum "complaint_status" {
+  "SUBMITTED"
+  "IN_PROGRESS"
+  "RESOLVED"
+  "REJECTED"
+}
+
+Enum "asset_type" {
+  "INPUT_DOC"
+  "TASK_RESULT"
+  "COMPLAINT_ATTACHMENT"
+  "PAYMENT_RECEIPT"
+  "DAMAGE_EVIDENCE"
+  "SYSTEM_FILE"
+}
+
+Enum "payment_method" {
+  "CASH"
+  "CARD"
+  "BANK_TRANSFER"
+  "WALLET_TRANSFER"
+}
+
+Enum "payment_status" {
+  "PENDING_VERIFICATION"
+  "APPROVED"
+  "REJECTED"
+}
+
+Enum "utility_fee_status" {
+  "PENDING"
+  "PARTIALLY_PAID"
+  "PAID"
+}
+
+Table "department" {
+  "department_id" SERIAL [pk, increment]
+  "name" TEXT [unique, not null]
+  "is_active" BOOLEAN [not null, default: TRUE]
+}
+
+Table "section" {
+  "section_id" SERIAL [pk, increment]
+  "department_id" INT [not null]
+  "name" TEXT [not null]
+  "description" TEXT
+  "is_active" BOOLEAN [not null, default: TRUE]
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+  "updated_at" TIMESTAMP [not null, default: `NOW()`]
+
+  Indexes {
+    (department_id, name) [unique]
+  }
+}
+
+Table "user" {
+  "user_id" SERIAL [pk, increment]
+  "full_name" TEXT [not null]
+  "email" TEXT [unique, not null]
+  "password_hash" TEXT [not null]
+  "national_id" TEXT [unique]
+  "phone" TEXT
+  "address" TEXT
+  "is_verified" BOOLEAN [not null, default: FALSE]
+  "role" user_role [not null]
+  "department_id" INT
+  "section_id" INT
+  "is_active" BOOLEAN [not null, default: TRUE]
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+  "updated_at" TIMESTAMP [not null, default: `NOW()`]
+}
+
+Table "service_flow" {
+  "flow_id" SERIAL [pk, increment]
+  "name" TEXT [not null]
+  "version" INT [not null, default: 1]
+  "is_active" BOOLEAN [not null, default: TRUE]
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+
+  Indexes {
+    (name, version) [unique]
+  }
+}
+
+Table "service" {
+  "service_id" SERIAL [pk, increment]
+  "name" TEXT [unique, not null]
+  "description" TEXT
+  "department_id" INT [not null]
+  "flow_id" INT [not null]
+  "requires_payment" BOOLEAN [not null, default: FALSE]
+  "required_documents" JSONB [not null, default: '[]']
+  "is_active" BOOLEAN [not null, default: TRUE]
+}
+
+Table "flow_step" {
+  "step_id" SERIAL [pk, increment]
+  "flow_id" INT [not null]
+  "step_order" INT [not null]
+  "name" TEXT [not null]
+  "department_id" INT [not null]
+  "section_id" INT
+  "role_required" user_role [not null]
+  "is_mandatory" BOOLEAN [not null, default: TRUE]
+  "can_reject" BOOLEAN [not null, default: TRUE]
+
+  Indexes {
+    (flow_id, step_order) [unique]
+  }
+}
+
+Table "service_request" {
+  "request_id" SERIAL [pk, increment]
+  "service_id" INT [not null]
+  "citizen_id" INT [not null]
+  "status" request_status [not null, default: 'SUBMITTED']
+  "submitted_at" TIMESTAMP [not null, default: `NOW()`]
+  "completed_at" TIMESTAMP
+  "is_deleted" BOOLEAN [not null, default: FALSE]
+}
+
+Table "task_instance" {
+  "task_instance_id" SERIAL [pk, increment]
+  "request_id" INT [not null]
+  "step_id" INT [not null]
+  "section_id" INT [not null]
+  "status" task_status [not null, default: 'PENDING']
+  "is_rework" BOOLEAN [not null, default: FALSE]
+  "previous_task_instance_id" INT
+  "started_by_employee_id" INT
+  "completed_by_employee_id" INT
+  "rework_reason" TEXT
+  "started_at" TIMESTAMP
+  "completed_at" TIMESTAMP
+  "notes" TEXT
+  "is_deleted" BOOLEAN [not null, default: FALSE]
+
+  Indexes {
+    (request_id, step_id, previous_task_instance_id) [unique]
+  }
+}
+
+Table "complaint" {
+  "complaint_id" SERIAL [pk, increment]
+  "citizen_id" INT [not null]
+  "title" TEXT [not null]
+  "description" TEXT
+  "status" complaint_status [not null, default: 'SUBMITTED']
+  "resolution_text" TEXT
+  "submitted_at" TIMESTAMP [not null, default: `NOW()`]
+  "resolved_at" TIMESTAMP
+  "is_deleted" BOOLEAN [not null, default: FALSE]
+}
+
+Table "damage_assessment" {
+  "assessment_id" SERIAL [pk, increment]
+  "citizen_id" INT [not null]
+  "location" TEXT [not null]
+  "damage_type" TEXT [not null]
+  "damage_description" TEXT [not null]
+  "estimated_loss" DECIMAL(14,2)
+  "incident_date" DATE
+  "status" TEXT [not null, default: 'SUBMITTED']
+  "submitted_at" TIMESTAMP [not null, default: `NOW()`]
+  "reviewed_at" TIMESTAMP
+  "is_deleted" BOOLEAN [not null, default: FALSE]
+}
+
+Table "asset" {
+  "asset_id" BIGSERIAL [pk, increment]
+  "asset_type" asset_type [not null]
+  "file_name" TEXT [not null]
+  "url" TEXT [not null]
+  "description" TEXT
+  "owner_id" INT
+  "service_request_id" INT
+  "task_instance_id" INT
+  "complaint_id" INT
+  "damage_assessment_id" INT
+  "file_size" BIGINT [not null]
+  "mime_type" TEXT [not null]
+  "is_active" BOOLEAN [not null, default: TRUE]
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+
+  Checks {
+    `service_request_id IS NOT NULL
+    OR task_instance_id IS NOT NULL
+    OR complaint_id IS NOT NULL
+    OR damage_assessment_id IS NOT NULL`
+  }
+}
+
+Table "citizen_wallet" {
+  "wallet_id" SERIAL [pk, increment]
+  "citizen_id" INT [not null]
+  "balance" DECIMAL(14,2) [not null, default: 0]
+}
+
+Table "wallet_transaction" {
+  "transaction_id" SERIAL [pk, increment]
+  "wallet_id" INT [not null]
+  "amount" DECIMAL(14,2) [not null]
+  "transaction_type" TEXT [not null, check: `transaction_type IN ('CREDIT','DEBIT')`]
+  "reference" TEXT
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+}
+
+Table "payment" {
+  "payment_id" SERIAL [pk, increment]
+  "amount" DECIMAL(14,2) [not null]
+  "payment_method" payment_method [not null]
+  "payer_id" INT [not null]
+  "status" payment_status [not null, default: 'PENDING_VERIFICATION']
+  "reference" TEXT
+  "receipt_asset_id" BIGINT
+  "service_request_id" INT
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+}
+
+Table "utility_account" {
+  "account_id" SERIAL [pk, increment]
+  "citizen_id" INT [not null]
+  "account_number" TEXT [unique, not null]
+  "utility_type" TEXT [not null]
+  "is_active" BOOLEAN [not null, default: TRUE]
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+  "updated_at" TIMESTAMP [not null, default: `NOW()`]
+}
+
+Table "utility_fee" {
+  "fee_id" SERIAL [pk, increment]
+  "account_id" INT [not null]
+  "billing_period_start" DATE [not null]
+  "billing_period_end" DATE [not null]
+  "amount_due" DECIMAL(14,2) [not null]
+  "amount_paid" DECIMAL(14,2) [not null, default: 0]
+  "status" utility_fee_status [not null, default: 'PENDING']
+  "issued_at" TIMESTAMP [not null, default: `NOW()`]
+  "paid_at" TIMESTAMP
+}
+
+Table "notification" {
+  "notification_id" SERIAL [pk, increment]
+  "user_id" INT [not null]
+  "title" TEXT [not null]
+  "message" TEXT
+  "data" JSONB
+  "is_read" BOOLEAN [not null, default: FALSE]
+  "created_at" TIMESTAMP [not null, default: `NOW()`]
+  "read_at" TIMESTAMP
+}
+
+Ref:"department"."department_id" < "section"."department_id"
+
+Ref:"department"."department_id" < "user"."department_id"
+
+Ref:"section"."section_id" < "user"."section_id"
+
+Ref:"department"."department_id" < "service"."department_id"
+
+Ref:"service_flow"."flow_id" < "service"."flow_id"
+
+Ref:"service_flow"."flow_id" < "flow_step"."flow_id" [delete: cascade]
+
+Ref:"department"."department_id" < "flow_step"."department_id"
+
+Ref:"section"."section_id" < "flow_step"."section_id"
+
+Ref:"service"."service_id" < "service_request"."service_id"
+
+Ref:"user"."user_id" < "service_request"."citizen_id"
+
+Ref:"service_request"."request_id" < "task_instance"."request_id" [delete: cascade]
+
+Ref:"flow_step"."step_id" < "task_instance"."step_id"
+
+Ref:"section"."section_id" < "task_instance"."section_id"
+
+Ref:"task_instance"."task_instance_id" < "task_instance"."previous_task_instance_id"
+
+Ref:"user"."user_id" < "task_instance"."started_by_employee_id"
+
+Ref:"user"."user_id" < "task_instance"."completed_by_employee_id"
+
+Ref:"user"."user_id" < "complaint"."citizen_id"
+
+Ref:"user"."user_id" < "damage_assessment"."citizen_id"
+
+Ref:"user"."user_id" < "asset"."owner_id"
+
+Ref:"service_request"."request_id" < "asset"."service_request_id"
+
+Ref:"task_instance"."task_instance_id" < "asset"."task_instance_id"
+
+Ref:"complaint"."complaint_id" < "asset"."complaint_id"
+
+Ref:"damage_assessment"."assessment_id" < "asset"."damage_assessment_id"
+
+Ref:"user"."user_id" < "citizen_wallet"."citizen_id"
+
+Ref:"citizen_wallet"."wallet_id" < "wallet_transaction"."wallet_id"
+
+Ref:"user"."user_id" < "payment"."payer_id"
+
+Ref:"asset"."asset_id" < "payment"."receipt_asset_id"
+
+Ref:"service_request"."request_id" < "payment"."service_request_id"
+
+Ref:"user"."user_id" < "utility_account"."citizen_id"
+
+Ref:"utility_account"."account_id" < "utility_fee"."account_id"
+
+Ref:"user"."user_id" < "notification"."user_id"
