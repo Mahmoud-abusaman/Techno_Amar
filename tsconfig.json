@@ -15,8 +15,8 @@
       "@auth/*": ["./src/modules/auth/*"],
       "@users/*": ["./src/modules/users/*"],
       "@org/*": ["./src/modules/org/*"],
-      "@citizens/*": ["./src/modules/citizens/*"],
-      "@employees/*": ["./src/modules/employees/*"]
+      "@services/*": ["./src/modules/services/*"],
+      "@service-tasks/*": ["./src/modules/service-tasks/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

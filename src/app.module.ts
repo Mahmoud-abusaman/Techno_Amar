@@ -5,6 +5,8 @@ import { PrismaModule } from '@shared/database/prisma.module';
 import { AuthModule } from '@auth/auth.module';
 import { UsersModule } from '@users/users.module';
 import { OrgModule } from '@org/org.module';
+import { ServicesModule } from '@services/services.module';
+import { ServiceTasksModule } from '@service-tasks/service-tasks.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { OrgModule } from '@org/org.module';
     UsersModule,
     AuthModule,
     OrgModule,
+    ServicesModule,
+    ServiceTasksModule,
   ],
 })
 export class AppModule {}

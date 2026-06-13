@@ -311,6 +311,7 @@ export type UserWhereInput = {
   section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   otpCodes?: Prisma.OtpCodeListRelationFilter
   citizen_profile?: Prisma.XOR<Prisma.CitizenProfileNullableScalarRelationFilter, Prisma.CitizenProfileWhereInput> | null
+  created_services?: Prisma.ServiceListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -333,6 +334,7 @@ export type UserOrderByWithRelationInput = {
   section?: Prisma.SectionOrderByWithRelationInput
   otpCodes?: Prisma.OtpCodeOrderByRelationAggregateInput
   citizen_profile?: Prisma.CitizenProfileOrderByWithRelationInput
+  created_services?: Prisma.ServiceOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -358,6 +360,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   otpCodes?: Prisma.OtpCodeListRelationFilter
   citizen_profile?: Prisma.XOR<Prisma.CitizenProfileNullableScalarRelationFilter, Prisma.CitizenProfileWhereInput> | null
+  created_services?: Prisma.ServiceListRelationFilter
 }, "id" | "national_id" | "employee_id">
 
 export type UserOrderByWithAggregationInput = {
@@ -425,6 +428,7 @@ export type UserCreateInput = {
   section?: Prisma.SectionCreateNestedOneWithoutUsersInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -446,6 +450,7 @@ export type UserUncheckedCreateInput = {
   updated_at?: Date | string
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
 }
 
 export type UserUpdateInput = {
@@ -467,6 +472,7 @@ export type UserUpdateInput = {
   section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -488,6 +494,7 @@ export type UserUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -718,6 +725,20 @@ export type UserUpdateOneRequiredWithoutOtpCodesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOtpCodesInput, Prisma.UserUpdateWithoutOtpCodesInput>, Prisma.UserUncheckedUpdateWithoutOtpCodesInput>
 }
 
+export type UserCreateNestedOneWithoutCreated_servicesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreated_servicesInput, Prisma.UserUncheckedCreateWithoutCreated_servicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreated_servicesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCreated_servicesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreated_servicesInput, Prisma.UserUncheckedCreateWithoutCreated_servicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreated_servicesInput
+  upsert?: Prisma.UserUpsertWithoutCreated_servicesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreated_servicesInput, Prisma.UserUpdateWithoutCreated_servicesInput>, Prisma.UserUncheckedUpdateWithoutCreated_servicesInput>
+}
+
 export type UserCreateWithoutSectionInput = {
   id?: bigint | number
   full_name: string
@@ -736,6 +757,7 @@ export type UserCreateWithoutSectionInput = {
   updated_at?: Date | string
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
 }
 
 export type UserUncheckedCreateWithoutSectionInput = {
@@ -756,6 +778,7 @@ export type UserUncheckedCreateWithoutSectionInput = {
   updated_at?: Date | string
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
 }
 
 export type UserCreateOrConnectWithoutSectionInput = {
@@ -824,6 +847,7 @@ export type UserCreateWithoutCitizen_profileInput = {
   updated_at?: Date | string
   section?: Prisma.SectionCreateNestedOneWithoutUsersInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
+  created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
 }
 
 export type UserUncheckedCreateWithoutCitizen_profileInput = {
@@ -844,6 +868,7 @@ export type UserUncheckedCreateWithoutCitizen_profileInput = {
   created_at?: Date | string
   updated_at?: Date | string
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
+  created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
 }
 
 export type UserCreateOrConnectWithoutCitizen_profileInput = {
@@ -880,6 +905,7 @@ export type UserUpdateWithoutCitizen_profileInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
+  created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCitizen_profileInput = {
@@ -900,6 +926,7 @@ export type UserUncheckedUpdateWithoutCitizen_profileInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
+  created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserCreateWithoutOtpCodesInput = {
@@ -920,6 +947,7 @@ export type UserCreateWithoutOtpCodesInput = {
   updated_at?: Date | string
   section?: Prisma.SectionCreateNestedOneWithoutUsersInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
 }
 
 export type UserUncheckedCreateWithoutOtpCodesInput = {
@@ -940,6 +968,7 @@ export type UserUncheckedCreateWithoutOtpCodesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
 }
 
 export type UserCreateOrConnectWithoutOtpCodesInput = {
@@ -976,6 +1005,7 @@ export type UserUpdateWithoutOtpCodesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpCodesInput = {
@@ -995,6 +1025,107 @@ export type UserUncheckedUpdateWithoutOtpCodesInput = {
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+}
+
+export type UserCreateWithoutCreated_servicesInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  section?: Prisma.SectionCreateNestedOneWithoutUsersInput
+  otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCreated_servicesInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  section_id?: bigint | number | null
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCreated_servicesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreated_servicesInput, Prisma.UserUncheckedCreateWithoutCreated_servicesInput>
+}
+
+export type UserUpsertWithoutCreated_servicesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreated_servicesInput, Prisma.UserUncheckedUpdateWithoutCreated_servicesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreated_servicesInput, Prisma.UserUncheckedCreateWithoutCreated_servicesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreated_servicesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreated_servicesInput, Prisma.UserUncheckedUpdateWithoutCreated_servicesInput>
+}
+
+export type UserUpdateWithoutCreated_servicesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
+  otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
+  citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreated_servicesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  section_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1034,6 +1165,7 @@ export type UserUpdateWithoutSectionInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSectionInput = {
@@ -1054,6 +1186,7 @@ export type UserUncheckedUpdateWithoutSectionInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutSectionInput = {
@@ -1081,10 +1214,12 @@ export type UserUncheckedUpdateManyWithoutSectionInput = {
 
 export type UserCountOutputType = {
   otpCodes: number
+  created_services: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   otpCodes?: boolean | UserCountOutputTypeCountOtpCodesArgs
+  created_services?: boolean | UserCountOutputTypeCountCreated_servicesArgs
 }
 
 /**
@@ -1102,6 +1237,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountOtpCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OtpCodeWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreated_servicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceWhereInput
 }
 
 
@@ -1125,6 +1267,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   section?: boolean | Prisma.User$sectionArgs<ExtArgs>
   otpCodes?: boolean | Prisma.User$otpCodesArgs<ExtArgs>
   citizen_profile?: boolean | Prisma.User$citizen_profileArgs<ExtArgs>
+  created_services?: boolean | Prisma.User$created_servicesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1192,6 +1335,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   section?: boolean | Prisma.User$sectionArgs<ExtArgs>
   otpCodes?: boolean | Prisma.User$otpCodesArgs<ExtArgs>
   citizen_profile?: boolean | Prisma.User$citizen_profileArgs<ExtArgs>
+  created_services?: boolean | Prisma.User$created_servicesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1207,6 +1351,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     section: Prisma.$SectionPayload<ExtArgs> | null
     otpCodes: Prisma.$OtpCodePayload<ExtArgs>[]
     citizen_profile: Prisma.$CitizenProfilePayload<ExtArgs> | null
+    created_services: Prisma.$ServicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1622,6 +1767,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   section<T extends Prisma.User$sectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sectionArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   otpCodes<T extends Prisma.User$otpCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   citizen_profile<T extends Prisma.User$citizen_profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$citizen_profileArgs<ExtArgs>>): Prisma.Prisma__CitizenProfileClient<runtime.Types.Result.GetResult<Prisma.$CitizenProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  created_services<T extends Prisma.User$created_servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2127,6 +2273,30 @@ export type User$citizen_profileArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.CitizenProfileInclude<ExtArgs> | null
   where?: Prisma.CitizenProfileWhereInput
+}
+
+/**
+ * User.created_services
+ */
+export type User$created_servicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Service
+   */
+  select?: Prisma.ServiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Service
+   */
+  omit?: Prisma.ServiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceInclude<ExtArgs> | null
+  where?: Prisma.ServiceWhereInput
+  orderBy?: Prisma.ServiceOrderByWithRelationInput | Prisma.ServiceOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScalarFieldEnum | Prisma.ServiceScalarFieldEnum[]
 }
 
 /**

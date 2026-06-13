@@ -44,6 +44,12 @@ enum AccountStatus {
   REJECTED
 }
 
+enum ServiceStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 // ======================
 // ORGANIZATION
 // ======================
@@ -57,6 +63,7 @@ model Department {
   updated_at  DateTime @updatedAt
 
   sections Section[]
+  services Service[]
 
   @@map("departments")
 }
@@ -71,7 +78,8 @@ model Section {
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
 
-  users User[]
+  users         User[]
+  service_tasks ServiceTask[]
 
   @@unique([department_id, name])
   @@map("sections")
@@ -107,8 +115,9 @@ model User {
 
   created_at      DateTime        @default(now())
   updated_at      DateTime        @updatedAt
-  otpCodes        OtpCode[]
-  citizen_profile CitizenProfile?
+  otpCodes         OtpCode[]
+  citizen_profile  CitizenProfile?
+  created_services Service[]
 
   @@map("users")
 }
@@ -152,4 +161,47 @@ model OtpCode {
 
   @@index([userId])
   @@map("otp_codes")
+}
+
+// ======================
+// SERVICE CATALOG
+// ======================
+
+model Service {
+  id                        BigInt        @id @default(autoincrement())
+  name                      String        @unique
+  description               String?
+  department_id             BigInt
+  department                Department    @relation(fields: [department_id], references: [id])
+  fee                       Decimal       @db.Decimal(10, 2)
+  estimated_processing_days Int
+  status                    ServiceStatus @default(DRAFT)
+  created_by                BigInt
+  creator                   User          @relation(fields: [created_by], references: [id])
+  published_at              DateTime?
+  is_active                 Boolean       @default(true)
+  created_at                DateTime      @default(now())
+  updated_at                DateTime      @updatedAt
+
+  workflow_tasks ServiceTask[]
+
+  @@map("services")
+}
+
+model ServiceTask {
+  id                    BigInt   @id @default(autoincrement())
+  service_id            BigInt
+  service               Service  @relation(fields: [service_id], references: [id], onDelete: Restrict)
+  section_id            BigInt
+  section               Section  @relation(fields: [section_id], references: [id])
+  name                  String
+  description           String?
+  task_order            Int
+  estimated_time_hours  Int
+  is_active             Boolean  @default(true)
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+
+  @@unique([service_id, task_order])
+  @@map("service_tasks")
 }

@@ -42,3 +42,13 @@ export type CitizenProfile = Prisma.CitizenProfileModel
  * 
  */
 export type OtpCode = Prisma.OtpCodeModel
+/**
+ * Model Service
+ * 
+ */
+export type Service = Prisma.ServiceModel
+/**
+ * Model ServiceTask
+ * 
+ */
+export type ServiceTask = Prisma.ServiceTaskModel

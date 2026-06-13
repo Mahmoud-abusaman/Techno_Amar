@@ -55,7 +55,9 @@ export const ModelName = {
   Section: 'Section',
   User: 'User',
   CitizenProfile: 'CitizenProfile',
-  OtpCode: 'OtpCode'
+  OtpCode: 'OtpCode',
+  Service: 'Service',
+  ServiceTask: 'ServiceTask'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -147,6 +149,40 @@ export const OtpCodeScalarFieldEnum = {
 } as const
 
 export type OtpCodeScalarFieldEnum = (typeof OtpCodeScalarFieldEnum)[keyof typeof OtpCodeScalarFieldEnum]
+
+
+export const ServiceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  department_id: 'department_id',
+  fee: 'fee',
+  estimated_processing_days: 'estimated_processing_days',
+  status: 'status',
+  created_by: 'created_by',
+  published_at: 'published_at',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
+
+
+export const ServiceTaskScalarFieldEnum = {
+  id: 'id',
+  service_id: 'service_id',
+  section_id: 'section_id',
+  name: 'name',
+  description: 'description',
+  task_order: 'task_order',
+  estimated_time_hours: 'estimated_time_hours',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ServiceTaskScalarFieldEnum = (typeof ServiceTaskScalarFieldEnum)[keyof typeof ServiceTaskScalarFieldEnum]
 
 
 export const SortOrder = {

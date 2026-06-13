@@ -238,6 +238,7 @@ export type SectionWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"Section"> | Date | string
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
   users?: Prisma.UserListRelationFilter
+  service_tasks?: Prisma.ServiceTaskListRelationFilter
 }
 
 export type SectionOrderByWithRelationInput = {
@@ -250,6 +251,7 @@ export type SectionOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   department?: Prisma.DepartmentOrderByWithRelationInput
   users?: Prisma.UserOrderByRelationAggregateInput
+  service_tasks?: Prisma.ServiceTaskOrderByRelationAggregateInput
 }
 
 export type SectionWhereUniqueInput = Prisma.AtLeast<{
@@ -266,6 +268,7 @@ export type SectionWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"Section"> | Date | string
   department?: Prisma.XOR<Prisma.DepartmentScalarRelationFilter, Prisma.DepartmentWhereInput>
   users?: Prisma.UserListRelationFilter
+  service_tasks?: Prisma.ServiceTaskListRelationFilter
 }, "id" | "department_id_name">
 
 export type SectionOrderByWithAggregationInput = {
@@ -305,6 +308,7 @@ export type SectionCreateInput = {
   updated_at?: Date | string
   department: Prisma.DepartmentCreateNestedOneWithoutSectionsInput
   users?: Prisma.UserCreateNestedManyWithoutSectionInput
+  service_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutSectionInput
 }
 
 export type SectionUncheckedCreateInput = {
@@ -316,6 +320,7 @@ export type SectionUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSectionInput
+  service_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutSectionInput
 }
 
 export type SectionUpdateInput = {
@@ -327,6 +332,7 @@ export type SectionUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   department?: Prisma.DepartmentUpdateOneRequiredWithoutSectionsNestedInput
   users?: Prisma.UserUpdateManyWithoutSectionNestedInput
+  service_tasks?: Prisma.ServiceTaskUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionUncheckedUpdateInput = {
@@ -338,6 +344,7 @@ export type SectionUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSectionNestedInput
+  service_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionCreateManyInput = {
@@ -429,6 +436,11 @@ export type SectionNullableScalarRelationFilter = {
   isNot?: Prisma.SectionWhereInput | null
 }
 
+export type SectionScalarRelationFilter = {
+  is?: Prisma.SectionWhereInput
+  isNot?: Prisma.SectionWhereInput
+}
+
 export type SectionCreateNestedManyWithoutDepartmentInput = {
   create?: Prisma.XOR<Prisma.SectionCreateWithoutDepartmentInput, Prisma.SectionUncheckedCreateWithoutDepartmentInput> | Prisma.SectionCreateWithoutDepartmentInput[] | Prisma.SectionUncheckedCreateWithoutDepartmentInput[]
   connectOrCreate?: Prisma.SectionCreateOrConnectWithoutDepartmentInput | Prisma.SectionCreateOrConnectWithoutDepartmentInput[]
@@ -487,6 +499,20 @@ export type SectionUpdateOneWithoutUsersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SectionUpdateToOneWithWhereWithoutUsersInput, Prisma.SectionUpdateWithoutUsersInput>, Prisma.SectionUncheckedUpdateWithoutUsersInput>
 }
 
+export type SectionCreateNestedOneWithoutService_tasksInput = {
+  create?: Prisma.XOR<Prisma.SectionCreateWithoutService_tasksInput, Prisma.SectionUncheckedCreateWithoutService_tasksInput>
+  connectOrCreate?: Prisma.SectionCreateOrConnectWithoutService_tasksInput
+  connect?: Prisma.SectionWhereUniqueInput
+}
+
+export type SectionUpdateOneRequiredWithoutService_tasksNestedInput = {
+  create?: Prisma.XOR<Prisma.SectionCreateWithoutService_tasksInput, Prisma.SectionUncheckedCreateWithoutService_tasksInput>
+  connectOrCreate?: Prisma.SectionCreateOrConnectWithoutService_tasksInput
+  upsert?: Prisma.SectionUpsertWithoutService_tasksInput
+  connect?: Prisma.SectionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SectionUpdateToOneWithWhereWithoutService_tasksInput, Prisma.SectionUpdateWithoutService_tasksInput>, Prisma.SectionUncheckedUpdateWithoutService_tasksInput>
+}
+
 export type SectionCreateWithoutDepartmentInput = {
   id?: bigint | number
   name: string
@@ -495,6 +521,7 @@ export type SectionCreateWithoutDepartmentInput = {
   created_at?: Date | string
   updated_at?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutSectionInput
+  service_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutSectionInput
 }
 
 export type SectionUncheckedCreateWithoutDepartmentInput = {
@@ -505,6 +532,7 @@ export type SectionUncheckedCreateWithoutDepartmentInput = {
   created_at?: Date | string
   updated_at?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSectionInput
+  service_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutSectionInput
 }
 
 export type SectionCreateOrConnectWithoutDepartmentInput = {
@@ -554,6 +582,7 @@ export type SectionCreateWithoutUsersInput = {
   created_at?: Date | string
   updated_at?: Date | string
   department: Prisma.DepartmentCreateNestedOneWithoutSectionsInput
+  service_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutSectionInput
 }
 
 export type SectionUncheckedCreateWithoutUsersInput = {
@@ -564,6 +593,7 @@ export type SectionUncheckedCreateWithoutUsersInput = {
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  service_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutSectionInput
 }
 
 export type SectionCreateOrConnectWithoutUsersInput = {
@@ -590,6 +620,7 @@ export type SectionUpdateWithoutUsersInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   department?: Prisma.DepartmentUpdateOneRequiredWithoutSectionsNestedInput
+  service_tasks?: Prisma.ServiceTaskUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionUncheckedUpdateWithoutUsersInput = {
@@ -600,6 +631,67 @@ export type SectionUncheckedUpdateWithoutUsersInput = {
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  service_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutSectionNestedInput
+}
+
+export type SectionCreateWithoutService_tasksInput = {
+  id?: bigint | number
+  name: string
+  description?: string | null
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  department: Prisma.DepartmentCreateNestedOneWithoutSectionsInput
+  users?: Prisma.UserCreateNestedManyWithoutSectionInput
+}
+
+export type SectionUncheckedCreateWithoutService_tasksInput = {
+  id?: bigint | number
+  department_id: bigint | number
+  name: string
+  description?: string | null
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSectionInput
+}
+
+export type SectionCreateOrConnectWithoutService_tasksInput = {
+  where: Prisma.SectionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SectionCreateWithoutService_tasksInput, Prisma.SectionUncheckedCreateWithoutService_tasksInput>
+}
+
+export type SectionUpsertWithoutService_tasksInput = {
+  update: Prisma.XOR<Prisma.SectionUpdateWithoutService_tasksInput, Prisma.SectionUncheckedUpdateWithoutService_tasksInput>
+  create: Prisma.XOR<Prisma.SectionCreateWithoutService_tasksInput, Prisma.SectionUncheckedCreateWithoutService_tasksInput>
+  where?: Prisma.SectionWhereInput
+}
+
+export type SectionUpdateToOneWithWhereWithoutService_tasksInput = {
+  where?: Prisma.SectionWhereInput
+  data: Prisma.XOR<Prisma.SectionUpdateWithoutService_tasksInput, Prisma.SectionUncheckedUpdateWithoutService_tasksInput>
+}
+
+export type SectionUpdateWithoutService_tasksInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department?: Prisma.DepartmentUpdateOneRequiredWithoutSectionsNestedInput
+  users?: Prisma.UserUpdateManyWithoutSectionNestedInput
+}
+
+export type SectionUncheckedUpdateWithoutService_tasksInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  department_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionCreateManyDepartmentInput = {
@@ -619,6 +711,7 @@ export type SectionUpdateWithoutDepartmentInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutSectionNestedInput
+  service_tasks?: Prisma.ServiceTaskUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionUncheckedUpdateWithoutDepartmentInput = {
@@ -629,6 +722,7 @@ export type SectionUncheckedUpdateWithoutDepartmentInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutSectionNestedInput
+  service_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionUncheckedUpdateManyWithoutDepartmentInput = {
@@ -647,10 +741,12 @@ export type SectionUncheckedUpdateManyWithoutDepartmentInput = {
 
 export type SectionCountOutputType = {
   users: number
+  service_tasks: number
 }
 
 export type SectionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | SectionCountOutputTypeCountUsersArgs
+  service_tasks?: boolean | SectionCountOutputTypeCountService_tasksArgs
 }
 
 /**
@@ -670,6 +766,13 @@ export type SectionCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.UserWhereInput
 }
 
+/**
+ * SectionCountOutputType without action
+ */
+export type SectionCountOutputTypeCountService_tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceTaskWhereInput
+}
+
 
 export type SectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -681,6 +784,7 @@ export type SectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updated_at?: boolean
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Section$usersArgs<ExtArgs>
+  service_tasks?: boolean | Prisma.Section$service_tasksArgs<ExtArgs>
   _count?: boolean | Prisma.SectionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["section"]>
 
@@ -720,6 +824,7 @@ export type SectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type SectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   department?: boolean | Prisma.DepartmentDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Section$usersArgs<ExtArgs>
+  service_tasks?: boolean | Prisma.Section$service_tasksArgs<ExtArgs>
   _count?: boolean | Prisma.SectionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -734,6 +839,7 @@ export type $SectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     department: Prisma.$DepartmentPayload<ExtArgs>
     users: Prisma.$UserPayload<ExtArgs>[]
+    service_tasks: Prisma.$ServiceTaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1139,6 +1245,7 @@ export interface Prisma__SectionClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   department<T extends Prisma.DepartmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DepartmentDefaultArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   users<T extends Prisma.Section$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Section$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  service_tasks<T extends Prisma.Section$service_tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Section$service_tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1597,6 +1704,30 @@ export type Section$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * Section.service_tasks
+ */
+export type Section$service_tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceTask
+   */
+  select?: Prisma.ServiceTaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceTask
+   */
+  omit?: Prisma.ServiceTaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceTaskInclude<ExtArgs> | null
+  where?: Prisma.ServiceTaskWhereInput
+  orderBy?: Prisma.ServiceTaskOrderByWithRelationInput | Prisma.ServiceTaskOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceTaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceTaskScalarFieldEnum | Prisma.ServiceTaskScalarFieldEnum[]
 }
 
 /**

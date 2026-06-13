@@ -1,0 +1,89 @@
+import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  MaxLength,
+  IsBoolean,
+  IsNumber,
+  IsInt,
+  Min,
+  IsEnum,
+} from 'class-validator';
+import { ServiceStatus } from '@/generated/prisma/enums';
+
+export class CreateServiceDto {
+  @ApiProperty({ example: 'Building Permit', description: 'Unique service name' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(200)
+  name: string;
+
+  @ApiPropertyOptional({ example: 'Apply for a new building permit' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  description?: string;
+
+  @ApiProperty({ example: '1', description: 'Responsible department ID' })
+  @Transform(({ value }) => BigInt(value))
+  department_id: bigint;
+
+  @ApiProperty({ example: 50.0 })
+  @Type(() => Number)
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  fee: number;
+
+  @ApiProperty({ example: 14 })
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  estimated_processing_days: number;
+}
+
+export class UpdateServiceDto extends PartialType(CreateServiceDto) {
+  @ApiPropertyOptional({ example: true })
+  @IsOptional()
+  @IsBoolean()
+  is_active?: boolean;
+
+  @ApiPropertyOptional({ enum: ServiceStatus })
+  @IsOptional()
+  @IsEnum(ServiceStatus)
+  status?: ServiceStatus;
+}
+
+export class ServiceResponseDto {
+  @ApiProperty({ example: '1' }) id: string;
+  @ApiProperty({ example: 'Building Permit' }) name: string;
+  @ApiPropertyOptional() description: string | null;
+  @ApiProperty({ example: '1' }) department_id: string;
+  @ApiProperty({ example: 50.0 }) fee: number;
+  @ApiProperty({ example: 14 }) estimated_processing_days: number;
+  @ApiProperty({ enum: ServiceStatus }) status: ServiceStatus;
+  @ApiProperty({ example: '1' }) created_by: string;
+  @ApiPropertyOptional() published_at: Date | null;
+  @ApiProperty({ example: true }) is_active: boolean;
+  @ApiProperty() created_at: Date;
+  @ApiProperty() updated_at: Date;
+}
+
+export class ServiceTaskSummaryResponseDto {
+  @ApiProperty({ example: '1' }) id: string;
+  @ApiProperty({ example: '1' }) service_id: string;
+  @ApiProperty({ example: '2' }) section_id: string;
+  @ApiProperty({ example: 'Initial Review' }) name: string;
+  @ApiPropertyOptional() description: string | null;
+  @ApiProperty({ example: 1 }) task_order: number;
+  @ApiProperty({ example: 4 }) estimated_time_hours: number;
+  @ApiProperty({ example: true }) is_active: boolean;
+  @ApiProperty() created_at: Date;
+  @ApiProperty() updated_at: Date;
+}
+
+export class ServiceWithTasksResponseDto extends ServiceResponseDto {
+  @ApiProperty({ type: [ServiceTaskSummaryResponseDto] })
+  workflow_tasks: ServiceTaskSummaryResponseDto[];
+}

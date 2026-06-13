@@ -225,6 +225,7 @@ export type DepartmentWhereInput = {
   created_at?: Prisma.DateTimeFilter<"Department"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Department"> | Date | string
   sections?: Prisma.SectionListRelationFilter
+  services?: Prisma.ServiceListRelationFilter
 }
 
 export type DepartmentOrderByWithRelationInput = {
@@ -235,6 +236,7 @@ export type DepartmentOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   sections?: Prisma.SectionOrderByRelationAggregateInput
+  services?: Prisma.ServiceOrderByRelationAggregateInput
 }
 
 export type DepartmentWhereUniqueInput = Prisma.AtLeast<{
@@ -248,6 +250,7 @@ export type DepartmentWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"Department"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Department"> | Date | string
   sections?: Prisma.SectionListRelationFilter
+  services?: Prisma.ServiceListRelationFilter
 }, "id" | "name">
 
 export type DepartmentOrderByWithAggregationInput = {
@@ -284,6 +287,7 @@ export type DepartmentCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   sections?: Prisma.SectionCreateNestedManyWithoutDepartmentInput
+  services?: Prisma.ServiceCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateInput = {
@@ -294,6 +298,7 @@ export type DepartmentUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutDepartmentInput
+  services?: Prisma.ServiceUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUpdateInput = {
@@ -304,6 +309,7 @@ export type DepartmentUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUpdateManyWithoutDepartmentNestedInput
+  services?: Prisma.ServiceUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateInput = {
@@ -314,6 +320,7 @@ export type DepartmentUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sections?: Prisma.SectionUncheckedUpdateManyWithoutDepartmentNestedInput
+  services?: Prisma.ServiceUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentCreateManyInput = {
@@ -421,6 +428,20 @@ export type DepartmentUpdateOneRequiredWithoutSectionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DepartmentUpdateToOneWithWhereWithoutSectionsInput, Prisma.DepartmentUpdateWithoutSectionsInput>, Prisma.DepartmentUncheckedUpdateWithoutSectionsInput>
 }
 
+export type DepartmentCreateNestedOneWithoutServicesInput = {
+  create?: Prisma.XOR<Prisma.DepartmentCreateWithoutServicesInput, Prisma.DepartmentUncheckedCreateWithoutServicesInput>
+  connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutServicesInput
+  connect?: Prisma.DepartmentWhereUniqueInput
+}
+
+export type DepartmentUpdateOneRequiredWithoutServicesNestedInput = {
+  create?: Prisma.XOR<Prisma.DepartmentCreateWithoutServicesInput, Prisma.DepartmentUncheckedCreateWithoutServicesInput>
+  connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutServicesInput
+  upsert?: Prisma.DepartmentUpsertWithoutServicesInput
+  connect?: Prisma.DepartmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DepartmentUpdateToOneWithWhereWithoutServicesInput, Prisma.DepartmentUpdateWithoutServicesInput>, Prisma.DepartmentUncheckedUpdateWithoutServicesInput>
+}
+
 export type DepartmentCreateWithoutSectionsInput = {
   id?: bigint | number
   name: string
@@ -428,6 +449,7 @@ export type DepartmentCreateWithoutSectionsInput = {
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  services?: Prisma.ServiceCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutSectionsInput = {
@@ -437,6 +459,7 @@ export type DepartmentUncheckedCreateWithoutSectionsInput = {
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  services?: Prisma.ServiceUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentCreateOrConnectWithoutSectionsInput = {
@@ -462,6 +485,7 @@ export type DepartmentUpdateWithoutSectionsInput = {
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  services?: Prisma.ServiceUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateWithoutSectionsInput = {
@@ -471,6 +495,63 @@ export type DepartmentUncheckedUpdateWithoutSectionsInput = {
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  services?: Prisma.ServiceUncheckedUpdateManyWithoutDepartmentNestedInput
+}
+
+export type DepartmentCreateWithoutServicesInput = {
+  id?: bigint | number
+  name: string
+  description?: string | null
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  sections?: Prisma.SectionCreateNestedManyWithoutDepartmentInput
+}
+
+export type DepartmentUncheckedCreateWithoutServicesInput = {
+  id?: bigint | number
+  name: string
+  description?: string | null
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutDepartmentInput
+}
+
+export type DepartmentCreateOrConnectWithoutServicesInput = {
+  where: Prisma.DepartmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.DepartmentCreateWithoutServicesInput, Prisma.DepartmentUncheckedCreateWithoutServicesInput>
+}
+
+export type DepartmentUpsertWithoutServicesInput = {
+  update: Prisma.XOR<Prisma.DepartmentUpdateWithoutServicesInput, Prisma.DepartmentUncheckedUpdateWithoutServicesInput>
+  create: Prisma.XOR<Prisma.DepartmentCreateWithoutServicesInput, Prisma.DepartmentUncheckedCreateWithoutServicesInput>
+  where?: Prisma.DepartmentWhereInput
+}
+
+export type DepartmentUpdateToOneWithWhereWithoutServicesInput = {
+  where?: Prisma.DepartmentWhereInput
+  data: Prisma.XOR<Prisma.DepartmentUpdateWithoutServicesInput, Prisma.DepartmentUncheckedUpdateWithoutServicesInput>
+}
+
+export type DepartmentUpdateWithoutServicesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sections?: Prisma.SectionUpdateManyWithoutDepartmentNestedInput
+}
+
+export type DepartmentUncheckedUpdateWithoutServicesInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 
@@ -480,10 +561,12 @@ export type DepartmentUncheckedUpdateWithoutSectionsInput = {
 
 export type DepartmentCountOutputType = {
   sections: number
+  services: number
 }
 
 export type DepartmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sections?: boolean | DepartmentCountOutputTypeCountSectionsArgs
+  services?: boolean | DepartmentCountOutputTypeCountServicesArgs
 }
 
 /**
@@ -503,6 +586,13 @@ export type DepartmentCountOutputTypeCountSectionsArgs<ExtArgs extends runtime.T
   where?: Prisma.SectionWhereInput
 }
 
+/**
+ * DepartmentCountOutputType without action
+ */
+export type DepartmentCountOutputTypeCountServicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceWhereInput
+}
+
 
 export type DepartmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -512,6 +602,7 @@ export type DepartmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   created_at?: boolean
   updated_at?: boolean
   sections?: boolean | Prisma.Department$sectionsArgs<ExtArgs>
+  services?: boolean | Prisma.Department$servicesArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["department"]>
 
@@ -545,6 +636,7 @@ export type DepartmentSelectScalar = {
 export type DepartmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["department"]>
 export type DepartmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sections?: boolean | Prisma.Department$sectionsArgs<ExtArgs>
+  services?: boolean | Prisma.Department$servicesArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DepartmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -554,6 +646,7 @@ export type $DepartmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Department"
   objects: {
     sections: Prisma.$SectionPayload<ExtArgs>[]
+    services: Prisma.$ServicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -957,6 +1050,7 @@ readonly fields: DepartmentFieldRefs;
 export interface Prisma__DepartmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sections<T extends Prisma.Department$sectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  services<T extends Prisma.Department$servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1406,6 +1500,30 @@ export type Department$sectionsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.SectionScalarFieldEnum | Prisma.SectionScalarFieldEnum[]
+}
+
+/**
+ * Department.services
+ */
+export type Department$servicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Service
+   */
+  select?: Prisma.ServiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Service
+   */
+  omit?: Prisma.ServiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceInclude<ExtArgs> | null
+  where?: Prisma.ServiceWhereInput
+  orderBy?: Prisma.ServiceOrderByWithRelationInput | Prisma.ServiceOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScalarFieldEnum | Prisma.ServiceScalarFieldEnum[]
 }
 
 /**

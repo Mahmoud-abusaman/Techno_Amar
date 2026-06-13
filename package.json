@@ -106,7 +106,9 @@
       "^@users/(.*)$": "<rootDir>/src/modules/users/$1",
       "^@org/(.*)$": "<rootDir>/src/modules/org/$1",
       "^@citizens/(.*)$": "<rootDir>/src/modules/citizens/$1",
-      "^@employees/(.*)$": "<rootDir>/src/modules/employees/$1"
+      "^@employees/(.*)$": "<rootDir>/src/modules/employees/$1",
+      "^@services/(.*)$": "<rootDir>/src/modules/services/$1",
+      "^@service-tasks/(.*)$": "<rootDir>/src/modules/service-tasks/$1"
     },
     "collectCoverageFrom": [
       "src/**/*.(t|j)s"
