@@ -45,7 +45,9 @@ export class AdminServicesController {
 
   @Post()
   @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Create a new service (Admin only)' })
+  @ApiOperation({
+    summary: 'Create a service with workflow tasks (Admin only)',
+  })
   create(
     @Body() dto: CreateServiceDto,
     @ActiveUser('sub') userId: string,

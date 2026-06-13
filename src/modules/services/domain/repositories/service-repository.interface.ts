@@ -12,6 +12,18 @@ export type CreateServiceData = {
   created_by: bigint;
 };
 
+export type CreateServiceTaskInput = {
+  section_id: bigint;
+  name: string;
+  description?: string | null;
+  task_order: number;
+  estimated_time_hours: number;
+};
+
+export type CreateServiceWithTasksData = CreateServiceData & {
+  workflow_tasks: CreateServiceTaskInput[];
+};
+
 export type UpdateServiceData = Partial<
   Omit<CreateServiceData, 'created_by'>
 > & {
@@ -28,6 +40,9 @@ export type ServiceFilters = {
 
 export interface IServiceRepository {
   create(data: CreateServiceData): Promise<ServiceEntity>;
+  createWithTasks(
+    data: CreateServiceWithTasksData,
+  ): Promise<ServiceWithTasksEntity>;
   findAll(filters?: ServiceFilters): Promise<ServiceEntity[]>;
   findById(id: bigint): Promise<ServiceEntity | null>;
   findByIdWithTasks(

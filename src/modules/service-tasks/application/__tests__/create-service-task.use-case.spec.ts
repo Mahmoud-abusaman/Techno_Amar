@@ -69,6 +69,7 @@ const makeTaskRepo = (): jest.Mocked<IServiceTaskRepository> => ({
 
 const makeServiceRepo = (): jest.Mocked<IServiceRepository> => ({
   create: jest.fn(),
+  createWithTasks: jest.fn(),
   findAll: jest.fn(),
   findById: jest.fn(),
   findByIdWithTasks: jest.fn(),

@@ -3,6 +3,7 @@ import { PrismaService } from '@shared/database/prisma.service';
 import {
   IServiceRepository,
   CreateServiceData,
+  CreateServiceWithTasksData,
   UpdateServiceData,
   ServiceFilters,
 } from '@services/domain/repositories/service-repository.interface';
@@ -18,6 +19,33 @@ export class PrismaServiceRepository implements IServiceRepository {
     return this.prisma.service
       .create({ data })
       .then((row) => this.toEntity(row));
+  }
+
+  createWithTasks(
+    data: CreateServiceWithTasksData,
+  ): Promise<ServiceWithTasksEntity> {
+    const { workflow_tasks, ...serviceData } = data;
+
+    return this.prisma.$transaction(async (tx) => {
+      const service = await tx.service.create({ data: serviceData });
+
+      const tasks = await Promise.all(
+        workflow_tasks.map((task) =>
+          tx.serviceTask.create({
+            data: {
+              service_id: service.id,
+              section_id: task.section_id,
+              name: task.name,
+              description: task.description ?? null,
+              task_order: task.task_order,
+              estimated_time_hours: task.estimated_time_hours,
+            },
+          }),
+        ),
+      );
+
+      return this.toServiceWithTasks({ ...service, workflow_tasks: tasks });
+    });
   }
 
   findAll(filters: ServiceFilters = {}): Promise<ServiceEntity[]> {

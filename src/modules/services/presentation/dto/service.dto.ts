@@ -10,8 +10,35 @@ import {
   IsInt,
   Min,
   IsEnum,
+  IsArray,
+  ArrayMinSize,
+  ValidateNested,
 } from 'class-validator';
 import { ServiceStatus } from '@/generated/prisma/enums';
+
+export class CreateServiceWorkflowTaskDto {
+  @ApiProperty({ example: 'Initial Review' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(200)
+  name: string;
+
+  @ApiPropertyOptional({ example: 'Review submitted documents' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  description?: string;
+
+  @ApiProperty({ example: '2', description: 'Section that handles this task' })
+  @Transform(({ value }) => BigInt(value))
+  section_id: bigint;
+
+  @ApiProperty({ example: 4 })
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  estimated_time_hours: number;
+}
 
 export class CreateServiceDto {
   @ApiProperty({ example: 'Building Permit', description: 'Unique service name' })
@@ -41,6 +68,16 @@ export class CreateServiceDto {
   @IsInt()
   @Min(1)
   estimated_processing_days: number;
+
+  @ApiProperty({
+    type: [CreateServiceWorkflowTaskDto],
+    description: 'Ordered workflow tasks for this service',
+  })
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => CreateServiceWorkflowTaskDto)
+  workflow_tasks: CreateServiceWorkflowTaskDto[];
 }
 
 export class UpdateServiceDto extends PartialType(CreateServiceDto) {
