@@ -192,8 +192,18 @@ describe('AuthController (integration)', () => {
       city: 'GAZA',
     };
 
-    it('201 — returns tokens and user on successful registration', async () => {
-      signupUseCase.execute.mockResolvedValue(authResultStub as any);
+    it('201 — returns pending user without tokens on successful registration', async () => {
+      signupUseCase.execute.mockResolvedValue({
+        message:
+          'Registration submitted successfully. Your account is pending admin verification.',
+        user: {
+          id: userStub.id,
+          email: userStub.email,
+          full_name: userStub.full_name,
+          role: userStub.role,
+          account_status: 'PENDING_VERIFICATION',
+        },
+      } as any);
 
       const { body } = await request(app.getHttpServer())
         .post('/auth/signup')
@@ -201,9 +211,10 @@ describe('AuthController (integration)', () => {
         .expect(201);
 
       expect(body.data).toMatchObject({
-        access_token: ACCESS_TOKEN,
-        user: { role: UserRole.CITIZEN },
+        message: expect.stringContaining('pending admin verification'),
+        user: { role: UserRole.CITIZEN, account_status: 'PENDING_VERIFICATION' },
       });
+      expect(body.data).not.toHaveProperty('access_token');
     });
 
     it('409 — propagates ConflictException on duplicate national_id', async () => {
@@ -234,7 +245,10 @@ describe('AuthController (integration)', () => {
     });
 
     it('whitelist — strips role field so it cannot be set by the client', async () => {
-      signupUseCase.execute.mockResolvedValue(authResultStub as any);
+      signupUseCase.execute.mockResolvedValue({
+        message: 'pending',
+        user: { ...userStub, account_status: 'PENDING_VERIFICATION' },
+      } as any);
 
       await request(app.getHttpServer())
         .post('/auth/signup')
@@ -246,7 +260,10 @@ describe('AuthController (integration)', () => {
     });
 
     it('whitelist — strips employee_id field so it cannot be set at signup', async () => {
-      signupUseCase.execute.mockResolvedValue(authResultStub as any);
+      signupUseCase.execute.mockResolvedValue({
+        message: 'pending',
+        user: { ...userStub, account_status: 'PENDING_VERIFICATION' },
+      } as any);
 
       await request(app.getHttpServer())
         .post('/auth/signup')

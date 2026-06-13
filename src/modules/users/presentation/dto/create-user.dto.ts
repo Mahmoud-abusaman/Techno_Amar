@@ -52,4 +52,12 @@ export class CreateUserDto {
   @ApiProperty({ enum: UserRole, example: SEED.citizen.role })
   @IsEnum(UserRole)
   role!: UserRole;
+
+  @ApiPropertyOptional({
+    description: 'Section ID for employees and department managers',
+    example: '1',
+  })
+  @IsString()
+  @IsOptional()
+  section_id?: string;
 }

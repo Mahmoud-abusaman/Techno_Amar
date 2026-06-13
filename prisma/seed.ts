@@ -4,6 +4,7 @@ import {
   GazaCities,
   PrismaClient,
   UserRole,
+  AccountStatus,
 } from '../generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 
@@ -80,9 +81,18 @@ async function main() {
 
     const exists = await prisma.user.findFirst({ where: { OR: orClauses } });
     if (!exists) {
-      await prisma.user.create({ data: { ...data, password_hash } });
+      await prisma.user.create({
+        data: {
+          ...data,
+          password_hash,
+          account_status: AccountStatus.ACTIVE,
+        },
+      });
     } else {
-      await prisma.user.update({ where: { id: exists.id }, data: { ...data, password_hash } });
+      await prisma.user.update({
+        where: { id: exists.id },
+        data: { ...data, password_hash, account_status: AccountStatus.ACTIVE },
+      });
     }
 
     console.log(

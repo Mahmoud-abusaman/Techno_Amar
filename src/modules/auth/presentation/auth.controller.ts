@@ -72,16 +72,15 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @SignupDocs()
   async signup(@Body() dto: SignupDto) {
-    const { tokens, user } = await this.signupUseCase.execute(dto);
+    const { user, message } = await this.signupUseCase.execute(dto);
     return {
-      access_token: tokens.accessToken,
-      refresh_token: tokens.refreshToken,
-      expires_at: tokens.expiresAt,
+      message,
       user: {
         id: user.id,
         email: user.email,
         full_name: user.full_name,
         role: user.role,
+        account_status: user.account_status,
       },
     };
   }

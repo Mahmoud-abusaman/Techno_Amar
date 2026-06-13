@@ -6,7 +6,7 @@ import { IHashPort } from '@auth/domain/ports/hash.port';
 import { ITokenPairFactory } from '@auth/domain/ports/token.port';
 import { UserEntity } from '@users/domain/entities/user.entity';
 import { TokenPair } from '@auth/domain/ports/token.port';
-import { UserRole, GazaCities } from '@/generated/prisma/enums';
+import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
   ({
@@ -21,6 +21,8 @@ const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
     city: GazaCities.GAZA,
     is_verified: true,
     role: UserRole.CITIZEN,
+    account_status: AccountStatus.ACTIVE,
+    section_id: null,
     is_active: true,
     created_at: new Date(),
     updated_at: new Date(),
@@ -43,8 +45,11 @@ describe('LoginUseCase', () => {
   beforeEach(() => {
     userRepo = {
       create: jest.fn(),
+      createCitizenProfile: jest.fn(),
       findAll: jest.fn(),
       findById: jest.fn(),
+      findByIdWithProfile: jest.fn(),
+      updateCitizenProfile: jest.fn(),
       findByEmail: jest.fn(),
       findByPhone: jest.fn(),
       findByNationalId: jest.fn(),
@@ -150,6 +155,39 @@ describe('LoginUseCase', () => {
         new UnauthorizedException('Account is disabled'),
       );
       expect(tokenPairFactory.createPair).not.toHaveBeenCalled();
+    });
+
+    it('throws UnauthorizedException when account is pending verification', async () => {
+      userRepo.findByNationalId.mockResolvedValue(
+        makeUser({ account_status: AccountStatus.PENDING_VERIFICATION }),
+      );
+      hashPort.compare.mockResolvedValue(true);
+
+      await expect(useCase.execute(citizenDto)).rejects.toThrow(
+        new UnauthorizedException('Account is pending admin verification'),
+      );
+    });
+
+    it('throws UnauthorizedException when account is rejected', async () => {
+      userRepo.findByNationalId.mockResolvedValue(
+        makeUser({ account_status: AccountStatus.REJECTED, is_active: false }),
+      );
+      hashPort.compare.mockResolvedValue(true);
+
+      await expect(useCase.execute(citizenDto)).rejects.toThrow(
+        new UnauthorizedException('Account registration was rejected'),
+      );
+    });
+
+    it('throws UnauthorizedException when citizen is not verified', async () => {
+      userRepo.findByNationalId.mockResolvedValue(
+        makeUser({ is_verified: false }),
+      );
+      hashPort.compare.mockResolvedValue(true);
+
+      await expect(useCase.execute(citizenDto)).rejects.toThrow(
+        new UnauthorizedException('Account is not verified'),
+      );
     });
 
     it('calls tokenPairFactory.createPair with the user', async () => {

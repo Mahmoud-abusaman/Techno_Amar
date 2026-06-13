@@ -1,7 +1,19 @@
 import { UserEntity } from '../entities/user.entity';
+import { CitizenProfileEntity } from '../entities/citizen-profile.entity';
 import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
 
 export const IUserRepository = Symbol('IUserRepository');
+
+export type UpdateCitizenProfileData = {
+  date_of_birth?: Date | null;
+  verification_document?: string | null;
+  rejection_reason?: string | null;
+  verified_at?: Date | null;
+};
+
+export type UserWithProfile = UserEntity & {
+  citizen_profile: CitizenProfileEntity | null;
+};
 
 export type CreateUserData = {
   full_name: string;
@@ -26,12 +38,19 @@ export type FindUsersFilter = {
   department_id?: bigint;
   section_id?: bigint;
   is_active?: boolean;
+  account_status?: AccountStatus;
 };
 
 export interface IUserRepository {
   create(data: CreateUserData): Promise<UserEntity>;
+  createCitizenProfile(userId: bigint): Promise<CitizenProfileEntity>;
   findAll(filter?: FindUsersFilter): Promise<UserEntity[]>;
   findById(id: bigint): Promise<UserEntity | null>;
+  findByIdWithProfile(id: bigint): Promise<UserWithProfile | null>;
+  updateCitizenProfile(
+    userId: bigint,
+    data: UpdateCitizenProfileData,
+  ): Promise<CitizenProfileEntity>;
   findByEmail(email: string): Promise<UserEntity | null>;
   findByPhone(phone: string): Promise<UserEntity | null>;
   findByNationalId(nationalId: string): Promise<UserEntity | null>;

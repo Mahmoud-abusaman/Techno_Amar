@@ -46,8 +46,11 @@ describe('RefreshTokensUseCase', () => {
   beforeEach(() => {
     userRepo = {
       create: jest.fn(),
+      createCitizenProfile: jest.fn(),
       findAll: jest.fn(),
       findById: jest.fn(),
+      findByIdWithProfile: jest.fn(),
+      updateCitizenProfile: jest.fn(),
       findByEmail: jest.fn(),
       findByPhone: jest.fn(),
       findByNationalId: jest.fn(),

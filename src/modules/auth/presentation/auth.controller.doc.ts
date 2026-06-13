@@ -72,7 +72,8 @@ export const SignupDocs = () =>
   applyDecorators(
     ApiOperation({
       summary: 'Register as a citizen (public)',
-      description: 'Open to all. Always creates a CITIZEN account.',
+      description:
+        'Open to all. Creates a CITIZEN account in PENDING_VERIFICATION status. No tokens are issued until an admin approves the account.',
     }),
     ApiBody({
       type: SignupDto,

@@ -5,6 +5,7 @@ import { ITokenPairFactory } from '@auth/domain/ports/token.port';
 import { TokenPair } from '@auth/domain/ports/token.port';
 import { UserEntity } from '@users/domain/entities/user.entity';
 import { ISectionRepository } from '@org/domain/repositories/section-repository.interface';
+import { UserRole, AccountStatus } from '@/generated/prisma/enums';
 
 export interface LoginInput {
   identifier: string;
@@ -42,7 +43,7 @@ export class LoginUseCase {
     );
     if (!isValid) throw new UnauthorizedException('Invalid credentials');
 
-    if (!user.is_active) throw new UnauthorizedException('Account is disabled');
+    this.assertAccountCanLogin(user);
 
     const department_id = await this.resolveDepartmentId(user.section_id);
 
@@ -63,6 +64,30 @@ export class LoginUseCase {
         department_id,
       },
     };
+  }
+
+  private assertAccountCanLogin(user: UserEntity): void {
+    if (user.account_status === AccountStatus.REJECTED) {
+      throw new UnauthorizedException('Account registration was rejected');
+    }
+
+    if (user.account_status === AccountStatus.PENDING_VERIFICATION) {
+      throw new UnauthorizedException(
+        'Account is pending admin verification',
+      );
+    }
+
+    if (user.account_status === AccountStatus.INACTIVE) {
+      throw new UnauthorizedException('Account is inactive');
+    }
+
+    if (!user.is_active) {
+      throw new UnauthorizedException('Account is disabled');
+    }
+
+    if (user.role === UserRole.CITIZEN && !user.is_verified) {
+      throw new UnauthorizedException('Account is not verified');
+    }
   }
 
   private async resolveDepartmentId(

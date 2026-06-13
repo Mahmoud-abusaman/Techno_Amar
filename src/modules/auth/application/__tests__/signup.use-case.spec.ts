@@ -2,10 +2,8 @@ import { ConflictException } from '@nestjs/common';
 import { SignupUseCase, SignupInput } from '../signup.use-case';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
 import { IHashPort } from '@auth/domain/ports/hash.port';
-import { ITokenPairFactory } from '@auth/domain/ports/token.port';
 import { UserEntity } from '@users/domain/entities/user.entity';
-import { TokenPair } from '@auth/domain/ports/token.port';
-import { UserRole, GazaCities } from '@/generated/prisma/enums';
+import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
   ({
@@ -20,17 +18,13 @@ const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
     city: GazaCities.GAZA,
     is_verified: false,
     role: UserRole.CITIZEN,
+    account_status: AccountStatus.PENDING_VERIFICATION,
+    section_id: null,
     is_active: true,
     created_at: new Date(),
     updated_at: new Date(),
     ...overrides,
   }) as UserEntity;
-
-const makeTokenPair = (): TokenPair => ({
-  accessToken: 'access.token.jwt',
-  refreshToken: 'refresh.token.jwt',
-  expiresAt: new Date(Date.now() + 900_000),
-});
 
 const makeSignupInput = (
   overrides: Partial<SignupInput> = {},
@@ -49,13 +43,15 @@ describe('SignupUseCase', () => {
   let useCase: SignupUseCase;
   let userRepo: jest.Mocked<IUserRepository>;
   let hashPort: jest.Mocked<IHashPort>;
-  let tokenPairFactory: jest.Mocked<ITokenPairFactory>;
 
   beforeEach(() => {
     userRepo = {
       create: jest.fn(),
+      createCitizenProfile: jest.fn(),
       findAll: jest.fn(),
       findById: jest.fn(),
+      findByIdWithProfile: jest.fn(),
+      updateCitizenProfile: jest.fn(),
       findByEmail: jest.fn(),
       findByPhone: jest.fn(),
       findByNationalId: jest.fn(),
@@ -69,47 +65,47 @@ describe('SignupUseCase', () => {
       compare: jest.fn(),
     };
 
-    tokenPairFactory = {
-      createPair: jest.fn(),
-    };
-
-    useCase = new SignupUseCase(userRepo, hashPort, tokenPairFactory);
+    useCase = new SignupUseCase(userRepo, hashPort);
   });
 
   describe('execute', () => {
-    it('creates a user and returns tokens on valid input', async () => {
+    it('creates a pending citizen profile and returns no tokens', async () => {
       const dto = makeSignupInput();
       const user = makeUser();
-      const tokens = makeTokenPair();
 
       hashPort.hash.mockResolvedValue('hashed_password');
       userRepo.create.mockResolvedValue(user);
-      tokenPairFactory.createPair.mockResolvedValue(tokens);
+      userRepo.createCitizenProfile.mockResolvedValue({} as any);
 
       const result = await useCase.execute(dto);
 
-      expect(result.tokens).toBe(tokens);
       expect(result.user).toEqual({
         id: user.id,
         email: user.email,
         full_name: user.full_name,
         role: user.role,
+        account_status: user.account_status,
       });
+      expect(result.message).toContain('pending admin verification');
+      expect(userRepo.createCitizenProfile).toHaveBeenCalledWith(user.id);
     });
 
-    it('always creates the user with CITIZEN role regardless of input', async () => {
+    it('always creates the user with CITIZEN role and PENDING_VERIFICATION status', async () => {
       const dto = makeSignupInput();
       const user = makeUser();
-      const tokens = makeTokenPair();
 
       hashPort.hash.mockResolvedValue('hashed_password');
       userRepo.create.mockResolvedValue(user);
-      tokenPairFactory.createPair.mockResolvedValue(tokens);
+      userRepo.createCitizenProfile.mockResolvedValue({} as any);
 
       await useCase.execute(dto);
 
       expect(userRepo.create).toHaveBeenCalledWith(
-        expect.objectContaining({ role: UserRole.CITIZEN }),
+        expect.objectContaining({
+          role: UserRole.CITIZEN,
+          account_status: AccountStatus.PENDING_VERIFICATION,
+          is_verified: false,
+        }),
       );
     });
 
@@ -117,7 +113,7 @@ describe('SignupUseCase', () => {
       const dto = makeSignupInput();
       hashPort.hash.mockResolvedValue('hashed_password');
       userRepo.create.mockResolvedValue(makeUser());
-      tokenPairFactory.createPair.mockResolvedValue(makeTokenPair());
+      userRepo.createCitizenProfile.mockResolvedValue({} as any);
 
       await useCase.execute(dto);
 
@@ -130,7 +126,7 @@ describe('SignupUseCase', () => {
       const dto = makeSignupInput({ password: 'SecurePass@2024' });
       hashPort.hash.mockResolvedValue('hashed_password');
       userRepo.create.mockResolvedValue(makeUser());
-      tokenPairFactory.createPair.mockResolvedValue(makeTokenPair());
+      userRepo.createCitizenProfile.mockResolvedValue({} as any);
 
       await useCase.execute(dto);
 
@@ -172,18 +168,6 @@ describe('SignupUseCase', () => {
       await expect(useCase.execute(dto)).rejects.toThrow(
         'Database connection lost',
       );
-    });
-
-    it('calls tokenPairFactory with the created user', async () => {
-      const dto = makeSignupInput();
-      const user = makeUser();
-      hashPort.hash.mockResolvedValue('hashed_password');
-      userRepo.create.mockResolvedValue(user);
-      tokenPairFactory.createPair.mockResolvedValue(makeTokenPair());
-
-      await useCase.execute(dto);
-
-      expect(tokenPairFactory.createPair).toHaveBeenCalledWith(user);
     });
   });
 });

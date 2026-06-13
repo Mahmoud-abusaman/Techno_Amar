@@ -1,10 +1,8 @@
 import { Injectable, Inject, ConflictException } from '@nestjs/common';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
 import { IHashPort } from '@auth/domain/ports/hash.port';
-import { ITokenPairFactory } from '@auth/domain/ports/token.port';
-import { TokenPair } from '@auth/domain/ports/token.port';
 import { UserEntity } from '@users/domain/entities/user.entity';
-import { UserRole, GazaCities } from '@/generated/prisma/enums';
+import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
 
 export interface SignupInput {
   full_name: string;
@@ -17,8 +15,11 @@ export interface SignupInput {
 }
 
 export interface SignupResult {
-  tokens: TokenPair;
-  user: Pick<UserEntity, 'id' | 'email' | 'full_name' | 'role'>;
+  user: Pick<
+    UserEntity,
+    'id' | 'email' | 'full_name' | 'role' | 'account_status'
+  >;
+  message: string;
 }
 
 @Injectable()
@@ -26,8 +27,6 @@ export class SignupUseCase {
   constructor(
     @Inject(IUserRepository) private readonly userRepo: IUserRepository,
     @Inject(IHashPort) private readonly hashPort: IHashPort,
-    @Inject(ITokenPairFactory)
-    private readonly tokenPairFactory: ITokenPairFactory,
   ) {}
 
   async execute(input: SignupInput): Promise<SignupResult> {
@@ -40,6 +39,9 @@ export class SignupUseCase {
         ...rest,
         role: UserRole.CITIZEN,
         password_hash,
+        account_status: AccountStatus.PENDING_VERIFICATION,
+        is_verified: false,
+        is_active: true,
       });
     } catch (err: any) {
       if (err?.code === 'P2002') {
@@ -52,16 +54,18 @@ export class SignupUseCase {
       throw err;
     }
 
-    const tokens = await this.tokenPairFactory.createPair(user);
+    await this.userRepo.createCitizenProfile(user.id);
 
     return {
-      tokens,
       user: {
         id: user.id,
         email: user.email,
         full_name: user.full_name,
         role: user.role,
+        account_status: user.account_status,
       },
+      message:
+        'Registration submitted successfully. Your account is pending admin verification.',
     };
   }
 }
