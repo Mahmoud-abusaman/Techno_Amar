@@ -341,6 +341,40 @@ export type EnumServiceStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumServiceStatusFilter<$PrismaModel>
 }
 
+export type EnumDamageSeverityFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageSeverity | Prisma.EnumDamageSeverityFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageSeverityFilter<$PrismaModel> | $Enums.DamageSeverity
+}
+
+export type EnumDamageAssessmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageAssessmentStatus | Prisma.EnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageAssessmentStatusFilter<$PrismaModel> | $Enums.DamageAssessmentStatus
+}
+
+export type EnumDamageSeverityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageSeverity | Prisma.EnumDamageSeverityFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageSeverityWithAggregatesFilter<$PrismaModel> | $Enums.DamageSeverity
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDamageSeverityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDamageSeverityFilter<$PrismaModel>
+}
+
+export type EnumDamageAssessmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageAssessmentStatus | Prisma.EnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageAssessmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.DamageAssessmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDamageAssessmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDamageAssessmentStatusFilter<$PrismaModel>
+}
+
 export type NestedBigIntFilter<$PrismaModel = never> = {
   equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
   in?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel>
@@ -690,6 +724,40 @@ export type NestedEnumServiceStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumServiceStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumServiceStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumDamageSeverityFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageSeverity | Prisma.EnumDamageSeverityFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageSeverityFilter<$PrismaModel> | $Enums.DamageSeverity
+}
+
+export type NestedEnumDamageAssessmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageAssessmentStatus | Prisma.EnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageAssessmentStatusFilter<$PrismaModel> | $Enums.DamageAssessmentStatus
+}
+
+export type NestedEnumDamageSeverityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageSeverity | Prisma.EnumDamageSeverityFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageSeverityWithAggregatesFilter<$PrismaModel> | $Enums.DamageSeverity
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDamageSeverityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDamageSeverityFilter<$PrismaModel>
+}
+
+export type NestedEnumDamageAssessmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DamageAssessmentStatus | Prisma.EnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DamageAssessmentStatus[] | Prisma.ListEnumDamageAssessmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDamageAssessmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.DamageAssessmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDamageAssessmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDamageAssessmentStatusFilter<$PrismaModel>
 }
 
 

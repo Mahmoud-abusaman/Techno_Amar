@@ -52,3 +52,8 @@ export type Service = Prisma.ServiceModel
  * 
  */
 export type ServiceTask = Prisma.ServiceTaskModel
+/**
+ * Model DamageAssessment
+ * 
+ */
+export type DamageAssessment = Prisma.DamageAssessmentModel

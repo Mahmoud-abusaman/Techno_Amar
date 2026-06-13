@@ -55,3 +55,23 @@ export const ServiceStatus = {
 } as const
 
 export type ServiceStatus = (typeof ServiceStatus)[keyof typeof ServiceStatus]
+
+
+export const DamageSeverity = {
+  MINOR: 'MINOR',
+  MODERATE: 'MODERATE',
+  SEVERE: 'SEVERE'
+} as const
+
+export type DamageSeverity = (typeof DamageSeverity)[keyof typeof DamageSeverity]
+
+
+export const DamageAssessmentStatus = {
+  SUBMITTED: 'SUBMITTED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  RESOLVED: 'RESOLVED'
+} as const
+
+export type DamageAssessmentStatus = (typeof DamageAssessmentStatus)[keyof typeof DamageAssessmentStatus]

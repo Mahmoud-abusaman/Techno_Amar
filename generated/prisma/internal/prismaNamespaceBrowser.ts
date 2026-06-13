@@ -57,7 +57,8 @@ export const ModelName = {
   CitizenProfile: 'CitizenProfile',
   OtpCode: 'OtpCode',
   Service: 'Service',
-  ServiceTask: 'ServiceTask'
+  ServiceTask: 'ServiceTask',
+  DamageAssessment: 'DamageAssessment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -183,6 +184,21 @@ export const ServiceTaskScalarFieldEnum = {
 } as const
 
 export type ServiceTaskScalarFieldEnum = (typeof ServiceTaskScalarFieldEnum)[keyof typeof ServiceTaskScalarFieldEnum]
+
+
+export const DamageAssessmentScalarFieldEnum = {
+  id: 'id',
+  citizen_id: 'citizen_id',
+  location: 'location',
+  description: 'description',
+  damage_severity: 'damage_severity',
+  status: 'status',
+  submitted_at: 'submitted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type DamageAssessmentScalarFieldEnum = (typeof DamageAssessmentScalarFieldEnum)[keyof typeof DamageAssessmentScalarFieldEnum]
 
 
 export const SortOrder = {

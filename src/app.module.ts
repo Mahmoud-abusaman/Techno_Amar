@@ -7,6 +7,7 @@ import { UsersModule } from '@users/users.module';
 import { OrgModule } from '@org/org.module';
 import { ServicesModule } from '@services/services.module';
 import { ServiceTasksModule } from '@service-tasks/service-tasks.module';
+import { DamageAssessmentsModule } from '@damage-assessments/damage-assessments.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ServiceTasksModule } from '@service-tasks/service-tasks.module';
     OrgModule,
     ServicesModule,
     ServiceTasksModule,
+    DamageAssessmentsModule,
   ],
 })
 export class AppModule {}

@@ -312,6 +312,7 @@ export type UserWhereInput = {
   otpCodes?: Prisma.OtpCodeListRelationFilter
   citizen_profile?: Prisma.XOR<Prisma.CitizenProfileNullableScalarRelationFilter, Prisma.CitizenProfileWhereInput> | null
   created_services?: Prisma.ServiceListRelationFilter
+  damage_assessments?: Prisma.DamageAssessmentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -335,6 +336,7 @@ export type UserOrderByWithRelationInput = {
   otpCodes?: Prisma.OtpCodeOrderByRelationAggregateInput
   citizen_profile?: Prisma.CitizenProfileOrderByWithRelationInput
   created_services?: Prisma.ServiceOrderByRelationAggregateInput
+  damage_assessments?: Prisma.DamageAssessmentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -361,6 +363,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   otpCodes?: Prisma.OtpCodeListRelationFilter
   citizen_profile?: Prisma.XOR<Prisma.CitizenProfileNullableScalarRelationFilter, Prisma.CitizenProfileWhereInput> | null
   created_services?: Prisma.ServiceListRelationFilter
+  damage_assessments?: Prisma.DamageAssessmentListRelationFilter
 }, "id" | "national_id" | "employee_id">
 
 export type UserOrderByWithAggregationInput = {
@@ -429,6 +432,7 @@ export type UserCreateInput = {
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -451,6 +455,7 @@ export type UserUncheckedCreateInput = {
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
 }
 
 export type UserUpdateInput = {
@@ -473,6 +478,7 @@ export type UserUpdateInput = {
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -495,6 +501,7 @@ export type UserUncheckedUpdateInput = {
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -739,6 +746,20 @@ export type UserUpdateOneRequiredWithoutCreated_servicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreated_servicesInput, Prisma.UserUpdateWithoutCreated_servicesInput>, Prisma.UserUncheckedUpdateWithoutCreated_servicesInput>
 }
 
+export type UserCreateNestedOneWithoutDamage_assessmentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDamage_assessmentsInput, Prisma.UserUncheckedCreateWithoutDamage_assessmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDamage_assessmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutDamage_assessmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDamage_assessmentsInput, Prisma.UserUncheckedCreateWithoutDamage_assessmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDamage_assessmentsInput
+  upsert?: Prisma.UserUpsertWithoutDamage_assessmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDamage_assessmentsInput, Prisma.UserUpdateWithoutDamage_assessmentsInput>, Prisma.UserUncheckedUpdateWithoutDamage_assessmentsInput>
+}
+
 export type UserCreateWithoutSectionInput = {
   id?: bigint | number
   full_name: string
@@ -758,6 +779,7 @@ export type UserCreateWithoutSectionInput = {
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
 }
 
 export type UserUncheckedCreateWithoutSectionInput = {
@@ -779,6 +801,7 @@ export type UserUncheckedCreateWithoutSectionInput = {
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
 }
 
 export type UserCreateOrConnectWithoutSectionInput = {
@@ -848,6 +871,7 @@ export type UserCreateWithoutCitizen_profileInput = {
   section?: Prisma.SectionCreateNestedOneWithoutUsersInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
 }
 
 export type UserUncheckedCreateWithoutCitizen_profileInput = {
@@ -869,6 +893,7 @@ export type UserUncheckedCreateWithoutCitizen_profileInput = {
   updated_at?: Date | string
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
 }
 
 export type UserCreateOrConnectWithoutCitizen_profileInput = {
@@ -906,6 +931,7 @@ export type UserUpdateWithoutCitizen_profileInput = {
   section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCitizen_profileInput = {
@@ -927,6 +953,7 @@ export type UserUncheckedUpdateWithoutCitizen_profileInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserCreateWithoutOtpCodesInput = {
@@ -948,6 +975,7 @@ export type UserCreateWithoutOtpCodesInput = {
   section?: Prisma.SectionCreateNestedOneWithoutUsersInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
 }
 
 export type UserUncheckedCreateWithoutOtpCodesInput = {
@@ -969,6 +997,7 @@ export type UserUncheckedCreateWithoutOtpCodesInput = {
   updated_at?: Date | string
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
 }
 
 export type UserCreateOrConnectWithoutOtpCodesInput = {
@@ -1006,6 +1035,7 @@ export type UserUpdateWithoutOtpCodesInput = {
   section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpCodesInput = {
@@ -1027,6 +1057,7 @@ export type UserUncheckedUpdateWithoutOtpCodesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserCreateWithoutCreated_servicesInput = {
@@ -1048,6 +1079,7 @@ export type UserCreateWithoutCreated_servicesInput = {
   section?: Prisma.SectionCreateNestedOneWithoutUsersInput
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+  damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
 }
 
 export type UserUncheckedCreateWithoutCreated_servicesInput = {
@@ -1069,6 +1101,7 @@ export type UserUncheckedCreateWithoutCreated_servicesInput = {
   updated_at?: Date | string
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
 }
 
 export type UserCreateOrConnectWithoutCreated_servicesInput = {
@@ -1106,6 +1139,7 @@ export type UserUpdateWithoutCreated_servicesInput = {
   section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_servicesInput = {
@@ -1127,6 +1161,111 @@ export type UserUncheckedUpdateWithoutCreated_servicesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+}
+
+export type UserCreateWithoutDamage_assessmentsInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  section?: Prisma.SectionCreateNestedOneWithoutUsersInput
+  otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+}
+
+export type UserUncheckedCreateWithoutDamage_assessmentsInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  section_id?: bigint | number | null
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+}
+
+export type UserCreateOrConnectWithoutDamage_assessmentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDamage_assessmentsInput, Prisma.UserUncheckedCreateWithoutDamage_assessmentsInput>
+}
+
+export type UserUpsertWithoutDamage_assessmentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDamage_assessmentsInput, Prisma.UserUncheckedUpdateWithoutDamage_assessmentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDamage_assessmentsInput, Prisma.UserUncheckedCreateWithoutDamage_assessmentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDamage_assessmentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDamage_assessmentsInput, Prisma.UserUncheckedUpdateWithoutDamage_assessmentsInput>
+}
+
+export type UserUpdateWithoutDamage_assessmentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
+  otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
+  citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDamage_assessmentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  section_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
+  citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserCreateManySectionInput = {
@@ -1166,6 +1305,7 @@ export type UserUpdateWithoutSectionInput = {
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSectionInput = {
@@ -1187,6 +1327,7 @@ export type UserUncheckedUpdateWithoutSectionInput = {
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutSectionInput = {
@@ -1215,11 +1356,13 @@ export type UserUncheckedUpdateManyWithoutSectionInput = {
 export type UserCountOutputType = {
   otpCodes: number
   created_services: number
+  damage_assessments: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   otpCodes?: boolean | UserCountOutputTypeCountOtpCodesArgs
   created_services?: boolean | UserCountOutputTypeCountCreated_servicesArgs
+  damage_assessments?: boolean | UserCountOutputTypeCountDamage_assessmentsArgs
 }
 
 /**
@@ -1246,6 +1389,13 @@ export type UserCountOutputTypeCountCreated_servicesArgs<ExtArgs extends runtime
   where?: Prisma.ServiceWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDamage_assessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DamageAssessmentWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1268,6 +1418,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   otpCodes?: boolean | Prisma.User$otpCodesArgs<ExtArgs>
   citizen_profile?: boolean | Prisma.User$citizen_profileArgs<ExtArgs>
   created_services?: boolean | Prisma.User$created_servicesArgs<ExtArgs>
+  damage_assessments?: boolean | Prisma.User$damage_assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1336,6 +1487,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   otpCodes?: boolean | Prisma.User$otpCodesArgs<ExtArgs>
   citizen_profile?: boolean | Prisma.User$citizen_profileArgs<ExtArgs>
   created_services?: boolean | Prisma.User$created_servicesArgs<ExtArgs>
+  damage_assessments?: boolean | Prisma.User$damage_assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1352,6 +1504,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     otpCodes: Prisma.$OtpCodePayload<ExtArgs>[]
     citizen_profile: Prisma.$CitizenProfilePayload<ExtArgs> | null
     created_services: Prisma.$ServicePayload<ExtArgs>[]
+    damage_assessments: Prisma.$DamageAssessmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1768,6 +1921,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   otpCodes<T extends Prisma.User$otpCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   citizen_profile<T extends Prisma.User$citizen_profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$citizen_profileArgs<ExtArgs>>): Prisma.Prisma__CitizenProfileClient<runtime.Types.Result.GetResult<Prisma.$CitizenProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   created_services<T extends Prisma.User$created_servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  damage_assessments<T extends Prisma.User$damage_assessmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$damage_assessmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DamageAssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2297,6 +2451,30 @@ export type User$created_servicesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.ServiceScalarFieldEnum | Prisma.ServiceScalarFieldEnum[]
+}
+
+/**
+ * User.damage_assessments
+ */
+export type User$damage_assessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DamageAssessment
+   */
+  select?: Prisma.DamageAssessmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DamageAssessment
+   */
+  omit?: Prisma.DamageAssessmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DamageAssessmentInclude<ExtArgs> | null
+  where?: Prisma.DamageAssessmentWhereInput
+  orderBy?: Prisma.DamageAssessmentOrderByWithRelationInput | Prisma.DamageAssessmentOrderByWithRelationInput[]
+  cursor?: Prisma.DamageAssessmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DamageAssessmentScalarFieldEnum | Prisma.DamageAssessmentScalarFieldEnum[]
 }
 
 /**
