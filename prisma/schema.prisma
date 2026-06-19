@@ -64,6 +64,36 @@ enum DamageAssessmentStatus {
   RESOLVED
 }
 
+enum RequestStatus {
+  SUBMITTED
+  IN_PROGRESS
+  APPROVED
+  REJECTED
+}
+
+enum RequestTaskStatus {
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum RequestPaymentStatus {
+  NOT_REQUIRED
+  PENDING_VERIFICATION
+  PAID
+  FAILED
+}
+
+enum RequestActivityAction {
+  SUBMITTED
+  TASK_ASSIGNED
+  TASK_COMPLETED
+  TASK_REJECTED
+  REQUEST_APPROVED
+  REQUEST_REJECTED
+}
+
 // ======================
 // ORGANIZATION
 // ======================
@@ -94,6 +124,7 @@ model Section {
 
   users         User[]
   service_tasks ServiceTask[]
+  request_tasks RequestTask[]
 
   @@unique([department_id, name])
   @@map("sections")
@@ -129,10 +160,13 @@ model User {
 
   created_at      DateTime        @default(now())
   updated_at      DateTime        @updatedAt
-  otpCodes         OtpCode[]
-  citizen_profile     CitizenProfile?
-  created_services    Service[]
-  damage_assessments  DamageAssessment[]
+  otpCodes              OtpCode[]
+  citizen_profile       CitizenProfile?
+  created_services      Service[]
+  damage_assessments    DamageAssessment[]
+  citizen_requests      ServiceRequest[]  @relation("CitizenRequests")
+  assigned_request_tasks RequestTask[]    @relation("AssignedTasks")
+  request_activities    RequestActivity[]
 
   @@map("users")
 }
@@ -198,7 +232,8 @@ model Service {
   created_at                DateTime      @default(now())
   updated_at                DateTime      @updatedAt
 
-  workflow_tasks ServiceTask[]
+  workflow_tasks  ServiceTask[]
+  service_requests ServiceRequest[]
 
   @@map("services")
 }
@@ -217,8 +252,79 @@ model ServiceTask {
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
 
+  request_tasks RequestTask[]
+
   @@unique([service_id, task_order])
   @@map("service_tasks")
+}
+
+// ======================
+// SERVICE REQUESTS
+// ======================
+
+model ServiceRequest {
+  id              BigInt               @id @default(autoincrement())
+  citizen_id      BigInt
+  citizen         User                 @relation("CitizenRequests", fields: [citizen_id], references: [id])
+  service_id      BigInt
+  service         Service              @relation(fields: [service_id], references: [id])
+  status          RequestStatus        @default(SUBMITTED)
+  payment_status  RequestPaymentStatus @default(NOT_REQUIRED)
+  current_task_id BigInt?
+  submitted_at    DateTime             @default(now())
+  completed_at    DateTime?
+  is_deleted      Boolean              @default(false)
+  created_at      DateTime             @default(now())
+  updated_at      DateTime             @updatedAt
+
+  tasks      RequestTask[]
+  activities RequestActivity[]
+
+  @@index([citizen_id])
+  @@index([service_id])
+  @@index([status])
+  @@map("service_requests")
+}
+
+model RequestTask {
+  id                   BigInt            @id @default(autoincrement())
+  request_id           BigInt
+  request              ServiceRequest    @relation(fields: [request_id], references: [id], onDelete: Cascade)
+  service_task_id      BigInt
+  service_task         ServiceTask       @relation(fields: [service_task_id], references: [id])
+  section_id           BigInt
+  section              Section           @relation(fields: [section_id], references: [id])
+  name                 String
+  task_order           Int
+  estimated_time_hours Int
+  assigned_employee_id BigInt?
+  assigned_employee    User?             @relation("AssignedTasks", fields: [assigned_employee_id], references: [id])
+  status               RequestTaskStatus @default(BACKLOG)
+  assigned_at          DateTime?
+  completed_at         DateTime?
+  rejection_reason     String?
+  created_at           DateTime          @default(now())
+  updated_at           DateTime          @updatedAt
+
+  @@unique([request_id, task_order])
+  @@index([section_id, status])
+  @@index([assigned_employee_id])
+  @@map("request_tasks")
+}
+
+model RequestActivity {
+  id          BigInt                @id @default(autoincrement())
+  request_id  BigInt
+  request     ServiceRequest        @relation(fields: [request_id], references: [id], onDelete: Cascade)
+  task_id     BigInt?
+  actor_id    BigInt
+  actor       User                  @relation(fields: [actor_id], references: [id])
+  action      RequestActivityAction
+  description String?
+  created_at  DateTime              @default(now())
+
+  @@index([request_id])
+  @@map("request_activities")
 }
 
 // ======================

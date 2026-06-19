@@ -5,6 +5,7 @@ import {
   PrismaClient,
   UserRole,
   AccountStatus,
+  ServiceStatus,
 } from '../generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 
@@ -69,37 +70,171 @@ const users: Array<{
   },
 ];
 
+async function upsertUser(
+  data: (typeof users)[number],
+  password_hash: string,
+  section_id?: bigint,
+) {
+  const { password: _password, ...userData } = data;
+  const orClauses: Array<Record<string, string>> = [{ email: userData.email }];
+  if (userData.national_id) orClauses.push({ national_id: userData.national_id });
+  if (userData.employee_id) orClauses.push({ employee_id: userData.employee_id });
+
+  const exists = await prisma.user.findFirst({ where: { OR: orClauses } });
+  const payload = {
+    ...userData,
+    password_hash,
+    account_status: AccountStatus.ACTIVE,
+    section_id: section_id ?? null,
+  };
+
+  const user = exists
+    ? await prisma.user.update({ where: { id: exists.id }, data: payload })
+    : await prisma.user.create({ data: payload });
+
+  if (user.role === UserRole.CITIZEN) {
+    await prisma.citizenProfile.upsert({
+      where: { user_id: user.id },
+      create: { user_id: user.id, verified_at: new Date() },
+      update: { verified_at: new Date(), rejection_reason: null },
+    });
+  }
+
+  return user;
+}
+
+async function seedPublishedService(adminId: bigint) {
+  const department = await prisma.department.upsert({
+    where: { name: 'Municipal Services' },
+    create: {
+      name: 'Municipal Services',
+      description: 'General municipal service department',
+    },
+    update: { is_active: true },
+  });
+
+  const section = await prisma.section.upsert({
+    where: {
+      department_id_name: {
+        department_id: department.id,
+        name: 'Permits Desk',
+      },
+    },
+    create: {
+      department_id: department.id,
+      name: 'Permits Desk',
+      description: 'Building permits and licensing',
+    },
+    update: { is_active: true },
+  });
+
+  const targetSectionId = section.id;
+
+  const existingService = await prisma.service.findUnique({
+    where: { name: 'Building Permit' },
+    include: { workflow_tasks: true },
+  });
+
+  if (!existingService) {
+    await prisma.service.create({
+      data: {
+        name: 'Building Permit',
+        description: 'Apply for a residential building permit',
+        department_id: department.id,
+        fee: 0,
+        estimated_processing_days: 14,
+        status: ServiceStatus.PUBLISHED,
+        created_by: adminId,
+        published_at: new Date(),
+        workflow_tasks: {
+          create: [
+            {
+              section_id: targetSectionId,
+              name: 'Initial Review',
+              description: 'Verify application completeness',
+              task_order: 1,
+              estimated_time_hours: 4,
+            },
+            {
+              section_id: targetSectionId,
+              name: 'Final Approval',
+              description: 'Issue permit decision',
+              task_order: 2,
+              estimated_time_hours: 2,
+            },
+          ],
+        },
+      },
+    });
+    return section;
+  }
+
+  if (existingService.workflow_tasks.length === 0) {
+    await prisma.serviceTask.createMany({
+      data: [
+        {
+          service_id: existingService.id,
+          section_id: targetSectionId,
+          name: 'Initial Review',
+          description: 'Verify application completeness',
+          task_order: 1,
+          estimated_time_hours: 4,
+        },
+        {
+          service_id: existingService.id,
+          section_id: targetSectionId,
+          name: 'Final Approval',
+          description: 'Issue permit decision',
+          task_order: 2,
+          estimated_time_hours: 2,
+        },
+      ],
+    });
+  }
+
+  await prisma.service.update({
+    where: { id: existingService.id },
+    data: {
+      status: ServiceStatus.PUBLISHED,
+      fee: 0,
+      published_at: new Date(),
+      is_active: true,
+    },
+  });
+
+  return section;
+}
+
 async function main() {
   console.log('Seeding database...');
 
-  for (const { password, ...data } of users) {
-    const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
+  const passwordHashes = await Promise.all(
+    users.map((u) => bcrypt.hash(u.password, SALT_ROUNDS)),
+  );
 
-    const orClauses: any[] = [{ email: data.email }];
-    if (data.national_id) orClauses.push({ national_id: data.national_id });
-    if (data.employee_id) orClauses.push({ employee_id: data.employee_id });
+  const admin = await upsertUser(users[0], passwordHashes[0]);
+  await upsertUser(users[1], passwordHashes[1]);
+  const employee = await upsertUser(users[2], passwordHashes[2]);
+  const manager = await upsertUser(users[3], passwordHashes[3]);
 
-    const exists = await prisma.user.findFirst({ where: { OR: orClauses } });
-    if (!exists) {
-      await prisma.user.create({
-        data: {
-          ...data,
-          password_hash,
-          account_status: AccountStatus.ACTIVE,
-        },
-      });
-    } else {
-      await prisma.user.update({
-        where: { id: exists.id },
-        data: { ...data, password_hash, account_status: AccountStatus.ACTIVE },
-      });
-    }
+  const section = await seedPublishedService(admin.id);
 
+  await prisma.user.update({
+    where: { id: employee.id },
+    data: { section_id: section.id },
+  });
+  await prisma.user.update({
+    where: { id: manager.id },
+    data: { section_id: section.id },
+  });
+
+  for (const user of users) {
     console.log(
-      `  ✓ ${data.role.padEnd(20)} ${data.email}  /  password: ${password}`,
+      `  ✓ ${user.role.padEnd(20)} ${user.email}  /  password: ${user.password}`,
     );
   }
 
+  console.log('  ✓ Published service: Building Permit (free, 2 workflow steps)');
   console.log('Done.');
 }
 

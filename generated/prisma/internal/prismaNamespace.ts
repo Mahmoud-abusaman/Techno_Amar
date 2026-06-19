@@ -391,6 +391,9 @@ export const ModelName = {
   OtpCode: 'OtpCode',
   Service: 'Service',
   ServiceTask: 'ServiceTask',
+  ServiceRequest: 'ServiceRequest',
+  RequestTask: 'RequestTask',
+  RequestActivity: 'RequestActivity',
   DamageAssessment: 'DamageAssessment'
 } as const
 
@@ -407,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "department" | "section" | "user" | "citizenProfile" | "otpCode" | "service" | "serviceTask" | "damageAssessment"
+    modelProps: "department" | "section" | "user" | "citizenProfile" | "otpCode" | "service" | "serviceTask" | "serviceRequest" | "requestTask" | "requestActivity" | "damageAssessment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -929,6 +932,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ServiceRequest: {
+      payload: Prisma.$ServiceRequestPayload<ExtArgs>
+      fields: Prisma.ServiceRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>
+        }
+        update: {
+          args: Prisma.ServiceRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceRequest>
+        }
+        groupBy: {
+          args: Prisma.ServiceRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    RequestTask: {
+      payload: Prisma.$RequestTaskPayload<ExtArgs>
+      fields: Prisma.RequestTaskFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RequestTaskFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RequestTaskFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>
+        }
+        findFirst: {
+          args: Prisma.RequestTaskFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RequestTaskFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>
+        }
+        findMany: {
+          args: Prisma.RequestTaskFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>[]
+        }
+        create: {
+          args: Prisma.RequestTaskCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>
+        }
+        createMany: {
+          args: Prisma.RequestTaskCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RequestTaskCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>[]
+        }
+        delete: {
+          args: Prisma.RequestTaskDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>
+        }
+        update: {
+          args: Prisma.RequestTaskUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>
+        }
+        deleteMany: {
+          args: Prisma.RequestTaskDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RequestTaskUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RequestTaskUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>[]
+        }
+        upsert: {
+          args: Prisma.RequestTaskUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestTaskPayload>
+        }
+        aggregate: {
+          args: Prisma.RequestTaskAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRequestTask>
+        }
+        groupBy: {
+          args: Prisma.RequestTaskGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestTaskGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RequestTaskCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestTaskCountAggregateOutputType> | number
+        }
+      }
+    }
+    RequestActivity: {
+      payload: Prisma.$RequestActivityPayload<ExtArgs>
+      fields: Prisma.RequestActivityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RequestActivityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RequestActivityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>
+        }
+        findFirst: {
+          args: Prisma.RequestActivityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RequestActivityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>
+        }
+        findMany: {
+          args: Prisma.RequestActivityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>[]
+        }
+        create: {
+          args: Prisma.RequestActivityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>
+        }
+        createMany: {
+          args: Prisma.RequestActivityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RequestActivityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>[]
+        }
+        delete: {
+          args: Prisma.RequestActivityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>
+        }
+        update: {
+          args: Prisma.RequestActivityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>
+        }
+        deleteMany: {
+          args: Prisma.RequestActivityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RequestActivityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RequestActivityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>[]
+        }
+        upsert: {
+          args: Prisma.RequestActivityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestActivityPayload>
+        }
+        aggregate: {
+          args: Prisma.RequestActivityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRequestActivity>
+        }
+        groupBy: {
+          args: Prisma.RequestActivityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestActivityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RequestActivityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestActivityCountAggregateOutputType> | number
+        }
+      }
+    }
     DamageAssessment: {
       payload: Prisma.$DamageAssessmentPayload<ExtArgs>
       fields: Prisma.DamageAssessmentFieldRefs
@@ -1151,6 +1376,56 @@ export const ServiceTaskScalarFieldEnum = {
 export type ServiceTaskScalarFieldEnum = (typeof ServiceTaskScalarFieldEnum)[keyof typeof ServiceTaskScalarFieldEnum]
 
 
+export const ServiceRequestScalarFieldEnum = {
+  id: 'id',
+  citizen_id: 'citizen_id',
+  service_id: 'service_id',
+  status: 'status',
+  payment_status: 'payment_status',
+  current_task_id: 'current_task_id',
+  submitted_at: 'submitted_at',
+  completed_at: 'completed_at',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum]
+
+
+export const RequestTaskScalarFieldEnum = {
+  id: 'id',
+  request_id: 'request_id',
+  service_task_id: 'service_task_id',
+  section_id: 'section_id',
+  name: 'name',
+  task_order: 'task_order',
+  estimated_time_hours: 'estimated_time_hours',
+  assigned_employee_id: 'assigned_employee_id',
+  status: 'status',
+  assigned_at: 'assigned_at',
+  completed_at: 'completed_at',
+  rejection_reason: 'rejection_reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RequestTaskScalarFieldEnum = (typeof RequestTaskScalarFieldEnum)[keyof typeof RequestTaskScalarFieldEnum]
+
+
+export const RequestActivityScalarFieldEnum = {
+  id: 'id',
+  request_id: 'request_id',
+  task_id: 'task_id',
+  actor_id: 'actor_id',
+  action: 'action',
+  description: 'description',
+  created_at: 'created_at'
+} as const
+
+export type RequestActivityScalarFieldEnum = (typeof RequestActivityScalarFieldEnum)[keyof typeof RequestActivityScalarFieldEnum]
+
+
 export const DamageAssessmentScalarFieldEnum = {
   id: 'id',
   citizen_id: 'citizen_id',
@@ -1344,6 +1619,62 @@ export type ListEnumServiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'RequestStatus'
+ */
+export type EnumRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestStatus[]'
+ */
+export type ListEnumRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestPaymentStatus'
+ */
+export type EnumRequestPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestPaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestPaymentStatus[]'
+ */
+export type ListEnumRequestPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestPaymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestTaskStatus'
+ */
+export type EnumRequestTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestTaskStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestTaskStatus[]'
+ */
+export type ListEnumRequestTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestTaskStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestActivityAction'
+ */
+export type EnumRequestActivityActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestActivityAction'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestActivityAction[]'
+ */
+export type ListEnumRequestActivityActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestActivityAction[]'>
+    
+
+
+/**
  * Reference to a field of type 'DamageSeverity'
  */
 export type EnumDamageSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DamageSeverity'>
@@ -1486,6 +1817,9 @@ export type GlobalOmitConfig = {
   otpCode?: Prisma.OtpCodeOmit
   service?: Prisma.ServiceOmit
   serviceTask?: Prisma.ServiceTaskOmit
+  serviceRequest?: Prisma.ServiceRequestOmit
+  requestTask?: Prisma.RequestTaskOmit
+  requestActivity?: Prisma.RequestActivityOmit
   damageAssessment?: Prisma.DamageAssessmentOmit
 }
 

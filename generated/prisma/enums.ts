@@ -75,3 +75,45 @@ export const DamageAssessmentStatus = {
 } as const
 
 export type DamageAssessmentStatus = (typeof DamageAssessmentStatus)[keyof typeof DamageAssessmentStatus]
+
+
+export const RequestStatus = {
+  SUBMITTED: 'SUBMITTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type RequestStatus = (typeof RequestStatus)[keyof typeof RequestStatus]
+
+
+export const RequestTaskStatus = {
+  BACKLOG: 'BACKLOG',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type RequestTaskStatus = (typeof RequestTaskStatus)[keyof typeof RequestTaskStatus]
+
+
+export const RequestPaymentStatus = {
+  NOT_REQUIRED: 'NOT_REQUIRED',
+  PENDING_VERIFICATION: 'PENDING_VERIFICATION',
+  PAID: 'PAID',
+  FAILED: 'FAILED'
+} as const
+
+export type RequestPaymentStatus = (typeof RequestPaymentStatus)[keyof typeof RequestPaymentStatus]
+
+
+export const RequestActivityAction = {
+  SUBMITTED: 'SUBMITTED',
+  TASK_ASSIGNED: 'TASK_ASSIGNED',
+  TASK_COMPLETED: 'TASK_COMPLETED',
+  TASK_REJECTED: 'TASK_REJECTED',
+  REQUEST_APPROVED: 'REQUEST_APPROVED',
+  REQUEST_REJECTED: 'REQUEST_REJECTED'
+} as const
+
+export type RequestActivityAction = (typeof RequestActivityAction)[keyof typeof RequestActivityAction]
