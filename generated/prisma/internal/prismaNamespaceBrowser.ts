@@ -58,6 +58,9 @@ export const ModelName = {
   OtpCode: 'OtpCode',
   Service: 'Service',
   ServiceTask: 'ServiceTask',
+  ServiceRequest: 'ServiceRequest',
+  RequestTask: 'RequestTask',
+  RequestActivity: 'RequestActivity',
   DamageAssessment: 'DamageAssessment'
 } as const
 
@@ -184,6 +187,56 @@ export const ServiceTaskScalarFieldEnum = {
 } as const
 
 export type ServiceTaskScalarFieldEnum = (typeof ServiceTaskScalarFieldEnum)[keyof typeof ServiceTaskScalarFieldEnum]
+
+
+export const ServiceRequestScalarFieldEnum = {
+  id: 'id',
+  citizen_id: 'citizen_id',
+  service_id: 'service_id',
+  status: 'status',
+  payment_status: 'payment_status',
+  current_task_id: 'current_task_id',
+  submitted_at: 'submitted_at',
+  completed_at: 'completed_at',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum]
+
+
+export const RequestTaskScalarFieldEnum = {
+  id: 'id',
+  request_id: 'request_id',
+  service_task_id: 'service_task_id',
+  section_id: 'section_id',
+  name: 'name',
+  task_order: 'task_order',
+  estimated_time_hours: 'estimated_time_hours',
+  assigned_employee_id: 'assigned_employee_id',
+  status: 'status',
+  assigned_at: 'assigned_at',
+  completed_at: 'completed_at',
+  rejection_reason: 'rejection_reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RequestTaskScalarFieldEnum = (typeof RequestTaskScalarFieldEnum)[keyof typeof RequestTaskScalarFieldEnum]
+
+
+export const RequestActivityScalarFieldEnum = {
+  id: 'id',
+  request_id: 'request_id',
+  task_id: 'task_id',
+  actor_id: 'actor_id',
+  action: 'action',
+  description: 'description',
+  created_at: 'created_at'
+} as const
+
+export type RequestActivityScalarFieldEnum = (typeof RequestActivityScalarFieldEnum)[keyof typeof RequestActivityScalarFieldEnum]
 
 
 export const DamageAssessmentScalarFieldEnum = {

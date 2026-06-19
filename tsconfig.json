@@ -17,7 +17,8 @@
       "@org/*": ["./src/modules/org/*"],
       "@services/*": ["./src/modules/services/*"],
       "@service-tasks/*": ["./src/modules/service-tasks/*"],
-      "@damage-assessments/*": ["./src/modules/damage-assessments/*"]
+      "@damage-assessments/*": ["./src/modules/damage-assessments/*"],
+      "@service-requests/*": ["./src/modules/service-requests/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

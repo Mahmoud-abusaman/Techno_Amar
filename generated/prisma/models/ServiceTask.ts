@@ -274,6 +274,7 @@ export type ServiceTaskWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"ServiceTask"> | Date | string
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
   section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
+  request_tasks?: Prisma.RequestTaskListRelationFilter
 }
 
 export type ServiceTaskOrderByWithRelationInput = {
@@ -289,6 +290,7 @@ export type ServiceTaskOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   service?: Prisma.ServiceOrderByWithRelationInput
   section?: Prisma.SectionOrderByWithRelationInput
+  request_tasks?: Prisma.RequestTaskOrderByRelationAggregateInput
 }
 
 export type ServiceTaskWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +310,7 @@ export type ServiceTaskWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"ServiceTask"> | Date | string
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
   section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
+  request_tasks?: Prisma.RequestTaskListRelationFilter
 }, "id" | "service_id_task_order">
 
 export type ServiceTaskOrderByWithAggregationInput = {
@@ -355,6 +358,7 @@ export type ServiceTaskCreateInput = {
   updated_at?: Date | string
   service: Prisma.ServiceCreateNestedOneWithoutWorkflow_tasksInput
   section: Prisma.SectionCreateNestedOneWithoutService_tasksInput
+  request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutService_taskInput
 }
 
 export type ServiceTaskUncheckedCreateInput = {
@@ -368,6 +372,7 @@ export type ServiceTaskUncheckedCreateInput = {
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutService_taskInput
 }
 
 export type ServiceTaskUpdateInput = {
@@ -381,6 +386,7 @@ export type ServiceTaskUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   service?: Prisma.ServiceUpdateOneRequiredWithoutWorkflow_tasksNestedInput
   section?: Prisma.SectionUpdateOneRequiredWithoutService_tasksNestedInput
+  request_tasks?: Prisma.RequestTaskUpdateManyWithoutService_taskNestedInput
 }
 
 export type ServiceTaskUncheckedUpdateInput = {
@@ -394,6 +400,7 @@ export type ServiceTaskUncheckedUpdateInput = {
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutService_taskNestedInput
 }
 
 export type ServiceTaskCreateManyInput = {
@@ -503,6 +510,11 @@ export type ServiceTaskSumOrderByAggregateInput = {
   estimated_time_hours?: Prisma.SortOrder
 }
 
+export type ServiceTaskScalarRelationFilter = {
+  is?: Prisma.ServiceTaskWhereInput
+  isNot?: Prisma.ServiceTaskWhereInput
+}
+
 export type ServiceTaskCreateNestedManyWithoutSectionInput = {
   create?: Prisma.XOR<Prisma.ServiceTaskCreateWithoutSectionInput, Prisma.ServiceTaskUncheckedCreateWithoutSectionInput> | Prisma.ServiceTaskCreateWithoutSectionInput[] | Prisma.ServiceTaskUncheckedCreateWithoutSectionInput[]
   connectOrCreate?: Prisma.ServiceTaskCreateOrConnectWithoutSectionInput | Prisma.ServiceTaskCreateOrConnectWithoutSectionInput[]
@@ -587,6 +599,20 @@ export type ServiceTaskUncheckedUpdateManyWithoutServiceNestedInput = {
   deleteMany?: Prisma.ServiceTaskScalarWhereInput | Prisma.ServiceTaskScalarWhereInput[]
 }
 
+export type ServiceTaskCreateNestedOneWithoutRequest_tasksInput = {
+  create?: Prisma.XOR<Prisma.ServiceTaskCreateWithoutRequest_tasksInput, Prisma.ServiceTaskUncheckedCreateWithoutRequest_tasksInput>
+  connectOrCreate?: Prisma.ServiceTaskCreateOrConnectWithoutRequest_tasksInput
+  connect?: Prisma.ServiceTaskWhereUniqueInput
+}
+
+export type ServiceTaskUpdateOneRequiredWithoutRequest_tasksNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceTaskCreateWithoutRequest_tasksInput, Prisma.ServiceTaskUncheckedCreateWithoutRequest_tasksInput>
+  connectOrCreate?: Prisma.ServiceTaskCreateOrConnectWithoutRequest_tasksInput
+  upsert?: Prisma.ServiceTaskUpsertWithoutRequest_tasksInput
+  connect?: Prisma.ServiceTaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceTaskUpdateToOneWithWhereWithoutRequest_tasksInput, Prisma.ServiceTaskUpdateWithoutRequest_tasksInput>, Prisma.ServiceTaskUncheckedUpdateWithoutRequest_tasksInput>
+}
+
 export type ServiceTaskCreateWithoutSectionInput = {
   id?: bigint | number
   name: string
@@ -597,6 +623,7 @@ export type ServiceTaskCreateWithoutSectionInput = {
   created_at?: Date | string
   updated_at?: Date | string
   service: Prisma.ServiceCreateNestedOneWithoutWorkflow_tasksInput
+  request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutService_taskInput
 }
 
 export type ServiceTaskUncheckedCreateWithoutSectionInput = {
@@ -609,6 +636,7 @@ export type ServiceTaskUncheckedCreateWithoutSectionInput = {
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutService_taskInput
 }
 
 export type ServiceTaskCreateOrConnectWithoutSectionInput = {
@@ -663,6 +691,7 @@ export type ServiceTaskCreateWithoutServiceInput = {
   created_at?: Date | string
   updated_at?: Date | string
   section: Prisma.SectionCreateNestedOneWithoutService_tasksInput
+  request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutService_taskInput
 }
 
 export type ServiceTaskUncheckedCreateWithoutServiceInput = {
@@ -675,6 +704,7 @@ export type ServiceTaskUncheckedCreateWithoutServiceInput = {
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutService_taskInput
 }
 
 export type ServiceTaskCreateOrConnectWithoutServiceInput = {
@@ -703,6 +733,74 @@ export type ServiceTaskUpdateManyWithWhereWithoutServiceInput = {
   data: Prisma.XOR<Prisma.ServiceTaskUpdateManyMutationInput, Prisma.ServiceTaskUncheckedUpdateManyWithoutServiceInput>
 }
 
+export type ServiceTaskCreateWithoutRequest_tasksInput = {
+  id?: bigint | number
+  name: string
+  description?: string | null
+  task_order: number
+  estimated_time_hours: number
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  service: Prisma.ServiceCreateNestedOneWithoutWorkflow_tasksInput
+  section: Prisma.SectionCreateNestedOneWithoutService_tasksInput
+}
+
+export type ServiceTaskUncheckedCreateWithoutRequest_tasksInput = {
+  id?: bigint | number
+  service_id: bigint | number
+  section_id: bigint | number
+  name: string
+  description?: string | null
+  task_order: number
+  estimated_time_hours: number
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type ServiceTaskCreateOrConnectWithoutRequest_tasksInput = {
+  where: Prisma.ServiceTaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceTaskCreateWithoutRequest_tasksInput, Prisma.ServiceTaskUncheckedCreateWithoutRequest_tasksInput>
+}
+
+export type ServiceTaskUpsertWithoutRequest_tasksInput = {
+  update: Prisma.XOR<Prisma.ServiceTaskUpdateWithoutRequest_tasksInput, Prisma.ServiceTaskUncheckedUpdateWithoutRequest_tasksInput>
+  create: Prisma.XOR<Prisma.ServiceTaskCreateWithoutRequest_tasksInput, Prisma.ServiceTaskUncheckedCreateWithoutRequest_tasksInput>
+  where?: Prisma.ServiceTaskWhereInput
+}
+
+export type ServiceTaskUpdateToOneWithWhereWithoutRequest_tasksInput = {
+  where?: Prisma.ServiceTaskWhereInput
+  data: Prisma.XOR<Prisma.ServiceTaskUpdateWithoutRequest_tasksInput, Prisma.ServiceTaskUncheckedUpdateWithoutRequest_tasksInput>
+}
+
+export type ServiceTaskUpdateWithoutRequest_tasksInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  task_order?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_time_hours?: Prisma.IntFieldUpdateOperationsInput | number
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  service?: Prisma.ServiceUpdateOneRequiredWithoutWorkflow_tasksNestedInput
+  section?: Prisma.SectionUpdateOneRequiredWithoutService_tasksNestedInput
+}
+
+export type ServiceTaskUncheckedUpdateWithoutRequest_tasksInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  service_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  section_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  task_order?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_time_hours?: Prisma.IntFieldUpdateOperationsInput | number
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ServiceTaskCreateManySectionInput = {
   id?: bigint | number
   service_id: bigint | number
@@ -725,6 +823,7 @@ export type ServiceTaskUpdateWithoutSectionInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   service?: Prisma.ServiceUpdateOneRequiredWithoutWorkflow_tasksNestedInput
+  request_tasks?: Prisma.RequestTaskUpdateManyWithoutService_taskNestedInput
 }
 
 export type ServiceTaskUncheckedUpdateWithoutSectionInput = {
@@ -737,6 +836,7 @@ export type ServiceTaskUncheckedUpdateWithoutSectionInput = {
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutService_taskNestedInput
 }
 
 export type ServiceTaskUncheckedUpdateManyWithoutSectionInput = {
@@ -773,6 +873,7 @@ export type ServiceTaskUpdateWithoutServiceInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   section?: Prisma.SectionUpdateOneRequiredWithoutService_tasksNestedInput
+  request_tasks?: Prisma.RequestTaskUpdateManyWithoutService_taskNestedInput
 }
 
 export type ServiceTaskUncheckedUpdateWithoutServiceInput = {
@@ -785,6 +886,7 @@ export type ServiceTaskUncheckedUpdateWithoutServiceInput = {
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutService_taskNestedInput
 }
 
 export type ServiceTaskUncheckedUpdateManyWithoutServiceInput = {
@@ -800,6 +902,35 @@ export type ServiceTaskUncheckedUpdateManyWithoutServiceInput = {
 }
 
 
+/**
+ * Count Type ServiceTaskCountOutputType
+ */
+
+export type ServiceTaskCountOutputType = {
+  request_tasks: number
+}
+
+export type ServiceTaskCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  request_tasks?: boolean | ServiceTaskCountOutputTypeCountRequest_tasksArgs
+}
+
+/**
+ * ServiceTaskCountOutputType without action
+ */
+export type ServiceTaskCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceTaskCountOutputType
+   */
+  select?: Prisma.ServiceTaskCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ServiceTaskCountOutputType without action
+ */
+export type ServiceTaskCountOutputTypeCountRequest_tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RequestTaskWhereInput
+}
+
 
 export type ServiceTaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -814,6 +945,8 @@ export type ServiceTaskSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updated_at?: boolean
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
   section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  request_tasks?: boolean | Prisma.ServiceTask$request_tasksArgs<ExtArgs>
+  _count?: boolean | Prisma.ServiceTaskCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["serviceTask"]>
 
 export type ServiceTaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -863,6 +996,8 @@ export type ServiceTaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ServiceTaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
   section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  request_tasks?: boolean | Prisma.ServiceTask$request_tasksArgs<ExtArgs>
+  _count?: boolean | Prisma.ServiceTaskCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceTaskIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
@@ -878,6 +1013,7 @@ export type $ServiceTaskPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     service: Prisma.$ServicePayload<ExtArgs>
     section: Prisma.$SectionPayload<ExtArgs>
+    request_tasks: Prisma.$RequestTaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1286,6 +1422,7 @@ export interface Prisma__ServiceTaskClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   service<T extends Prisma.ServiceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceClient<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   section<T extends Prisma.SectionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SectionDefaultArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  request_tasks<T extends Prisma.ServiceTask$request_tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceTask$request_tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1723,6 +1860,30 @@ export type ServiceTaskDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many ServiceTasks to delete.
    */
   limit?: number
+}
+
+/**
+ * ServiceTask.request_tasks
+ */
+export type ServiceTask$request_tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RequestTask
+   */
+  select?: Prisma.RequestTaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RequestTask
+   */
+  omit?: Prisma.RequestTaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestTaskInclude<ExtArgs> | null
+  where?: Prisma.RequestTaskWhereInput
+  orderBy?: Prisma.RequestTaskOrderByWithRelationInput | Prisma.RequestTaskOrderByWithRelationInput[]
+  cursor?: Prisma.RequestTaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RequestTaskScalarFieldEnum | Prisma.RequestTaskScalarFieldEnum[]
 }
 
 /**

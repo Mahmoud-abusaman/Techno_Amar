@@ -109,7 +109,8 @@
       "^@employees/(.*)$": "<rootDir>/src/modules/employees/$1",
       "^@services/(.*)$": "<rootDir>/src/modules/services/$1",
       "^@service-tasks/(.*)$": "<rootDir>/src/modules/service-tasks/$1",
-      "^@damage-assessments/(.*)$": "<rootDir>/src/modules/damage-assessments/$1"
+      "^@damage-assessments/(.*)$": "<rootDir>/src/modules/damage-assessments/$1",
+      "^@service-requests/(.*)$": "<rootDir>/src/modules/service-requests/$1"
     },
     "collectCoverageFrom": [
       "src/**/*.(t|j)s"

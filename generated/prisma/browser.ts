@@ -53,6 +53,21 @@ export type Service = Prisma.ServiceModel
  */
 export type ServiceTask = Prisma.ServiceTaskModel
 /**
+ * Model ServiceRequest
+ * 
+ */
+export type ServiceRequest = Prisma.ServiceRequestModel
+/**
+ * Model RequestTask
+ * 
+ */
+export type RequestTask = Prisma.RequestTaskModel
+/**
+ * Model RequestActivity
+ * 
+ */
+export type RequestActivity = Prisma.RequestActivityModel
+/**
  * Model DamageAssessment
  * 
  */

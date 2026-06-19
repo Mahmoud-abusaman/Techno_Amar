@@ -8,6 +8,7 @@ import { OrgModule } from '@org/org.module';
 import { ServicesModule } from '@services/services.module';
 import { ServiceTasksModule } from '@service-tasks/service-tasks.module';
 import { DamageAssessmentsModule } from '@damage-assessments/damage-assessments.module';
+import { ServiceRequestsModule } from '@service-requests/service-requests.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { DamageAssessmentsModule } from '@damage-assessments/damage-assessments.
     ServicesModule,
     ServiceTasksModule,
     DamageAssessmentsModule,
+    ServiceRequestsModule,
   ],
 })
 export class AppModule {}
