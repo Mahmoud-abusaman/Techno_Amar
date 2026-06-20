@@ -92,6 +92,7 @@ export const makeRequestRepo = (): jest.Mocked<IServiceRequestRepository> => ({
   countActiveByServiceId: jest.fn(),
   findActivities: jest.fn(),
   addActivity: jest.fn(),
+  findDocuments: jest.fn(),
 });
 
 export const makeUserRepo = (): jest.Mocked<IUserRepository> => ({

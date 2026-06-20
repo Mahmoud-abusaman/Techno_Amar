@@ -394,6 +394,8 @@ export const ModelName = {
   ServiceRequest: 'ServiceRequest',
   RequestTask: 'RequestTask',
   RequestActivity: 'RequestActivity',
+  RequiredDocument: 'RequiredDocument',
+  RequestDocument: 'RequestDocument',
   DamageAssessment: 'DamageAssessment'
 } as const
 
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "department" | "section" | "user" | "citizenProfile" | "otpCode" | "service" | "serviceTask" | "serviceRequest" | "requestTask" | "requestActivity" | "damageAssessment"
+    modelProps: "department" | "section" | "user" | "citizenProfile" | "otpCode" | "service" | "serviceTask" | "serviceRequest" | "requestTask" | "requestActivity" | "requiredDocument" | "requestDocument" | "damageAssessment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1154,6 +1156,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RequiredDocument: {
+      payload: Prisma.$RequiredDocumentPayload<ExtArgs>
+      fields: Prisma.RequiredDocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RequiredDocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RequiredDocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.RequiredDocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RequiredDocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>
+        }
+        findMany: {
+          args: Prisma.RequiredDocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>[]
+        }
+        create: {
+          args: Prisma.RequiredDocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>
+        }
+        createMany: {
+          args: Prisma.RequiredDocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RequiredDocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>[]
+        }
+        delete: {
+          args: Prisma.RequiredDocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>
+        }
+        update: {
+          args: Prisma.RequiredDocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.RequiredDocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RequiredDocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RequiredDocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>[]
+        }
+        upsert: {
+          args: Prisma.RequiredDocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequiredDocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.RequiredDocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRequiredDocument>
+        }
+        groupBy: {
+          args: Prisma.RequiredDocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequiredDocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RequiredDocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequiredDocumentCountAggregateOutputType> | number
+        }
+      }
+    }
+    RequestDocument: {
+      payload: Prisma.$RequestDocumentPayload<ExtArgs>
+      fields: Prisma.RequestDocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RequestDocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RequestDocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.RequestDocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RequestDocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>
+        }
+        findMany: {
+          args: Prisma.RequestDocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>[]
+        }
+        create: {
+          args: Prisma.RequestDocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>
+        }
+        createMany: {
+          args: Prisma.RequestDocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RequestDocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>[]
+        }
+        delete: {
+          args: Prisma.RequestDocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>
+        }
+        update: {
+          args: Prisma.RequestDocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.RequestDocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RequestDocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RequestDocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>[]
+        }
+        upsert: {
+          args: Prisma.RequestDocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RequestDocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.RequestDocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRequestDocument>
+        }
+        groupBy: {
+          args: Prisma.RequestDocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestDocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RequestDocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RequestDocumentCountAggregateOutputType> | number
+        }
+      }
+    }
     DamageAssessment: {
       payload: Prisma.$DamageAssessmentPayload<ExtArgs>
       fields: Prisma.DamageAssessmentFieldRefs
@@ -1426,6 +1576,39 @@ export const RequestActivityScalarFieldEnum = {
 export type RequestActivityScalarFieldEnum = (typeof RequestActivityScalarFieldEnum)[keyof typeof RequestActivityScalarFieldEnum]
 
 
+export const RequiredDocumentScalarFieldEnum = {
+  id: 'id',
+  service_id: 'service_id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RequiredDocumentScalarFieldEnum = (typeof RequiredDocumentScalarFieldEnum)[keyof typeof RequiredDocumentScalarFieldEnum]
+
+
+export const RequestDocumentScalarFieldEnum = {
+  id: 'id',
+  request_id: 'request_id',
+  required_document_id: 'required_document_id',
+  task_id: 'task_id',
+  name: 'name',
+  file_type: 'file_type',
+  file_url: 'file_url',
+  file_id: 'file_id',
+  file_path: 'file_path',
+  category: 'category',
+  uploaded_by: 'uploaded_by',
+  uploaded_at: 'uploaded_at',
+  created_at: 'created_at'
+} as const
+
+export type RequestDocumentScalarFieldEnum = (typeof RequestDocumentScalarFieldEnum)[keyof typeof RequestDocumentScalarFieldEnum]
+
+
 export const DamageAssessmentScalarFieldEnum = {
   id: 'id',
   citizen_id: 'citizen_id',
@@ -1675,6 +1858,34 @@ export type ListEnumRequestActivityActionFieldRefInput<$PrismaModel> = FieldRefI
 
 
 /**
+ * Reference to a field of type 'DocumentRequirementType'
+ */
+export type EnumDocumentRequirementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentRequirementType'>
+    
+
+
+/**
+ * Reference to a field of type 'DocumentRequirementType[]'
+ */
+export type ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentRequirementType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestDocumentCategory'
+ */
+export type EnumRequestDocumentCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestDocumentCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'RequestDocumentCategory[]'
+ */
+export type ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestDocumentCategory[]'>
+    
+
+
+/**
  * Reference to a field of type 'DamageSeverity'
  */
 export type EnumDamageSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DamageSeverity'>
@@ -1820,6 +2031,8 @@ export type GlobalOmitConfig = {
   serviceRequest?: Prisma.ServiceRequestOmit
   requestTask?: Prisma.RequestTaskOmit
   requestActivity?: Prisma.RequestActivityOmit
+  requiredDocument?: Prisma.RequiredDocumentOmit
+  requestDocument?: Prisma.RequestDocumentOmit
   damageAssessment?: Prisma.DamageAssessmentOmit
 }
 

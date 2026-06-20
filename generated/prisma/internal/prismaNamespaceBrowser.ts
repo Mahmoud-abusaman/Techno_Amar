@@ -61,6 +61,8 @@ export const ModelName = {
   ServiceRequest: 'ServiceRequest',
   RequestTask: 'RequestTask',
   RequestActivity: 'RequestActivity',
+  RequiredDocument: 'RequiredDocument',
+  RequestDocument: 'RequestDocument',
   DamageAssessment: 'DamageAssessment'
 } as const
 
@@ -237,6 +239,39 @@ export const RequestActivityScalarFieldEnum = {
 } as const
 
 export type RequestActivityScalarFieldEnum = (typeof RequestActivityScalarFieldEnum)[keyof typeof RequestActivityScalarFieldEnum]
+
+
+export const RequiredDocumentScalarFieldEnum = {
+  id: 'id',
+  service_id: 'service_id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RequiredDocumentScalarFieldEnum = (typeof RequiredDocumentScalarFieldEnum)[keyof typeof RequiredDocumentScalarFieldEnum]
+
+
+export const RequestDocumentScalarFieldEnum = {
+  id: 'id',
+  request_id: 'request_id',
+  required_document_id: 'required_document_id',
+  task_id: 'task_id',
+  name: 'name',
+  file_type: 'file_type',
+  file_url: 'file_url',
+  file_id: 'file_id',
+  file_path: 'file_path',
+  category: 'category',
+  uploaded_by: 'uploaded_by',
+  uploaded_at: 'uploaded_at',
+  created_at: 'created_at'
+} as const
+
+export type RequestDocumentScalarFieldEnum = (typeof RequestDocumentScalarFieldEnum)[keyof typeof RequestDocumentScalarFieldEnum]
 
 
 export const DamageAssessmentScalarFieldEnum = {

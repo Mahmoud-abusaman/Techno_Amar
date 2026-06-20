@@ -90,6 +90,16 @@ export type RequestTask = Prisma.RequestTaskModel
  */
 export type RequestActivity = Prisma.RequestActivityModel
 /**
+ * Model RequiredDocument
+ * 
+ */
+export type RequiredDocument = Prisma.RequiredDocumentModel
+/**
+ * Model RequestDocument
+ * 
+ */
+export type RequestDocument = Prisma.RequestDocumentModel
+/**
  * Model DamageAssessment
  * 
  */

@@ -409,6 +409,40 @@ export type EnumRequestActivityActionWithAggregatesFilter<$PrismaModel = never> 
   _max?: Prisma.NestedEnumRequestActivityActionFilter<$PrismaModel>
 }
 
+export type EnumDocumentRequirementTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentRequirementType | Prisma.EnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentRequirementTypeFilter<$PrismaModel> | $Enums.DocumentRequirementType
+}
+
+export type EnumDocumentRequirementTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentRequirementType | Prisma.EnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentRequirementTypeWithAggregatesFilter<$PrismaModel> | $Enums.DocumentRequirementType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDocumentRequirementTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDocumentRequirementTypeFilter<$PrismaModel>
+}
+
+export type EnumRequestDocumentCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.RequestDocumentCategory | Prisma.EnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRequestDocumentCategoryFilter<$PrismaModel> | $Enums.RequestDocumentCategory
+}
+
+export type EnumRequestDocumentCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RequestDocumentCategory | Prisma.EnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRequestDocumentCategoryWithAggregatesFilter<$PrismaModel> | $Enums.RequestDocumentCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRequestDocumentCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRequestDocumentCategoryFilter<$PrismaModel>
+}
+
 export type EnumDamageSeverityFilter<$PrismaModel = never> = {
   equals?: $Enums.DamageSeverity | Prisma.EnumDamageSeverityFieldRefInput<$PrismaModel>
   in?: $Enums.DamageSeverity[] | Prisma.ListEnumDamageSeverityFieldRefInput<$PrismaModel>
@@ -860,6 +894,40 @@ export type NestedEnumRequestActivityActionWithAggregatesFilter<$PrismaModel = n
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRequestActivityActionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRequestActivityActionFilter<$PrismaModel>
+}
+
+export type NestedEnumDocumentRequirementTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentRequirementType | Prisma.EnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentRequirementTypeFilter<$PrismaModel> | $Enums.DocumentRequirementType
+}
+
+export type NestedEnumDocumentRequirementTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DocumentRequirementType | Prisma.EnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DocumentRequirementType[] | Prisma.ListEnumDocumentRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDocumentRequirementTypeWithAggregatesFilter<$PrismaModel> | $Enums.DocumentRequirementType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDocumentRequirementTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDocumentRequirementTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumRequestDocumentCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.RequestDocumentCategory | Prisma.EnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRequestDocumentCategoryFilter<$PrismaModel> | $Enums.RequestDocumentCategory
+}
+
+export type NestedEnumRequestDocumentCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RequestDocumentCategory | Prisma.EnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RequestDocumentCategory[] | Prisma.ListEnumRequestDocumentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRequestDocumentCategoryWithAggregatesFilter<$PrismaModel> | $Enums.RequestDocumentCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRequestDocumentCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRequestDocumentCategoryFilter<$PrismaModel>
 }
 
 export type NestedEnumDamageSeverityFilter<$PrismaModel = never> = {

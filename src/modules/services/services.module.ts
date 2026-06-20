@@ -1,6 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { OrgModule } from '@org/org.module';
 import { ServiceRequestsModule } from '@service-requests/service-requests.module';
+import { RequiredDocumentsModule } from '@required-documents/required-documents.module';
 import { IServiceRepository } from '@services/domain/repositories/service-repository.interface';
 import { PrismaServiceRepository } from '@services/infrastructure/prisma-service.repository';
 import { CreateServiceUseCase } from '@services/application/create-service.use-case';
@@ -14,7 +15,11 @@ import { AdminServicesController } from '@services/presentation/admin-services.c
 import { ServicesController } from '@services/presentation/services.controller';
 
 @Module({
-  imports: [OrgModule, forwardRef(() => ServiceRequestsModule)],
+  imports: [
+    OrgModule,
+    forwardRef(() => ServiceRequestsModule),
+    forwardRef(() => RequiredDocumentsModule),
+  ],
   controllers: [AdminServicesController, ServicesController],
   providers: [
     { provide: IServiceRepository, useClass: PrismaServiceRepository },

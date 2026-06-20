@@ -19,6 +19,7 @@ const makeDetail = (
   updated_at: new Date(),
   service_name: 'Permit',
   tasks: [],
+  documents: [],
   ...overrides,
 });
 
@@ -36,6 +37,7 @@ describe('GetServiceRequestUseCase', () => {
       countActiveByServiceId: jest.fn(),
       findActivities: jest.fn(),
       addActivity: jest.fn(),
+      findDocuments: jest.fn(),
     };
     useCase = new GetServiceRequestUseCase(requestRepo);
   });

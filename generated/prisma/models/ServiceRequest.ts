@@ -280,6 +280,7 @@ export type ServiceRequestWhereInput = {
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
   tasks?: Prisma.RequestTaskListRelationFilter
   activities?: Prisma.RequestActivityListRelationFilter
+  documents?: Prisma.RequestDocumentListRelationFilter
 }
 
 export type ServiceRequestOrderByWithRelationInput = {
@@ -298,6 +299,7 @@ export type ServiceRequestOrderByWithRelationInput = {
   service?: Prisma.ServiceOrderByWithRelationInput
   tasks?: Prisma.RequestTaskOrderByRelationAggregateInput
   activities?: Prisma.RequestActivityOrderByRelationAggregateInput
+  documents?: Prisma.RequestDocumentOrderByRelationAggregateInput
 }
 
 export type ServiceRequestWhereUniqueInput = Prisma.AtLeast<{
@@ -319,6 +321,7 @@ export type ServiceRequestWhereUniqueInput = Prisma.AtLeast<{
   service?: Prisma.XOR<Prisma.ServiceScalarRelationFilter, Prisma.ServiceWhereInput>
   tasks?: Prisma.RequestTaskListRelationFilter
   activities?: Prisma.RequestActivityListRelationFilter
+  documents?: Prisma.RequestDocumentListRelationFilter
 }, "id">
 
 export type ServiceRequestOrderByWithAggregationInput = {
@@ -371,6 +374,7 @@ export type ServiceRequestCreateInput = {
   service: Prisma.ServiceCreateNestedOneWithoutService_requestsInput
   tasks?: Prisma.RequestTaskCreateNestedManyWithoutRequestInput
   activities?: Prisma.RequestActivityCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestUncheckedCreateInput = {
@@ -387,6 +391,7 @@ export type ServiceRequestUncheckedCreateInput = {
   updated_at?: Date | string
   tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutRequestInput
   activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestUpdateInput = {
@@ -403,6 +408,7 @@ export type ServiceRequestUpdateInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutService_requestsNestedInput
   tasks?: Prisma.RequestTaskUpdateManyWithoutRequestNestedInput
   activities?: Prisma.RequestActivityUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestUncheckedUpdateInput = {
@@ -419,6 +425,7 @@ export type ServiceRequestUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutRequestNestedInput
   activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestCreateManyInput = {
@@ -652,6 +659,20 @@ export type ServiceRequestUpdateOneRequiredWithoutActivitiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceRequestUpdateToOneWithWhereWithoutActivitiesInput, Prisma.ServiceRequestUpdateWithoutActivitiesInput>, Prisma.ServiceRequestUncheckedUpdateWithoutActivitiesInput>
 }
 
+export type ServiceRequestCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.ServiceRequestCreateWithoutDocumentsInput, Prisma.ServiceRequestUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.ServiceRequestWhereUniqueInput
+}
+
+export type ServiceRequestUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceRequestCreateWithoutDocumentsInput, Prisma.ServiceRequestUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.ServiceRequestUpsertWithoutDocumentsInput
+  connect?: Prisma.ServiceRequestWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceRequestUpdateToOneWithWhereWithoutDocumentsInput, Prisma.ServiceRequestUpdateWithoutDocumentsInput>, Prisma.ServiceRequestUncheckedUpdateWithoutDocumentsInput>
+}
+
 export type ServiceRequestCreateWithoutCitizenInput = {
   id?: bigint | number
   status?: $Enums.RequestStatus
@@ -665,6 +686,7 @@ export type ServiceRequestCreateWithoutCitizenInput = {
   service: Prisma.ServiceCreateNestedOneWithoutService_requestsInput
   tasks?: Prisma.RequestTaskCreateNestedManyWithoutRequestInput
   activities?: Prisma.RequestActivityCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestUncheckedCreateWithoutCitizenInput = {
@@ -680,6 +702,7 @@ export type ServiceRequestUncheckedCreateWithoutCitizenInput = {
   updated_at?: Date | string
   tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutRequestInput
   activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestCreateOrConnectWithoutCitizenInput = {
@@ -738,6 +761,7 @@ export type ServiceRequestCreateWithoutServiceInput = {
   citizen: Prisma.UserCreateNestedOneWithoutCitizen_requestsInput
   tasks?: Prisma.RequestTaskCreateNestedManyWithoutRequestInput
   activities?: Prisma.RequestActivityCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestUncheckedCreateWithoutServiceInput = {
@@ -753,6 +777,7 @@ export type ServiceRequestUncheckedCreateWithoutServiceInput = {
   updated_at?: Date | string
   tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutRequestInput
   activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestCreateOrConnectWithoutServiceInput = {
@@ -794,6 +819,7 @@ export type ServiceRequestCreateWithoutTasksInput = {
   citizen: Prisma.UserCreateNestedOneWithoutCitizen_requestsInput
   service: Prisma.ServiceCreateNestedOneWithoutService_requestsInput
   activities?: Prisma.RequestActivityCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestUncheckedCreateWithoutTasksInput = {
@@ -809,6 +835,7 @@ export type ServiceRequestUncheckedCreateWithoutTasksInput = {
   created_at?: Date | string
   updated_at?: Date | string
   activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestCreateOrConnectWithoutTasksInput = {
@@ -840,6 +867,7 @@ export type ServiceRequestUpdateWithoutTasksInput = {
   citizen?: Prisma.UserUpdateOneRequiredWithoutCitizen_requestsNestedInput
   service?: Prisma.ServiceUpdateOneRequiredWithoutService_requestsNestedInput
   activities?: Prisma.RequestActivityUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestUncheckedUpdateWithoutTasksInput = {
@@ -855,6 +883,7 @@ export type ServiceRequestUncheckedUpdateWithoutTasksInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestCreateWithoutActivitiesInput = {
@@ -870,6 +899,7 @@ export type ServiceRequestCreateWithoutActivitiesInput = {
   citizen: Prisma.UserCreateNestedOneWithoutCitizen_requestsInput
   service: Prisma.ServiceCreateNestedOneWithoutService_requestsInput
   tasks?: Prisma.RequestTaskCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestUncheckedCreateWithoutActivitiesInput = {
@@ -885,6 +915,7 @@ export type ServiceRequestUncheckedCreateWithoutActivitiesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutRequestInput
+  documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutRequestInput
 }
 
 export type ServiceRequestCreateOrConnectWithoutActivitiesInput = {
@@ -916,6 +947,7 @@ export type ServiceRequestUpdateWithoutActivitiesInput = {
   citizen?: Prisma.UserUpdateOneRequiredWithoutCitizen_requestsNestedInput
   service?: Prisma.ServiceUpdateOneRequiredWithoutService_requestsNestedInput
   tasks?: Prisma.RequestTaskUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestUncheckedUpdateWithoutActivitiesInput = {
@@ -931,6 +963,87 @@ export type ServiceRequestUncheckedUpdateWithoutActivitiesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutRequestNestedInput
+}
+
+export type ServiceRequestCreateWithoutDocumentsInput = {
+  id?: bigint | number
+  status?: $Enums.RequestStatus
+  payment_status?: $Enums.RequestPaymentStatus
+  current_task_id?: bigint | number | null
+  submitted_at?: Date | string
+  completed_at?: Date | string | null
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  citizen: Prisma.UserCreateNestedOneWithoutCitizen_requestsInput
+  service: Prisma.ServiceCreateNestedOneWithoutService_requestsInput
+  tasks?: Prisma.RequestTaskCreateNestedManyWithoutRequestInput
+  activities?: Prisma.RequestActivityCreateNestedManyWithoutRequestInput
+}
+
+export type ServiceRequestUncheckedCreateWithoutDocumentsInput = {
+  id?: bigint | number
+  citizen_id: bigint | number
+  service_id: bigint | number
+  status?: $Enums.RequestStatus
+  payment_status?: $Enums.RequestPaymentStatus
+  current_task_id?: bigint | number | null
+  submitted_at?: Date | string
+  completed_at?: Date | string | null
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutRequestInput
+  activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutRequestInput
+}
+
+export type ServiceRequestCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.ServiceRequestWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceRequestCreateWithoutDocumentsInput, Prisma.ServiceRequestUncheckedCreateWithoutDocumentsInput>
+}
+
+export type ServiceRequestUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.ServiceRequestUpdateWithoutDocumentsInput, Prisma.ServiceRequestUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.ServiceRequestCreateWithoutDocumentsInput, Prisma.ServiceRequestUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.ServiceRequestWhereInput
+}
+
+export type ServiceRequestUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.ServiceRequestWhereInput
+  data: Prisma.XOR<Prisma.ServiceRequestUpdateWithoutDocumentsInput, Prisma.ServiceRequestUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type ServiceRequestUpdateWithoutDocumentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
+  payment_status?: Prisma.EnumRequestPaymentStatusFieldUpdateOperationsInput | $Enums.RequestPaymentStatus
+  current_task_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  citizen?: Prisma.UserUpdateOneRequiredWithoutCitizen_requestsNestedInput
+  service?: Prisma.ServiceUpdateOneRequiredWithoutService_requestsNestedInput
+  tasks?: Prisma.RequestTaskUpdateManyWithoutRequestNestedInput
+  activities?: Prisma.RequestActivityUpdateManyWithoutRequestNestedInput
+}
+
+export type ServiceRequestUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  citizen_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  service_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  status?: Prisma.EnumRequestStatusFieldUpdateOperationsInput | $Enums.RequestStatus
+  payment_status?: Prisma.EnumRequestPaymentStatusFieldUpdateOperationsInput | $Enums.RequestPaymentStatus
+  current_task_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutRequestNestedInput
+  activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestCreateManyCitizenInput = {
@@ -959,6 +1072,7 @@ export type ServiceRequestUpdateWithoutCitizenInput = {
   service?: Prisma.ServiceUpdateOneRequiredWithoutService_requestsNestedInput
   tasks?: Prisma.RequestTaskUpdateManyWithoutRequestNestedInput
   activities?: Prisma.RequestActivityUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestUncheckedUpdateWithoutCitizenInput = {
@@ -974,6 +1088,7 @@ export type ServiceRequestUncheckedUpdateWithoutCitizenInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutRequestNestedInput
   activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestUncheckedUpdateManyWithoutCitizenInput = {
@@ -1015,6 +1130,7 @@ export type ServiceRequestUpdateWithoutServiceInput = {
   citizen?: Prisma.UserUpdateOneRequiredWithoutCitizen_requestsNestedInput
   tasks?: Prisma.RequestTaskUpdateManyWithoutRequestNestedInput
   activities?: Prisma.RequestActivityUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestUncheckedUpdateWithoutServiceInput = {
@@ -1030,6 +1146,7 @@ export type ServiceRequestUncheckedUpdateWithoutServiceInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutRequestNestedInput
   activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutRequestNestedInput
+  documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutRequestNestedInput
 }
 
 export type ServiceRequestUncheckedUpdateManyWithoutServiceInput = {
@@ -1053,11 +1170,13 @@ export type ServiceRequestUncheckedUpdateManyWithoutServiceInput = {
 export type ServiceRequestCountOutputType = {
   tasks: number
   activities: number
+  documents: number
 }
 
 export type ServiceRequestCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | ServiceRequestCountOutputTypeCountTasksArgs
   activities?: boolean | ServiceRequestCountOutputTypeCountActivitiesArgs
+  documents?: boolean | ServiceRequestCountOutputTypeCountDocumentsArgs
 }
 
 /**
@@ -1084,6 +1203,13 @@ export type ServiceRequestCountOutputTypeCountActivitiesArgs<ExtArgs extends run
   where?: Prisma.RequestActivityWhereInput
 }
 
+/**
+ * ServiceRequestCountOutputType without action
+ */
+export type ServiceRequestCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RequestDocumentWhereInput
+}
+
 
 export type ServiceRequestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1101,6 +1227,7 @@ export type ServiceRequestSelect<ExtArgs extends runtime.Types.Extensions.Intern
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
   tasks?: boolean | Prisma.ServiceRequest$tasksArgs<ExtArgs>
   activities?: boolean | Prisma.ServiceRequest$activitiesArgs<ExtArgs>
+  documents?: boolean | Prisma.ServiceRequest$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceRequestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["serviceRequest"]>
 
@@ -1156,6 +1283,7 @@ export type ServiceRequestInclude<ExtArgs extends runtime.Types.Extensions.Inter
   service?: boolean | Prisma.ServiceDefaultArgs<ExtArgs>
   tasks?: boolean | Prisma.ServiceRequest$tasksArgs<ExtArgs>
   activities?: boolean | Prisma.ServiceRequest$activitiesArgs<ExtArgs>
+  documents?: boolean | Prisma.ServiceRequest$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceRequestCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1174,6 +1302,7 @@ export type $ServiceRequestPayload<ExtArgs extends runtime.Types.Extensions.Inte
     service: Prisma.$ServicePayload<ExtArgs>
     tasks: Prisma.$RequestTaskPayload<ExtArgs>[]
     activities: Prisma.$RequestActivityPayload<ExtArgs>[]
+    documents: Prisma.$RequestDocumentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1585,6 +1714,7 @@ export interface Prisma__ServiceRequestClient<T, Null = never, ExtArgs extends r
   service<T extends Prisma.ServiceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceDefaultArgs<ExtArgs>>): Prisma.Prisma__ServiceClient<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tasks<T extends Prisma.ServiceRequest$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceRequest$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   activities<T extends Prisma.ServiceRequest$activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceRequest$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  documents<T extends Prisma.ServiceRequest$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceRequest$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2071,6 +2201,30 @@ export type ServiceRequest$activitiesArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.RequestActivityScalarFieldEnum | Prisma.RequestActivityScalarFieldEnum[]
+}
+
+/**
+ * ServiceRequest.documents
+ */
+export type ServiceRequest$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RequestDocument
+   */
+  select?: Prisma.RequestDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RequestDocument
+   */
+  omit?: Prisma.RequestDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestDocumentInclude<ExtArgs> | null
+  where?: Prisma.RequestDocumentWhereInput
+  orderBy?: Prisma.RequestDocumentOrderByWithRelationInput | Prisma.RequestDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.RequestDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RequestDocumentScalarFieldEnum | Prisma.RequestDocumentScalarFieldEnum[]
 }
 
 /**

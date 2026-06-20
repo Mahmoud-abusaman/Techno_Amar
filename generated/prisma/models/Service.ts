@@ -292,6 +292,7 @@ export type ServiceWhereInput = {
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   workflow_tasks?: Prisma.ServiceTaskListRelationFilter
   service_requests?: Prisma.ServiceRequestListRelationFilter
+  required_documents?: Prisma.RequiredDocumentListRelationFilter
 }
 
 export type ServiceOrderByWithRelationInput = {
@@ -311,6 +312,7 @@ export type ServiceOrderByWithRelationInput = {
   creator?: Prisma.UserOrderByWithRelationInput
   workflow_tasks?: Prisma.ServiceTaskOrderByRelationAggregateInput
   service_requests?: Prisma.ServiceRequestOrderByRelationAggregateInput
+  required_documents?: Prisma.RequiredDocumentOrderByRelationAggregateInput
 }
 
 export type ServiceWhereUniqueInput = Prisma.AtLeast<{
@@ -333,6 +335,7 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   workflow_tasks?: Prisma.ServiceTaskListRelationFilter
   service_requests?: Prisma.ServiceRequestListRelationFilter
+  required_documents?: Prisma.RequiredDocumentListRelationFilter
 }, "id" | "name">
 
 export type ServiceOrderByWithAggregationInput = {
@@ -388,6 +391,7 @@ export type ServiceCreateInput = {
   creator: Prisma.UserCreateNestedOneWithoutCreated_servicesInput
   workflow_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutServiceInput
   service_requests?: Prisma.ServiceRequestCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateInput = {
@@ -405,6 +409,7 @@ export type ServiceUncheckedCreateInput = {
   updated_at?: Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutServiceInput
   service_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUpdateInput = {
@@ -422,6 +427,7 @@ export type ServiceUpdateInput = {
   creator?: Prisma.UserUpdateOneRequiredWithoutCreated_servicesNestedInput
   workflow_tasks?: Prisma.ServiceTaskUpdateManyWithoutServiceNestedInput
   service_requests?: Prisma.ServiceRequestUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateInput = {
@@ -439,6 +445,7 @@ export type ServiceUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutServiceNestedInput
   service_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyInput = {
@@ -684,6 +691,20 @@ export type ServiceUpdateOneRequiredWithoutService_requestsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutService_requestsInput, Prisma.ServiceUpdateWithoutService_requestsInput>, Prisma.ServiceUncheckedUpdateWithoutService_requestsInput>
 }
 
+export type ServiceCreateNestedOneWithoutRequired_documentsInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutRequired_documentsInput, Prisma.ServiceUncheckedCreateWithoutRequired_documentsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutRequired_documentsInput
+  connect?: Prisma.ServiceWhereUniqueInput
+}
+
+export type ServiceUpdateOneRequiredWithoutRequired_documentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceCreateWithoutRequired_documentsInput, Prisma.ServiceUncheckedCreateWithoutRequired_documentsInput>
+  connectOrCreate?: Prisma.ServiceCreateOrConnectWithoutRequired_documentsInput
+  upsert?: Prisma.ServiceUpsertWithoutRequired_documentsInput
+  connect?: Prisma.ServiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceUpdateToOneWithWhereWithoutRequired_documentsInput, Prisma.ServiceUpdateWithoutRequired_documentsInput>, Prisma.ServiceUncheckedUpdateWithoutRequired_documentsInput>
+}
+
 export type ServiceCreateWithoutDepartmentInput = {
   id?: bigint | number
   name: string
@@ -698,6 +719,7 @@ export type ServiceCreateWithoutDepartmentInput = {
   creator: Prisma.UserCreateNestedOneWithoutCreated_servicesInput
   workflow_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutServiceInput
   service_requests?: Prisma.ServiceRequestCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutDepartmentInput = {
@@ -714,6 +736,7 @@ export type ServiceUncheckedCreateWithoutDepartmentInput = {
   updated_at?: Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutServiceInput
   service_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutDepartmentInput = {
@@ -774,6 +797,7 @@ export type ServiceCreateWithoutCreatorInput = {
   department: Prisma.DepartmentCreateNestedOneWithoutServicesInput
   workflow_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutServiceInput
   service_requests?: Prisma.ServiceRequestCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutCreatorInput = {
@@ -790,6 +814,7 @@ export type ServiceUncheckedCreateWithoutCreatorInput = {
   updated_at?: Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutServiceInput
   service_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutCreatorInput = {
@@ -832,6 +857,7 @@ export type ServiceCreateWithoutWorkflow_tasksInput = {
   department: Prisma.DepartmentCreateNestedOneWithoutServicesInput
   creator: Prisma.UserCreateNestedOneWithoutCreated_servicesInput
   service_requests?: Prisma.ServiceRequestCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutWorkflow_tasksInput = {
@@ -848,6 +874,7 @@ export type ServiceUncheckedCreateWithoutWorkflow_tasksInput = {
   created_at?: Date | string
   updated_at?: Date | string
   service_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutWorkflow_tasksInput = {
@@ -880,6 +907,7 @@ export type ServiceUpdateWithoutWorkflow_tasksInput = {
   department?: Prisma.DepartmentUpdateOneRequiredWithoutServicesNestedInput
   creator?: Prisma.UserUpdateOneRequiredWithoutCreated_servicesNestedInput
   service_requests?: Prisma.ServiceRequestUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutWorkflow_tasksInput = {
@@ -896,6 +924,7 @@ export type ServiceUncheckedUpdateWithoutWorkflow_tasksInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   service_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateWithoutService_requestsInput = {
@@ -912,6 +941,7 @@ export type ServiceCreateWithoutService_requestsInput = {
   department: Prisma.DepartmentCreateNestedOneWithoutServicesInput
   creator: Prisma.UserCreateNestedOneWithoutCreated_servicesInput
   workflow_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceUncheckedCreateWithoutService_requestsInput = {
@@ -928,6 +958,7 @@ export type ServiceUncheckedCreateWithoutService_requestsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutServiceInput
+  required_documents?: Prisma.RequiredDocumentUncheckedCreateNestedManyWithoutServiceInput
 }
 
 export type ServiceCreateOrConnectWithoutService_requestsInput = {
@@ -960,6 +991,7 @@ export type ServiceUpdateWithoutService_requestsInput = {
   department?: Prisma.DepartmentUpdateOneRequiredWithoutServicesNestedInput
   creator?: Prisma.UserUpdateOneRequiredWithoutCreated_servicesNestedInput
   workflow_tasks?: Prisma.ServiceTaskUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutService_requestsInput = {
@@ -976,6 +1008,91 @@ export type ServiceUncheckedUpdateWithoutService_requestsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUncheckedUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceCreateWithoutRequired_documentsInput = {
+  id?: bigint | number
+  name: string
+  description?: string | null
+  fee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimated_processing_days: number
+  status?: $Enums.ServiceStatus
+  published_at?: Date | string | null
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  department: Prisma.DepartmentCreateNestedOneWithoutServicesInput
+  creator: Prisma.UserCreateNestedOneWithoutCreated_servicesInput
+  workflow_tasks?: Prisma.ServiceTaskCreateNestedManyWithoutServiceInput
+  service_requests?: Prisma.ServiceRequestCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceUncheckedCreateWithoutRequired_documentsInput = {
+  id?: bigint | number
+  name: string
+  description?: string | null
+  department_id: bigint | number
+  fee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimated_processing_days: number
+  status?: $Enums.ServiceStatus
+  created_by: bigint | number
+  published_at?: Date | string | null
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  workflow_tasks?: Prisma.ServiceTaskUncheckedCreateNestedManyWithoutServiceInput
+  service_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutServiceInput
+}
+
+export type ServiceCreateOrConnectWithoutRequired_documentsInput = {
+  where: Prisma.ServiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutRequired_documentsInput, Prisma.ServiceUncheckedCreateWithoutRequired_documentsInput>
+}
+
+export type ServiceUpsertWithoutRequired_documentsInput = {
+  update: Prisma.XOR<Prisma.ServiceUpdateWithoutRequired_documentsInput, Prisma.ServiceUncheckedUpdateWithoutRequired_documentsInput>
+  create: Prisma.XOR<Prisma.ServiceCreateWithoutRequired_documentsInput, Prisma.ServiceUncheckedCreateWithoutRequired_documentsInput>
+  where?: Prisma.ServiceWhereInput
+}
+
+export type ServiceUpdateToOneWithWhereWithoutRequired_documentsInput = {
+  where?: Prisma.ServiceWhereInput
+  data: Prisma.XOR<Prisma.ServiceUpdateWithoutRequired_documentsInput, Prisma.ServiceUncheckedUpdateWithoutRequired_documentsInput>
+}
+
+export type ServiceUpdateWithoutRequired_documentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimated_processing_days?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department?: Prisma.DepartmentUpdateOneRequiredWithoutServicesNestedInput
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreated_servicesNestedInput
+  workflow_tasks?: Prisma.ServiceTaskUpdateManyWithoutServiceNestedInput
+  service_requests?: Prisma.ServiceRequestUpdateManyWithoutServiceNestedInput
+}
+
+export type ServiceUncheckedUpdateWithoutRequired_documentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  department_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  fee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimated_processing_days?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumServiceStatusFieldUpdateOperationsInput | $Enums.ServiceStatus
+  created_by?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutServiceNestedInput
+  service_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceCreateManyDepartmentInput = {
@@ -1006,6 +1123,7 @@ export type ServiceUpdateWithoutDepartmentInput = {
   creator?: Prisma.UserUpdateOneRequiredWithoutCreated_servicesNestedInput
   workflow_tasks?: Prisma.ServiceTaskUpdateManyWithoutServiceNestedInput
   service_requests?: Prisma.ServiceRequestUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutDepartmentInput = {
@@ -1022,6 +1140,7 @@ export type ServiceUncheckedUpdateWithoutDepartmentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutServiceNestedInput
   service_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateManyWithoutDepartmentInput = {
@@ -1066,6 +1185,7 @@ export type ServiceUpdateWithoutCreatorInput = {
   department?: Prisma.DepartmentUpdateOneRequiredWithoutServicesNestedInput
   workflow_tasks?: Prisma.ServiceTaskUpdateManyWithoutServiceNestedInput
   service_requests?: Prisma.ServiceRequestUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateWithoutCreatorInput = {
@@ -1082,6 +1202,7 @@ export type ServiceUncheckedUpdateWithoutCreatorInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workflow_tasks?: Prisma.ServiceTaskUncheckedUpdateManyWithoutServiceNestedInput
   service_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutServiceNestedInput
+  required_documents?: Prisma.RequiredDocumentUncheckedUpdateManyWithoutServiceNestedInput
 }
 
 export type ServiceUncheckedUpdateManyWithoutCreatorInput = {
@@ -1106,11 +1227,13 @@ export type ServiceUncheckedUpdateManyWithoutCreatorInput = {
 export type ServiceCountOutputType = {
   workflow_tasks: number
   service_requests: number
+  required_documents: number
 }
 
 export type ServiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workflow_tasks?: boolean | ServiceCountOutputTypeCountWorkflow_tasksArgs
   service_requests?: boolean | ServiceCountOutputTypeCountService_requestsArgs
+  required_documents?: boolean | ServiceCountOutputTypeCountRequired_documentsArgs
 }
 
 /**
@@ -1137,6 +1260,13 @@ export type ServiceCountOutputTypeCountService_requestsArgs<ExtArgs extends runt
   where?: Prisma.ServiceRequestWhereInput
 }
 
+/**
+ * ServiceCountOutputType without action
+ */
+export type ServiceCountOutputTypeCountRequired_documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RequiredDocumentWhereInput
+}
+
 
 export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1155,6 +1285,7 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   workflow_tasks?: boolean | Prisma.Service$workflow_tasksArgs<ExtArgs>
   service_requests?: boolean | Prisma.Service$service_requestsArgs<ExtArgs>
+  required_documents?: boolean | Prisma.Service$required_documentsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
@@ -1213,6 +1344,7 @@ export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   workflow_tasks?: boolean | Prisma.Service$workflow_tasksArgs<ExtArgs>
   service_requests?: boolean | Prisma.Service$service_requestsArgs<ExtArgs>
+  required_documents?: boolean | Prisma.Service$required_documentsArgs<ExtArgs>
   _count?: boolean | Prisma.ServiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1231,6 +1363,7 @@ export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     creator: Prisma.$UserPayload<ExtArgs>
     workflow_tasks: Prisma.$ServiceTaskPayload<ExtArgs>[]
     service_requests: Prisma.$ServiceRequestPayload<ExtArgs>[]
+    required_documents: Prisma.$RequiredDocumentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1643,6 +1776,7 @@ export interface Prisma__ServiceClient<T, Null = never, ExtArgs extends runtime.
   creator<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   workflow_tasks<T extends Prisma.Service$workflow_tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$workflow_tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   service_requests<T extends Prisma.Service$service_requestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$service_requestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  required_documents<T extends Prisma.Service$required_documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$required_documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequiredDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2130,6 +2264,30 @@ export type Service$service_requestsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.ServiceRequestScalarFieldEnum | Prisma.ServiceRequestScalarFieldEnum[]
+}
+
+/**
+ * Service.required_documents
+ */
+export type Service$required_documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RequiredDocument
+   */
+  select?: Prisma.RequiredDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RequiredDocument
+   */
+  omit?: Prisma.RequiredDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequiredDocumentInclude<ExtArgs> | null
+  where?: Prisma.RequiredDocumentWhereInput
+  orderBy?: Prisma.RequiredDocumentOrderByWithRelationInput | Prisma.RequiredDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.RequiredDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RequiredDocumentScalarFieldEnum | Prisma.RequiredDocumentScalarFieldEnum[]
 }
 
 /**

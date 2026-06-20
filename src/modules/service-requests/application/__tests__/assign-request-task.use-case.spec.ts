@@ -82,6 +82,7 @@ describe('AssignRequestTaskUseCase', () => {
       countActiveByServiceId: jest.fn(),
       findActivities: jest.fn(),
       addActivity: jest.fn(),
+      findDocuments: jest.fn(),
     };
     userRepo = {
       create: jest.fn(),
