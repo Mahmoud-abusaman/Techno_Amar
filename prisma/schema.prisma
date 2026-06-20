@@ -192,8 +192,8 @@ model CitizenProfile {
   user_id       BigInt    @unique
   user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
   date_of_birth DateTime?
-  // path to the uploaded verification document on disk
   verification_document String?
+  id_selfie             String?
   rejection_reason      String?
   verified_at           DateTime?
   created_at            DateTime  @default(now())
@@ -396,5 +396,23 @@ model DamageAssessment {
   created_at      DateTime               @default(now())
   updated_at      DateTime               @updatedAt
 
+  documents DamageAssessmentDocument[]
+
   @@map("damage_assessments")
+}
+
+model DamageAssessmentDocument {
+  id            BigInt           @id @default(autoincrement())
+  assessment_id BigInt
+  assessment    DamageAssessment @relation(fields: [assessment_id], references: [id], onDelete: Cascade)
+  name          String
+  file_type     String
+  file_url      String
+  file_id       String
+  file_path     String?
+  uploaded_at   DateTime         @default(now())
+  created_at    DateTime         @default(now())
+
+  @@index([assessment_id])
+  @@map("damage_assessment_documents")
 }

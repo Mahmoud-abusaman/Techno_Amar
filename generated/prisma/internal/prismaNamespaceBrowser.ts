@@ -63,7 +63,8 @@ export const ModelName = {
   RequestActivity: 'RequestActivity',
   RequiredDocument: 'RequiredDocument',
   RequestDocument: 'RequestDocument',
-  DamageAssessment: 'DamageAssessment'
+  DamageAssessment: 'DamageAssessment',
+  DamageAssessmentDocument: 'DamageAssessmentDocument'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -134,6 +135,7 @@ export const CitizenProfileScalarFieldEnum = {
   user_id: 'user_id',
   date_of_birth: 'date_of_birth',
   verification_document: 'verification_document',
+  id_selfie: 'id_selfie',
   rejection_reason: 'rejection_reason',
   verified_at: 'verified_at',
   created_at: 'created_at',
@@ -287,6 +289,21 @@ export const DamageAssessmentScalarFieldEnum = {
 } as const
 
 export type DamageAssessmentScalarFieldEnum = (typeof DamageAssessmentScalarFieldEnum)[keyof typeof DamageAssessmentScalarFieldEnum]
+
+
+export const DamageAssessmentDocumentScalarFieldEnum = {
+  id: 'id',
+  assessment_id: 'assessment_id',
+  name: 'name',
+  file_type: 'file_type',
+  file_url: 'file_url',
+  file_id: 'file_id',
+  file_path: 'file_path',
+  uploaded_at: 'uploaded_at',
+  created_at: 'created_at'
+} as const
+
+export type DamageAssessmentDocumentScalarFieldEnum = (typeof DamageAssessmentDocumentScalarFieldEnum)[keyof typeof DamageAssessmentDocumentScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -70,7 +70,11 @@ export class AdminUsersController {
 
   @Get(':id')
   @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Get user details with profile (Admin only)' })
+  @ApiOperation({
+    summary: 'Get user details with profile (Admin only)',
+    description:
+      'Includes citizen_profile with verification_document (ID PDF URL) and id_selfie (selfie URL) when applicable.',
+  })
   findOne(@Param('id') id: string) {
     return this.getUser.execute(BigInt(id));
   }

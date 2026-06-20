@@ -2,6 +2,7 @@ import { Module, forwardRef } from '@nestjs/common';
 
 import { AuthModule } from '@auth/auth.module';
 import { OrgModule } from '@org/org.module';
+import { UploadsModule } from '@uploads/uploads.module';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
 import { IHashPort } from '@auth/domain/ports/hash.port';
 
@@ -17,12 +18,13 @@ import { UpdateMyProfileUseCase } from '@users/application/update-my-profile.use
 import { VerifyUserUseCase } from '@users/application/verify-user.use-case';
 import { RejectUserUseCase } from '@users/application/reject-user.use-case';
 import { DisableUserUseCase } from '@users/application/disable-user.use-case';
+import { ResubmitVerificationDocumentsUseCase } from '@users/application/resubmit-verification-documents.use-case';
 
 import { UsersController } from '@users/presentation/users.controller';
 import { AdminUsersController } from '@users/presentation/admin-users.controller';
 
 @Module({
-  imports: [forwardRef(() => AuthModule), OrgModule],
+  imports: [forwardRef(() => AuthModule), OrgModule, UploadsModule],
   controllers: [UsersController, AdminUsersController],
   providers: [
     { provide: IUserRepository, useClass: PrismaUserRepository },
@@ -36,6 +38,7 @@ import { AdminUsersController } from '@users/presentation/admin-users.controller
     VerifyUserUseCase,
     RejectUserUseCase,
     DisableUserUseCase,
+    ResubmitVerificationDocumentsUseCase,
   ],
   exports: [IUserRepository],
 })

@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { UsersModule } from '@users/users.module';
 import { OrgModule } from '@org/org.module';
+import { UploadsModule } from '@uploads/uploads.module';
 
 import { IHashPort } from '@auth/domain/ports/hash.port';
 import {
@@ -45,7 +46,8 @@ import { RolesGuard } from '@auth/presentation/guards/roles.guard';
       inject: [ConfigService],
     }),
     forwardRef(() => UsersModule),
-     OrgModule,
+    OrgModule,
+    UploadsModule,
   ],
   controllers: [AuthController],
   providers: [

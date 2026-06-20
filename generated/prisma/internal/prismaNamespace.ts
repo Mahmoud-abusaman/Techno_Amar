@@ -396,7 +396,8 @@ export const ModelName = {
   RequestActivity: 'RequestActivity',
   RequiredDocument: 'RequiredDocument',
   RequestDocument: 'RequestDocument',
-  DamageAssessment: 'DamageAssessment'
+  DamageAssessment: 'DamageAssessment',
+  DamageAssessmentDocument: 'DamageAssessmentDocument'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "department" | "section" | "user" | "citizenProfile" | "otpCode" | "service" | "serviceTask" | "serviceRequest" | "requestTask" | "requestActivity" | "requiredDocument" | "requestDocument" | "damageAssessment"
+    modelProps: "department" | "section" | "user" | "citizenProfile" | "otpCode" | "service" | "serviceTask" | "serviceRequest" | "requestTask" | "requestActivity" | "requiredDocument" | "requestDocument" | "damageAssessment" | "damageAssessmentDocument"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1378,6 +1379,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DamageAssessmentDocument: {
+      payload: Prisma.$DamageAssessmentDocumentPayload<ExtArgs>
+      fields: Prisma.DamageAssessmentDocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DamageAssessmentDocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DamageAssessmentDocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.DamageAssessmentDocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DamageAssessmentDocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>
+        }
+        findMany: {
+          args: Prisma.DamageAssessmentDocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>[]
+        }
+        create: {
+          args: Prisma.DamageAssessmentDocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>
+        }
+        createMany: {
+          args: Prisma.DamageAssessmentDocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DamageAssessmentDocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>[]
+        }
+        delete: {
+          args: Prisma.DamageAssessmentDocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>
+        }
+        update: {
+          args: Prisma.DamageAssessmentDocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.DamageAssessmentDocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DamageAssessmentDocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DamageAssessmentDocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>[]
+        }
+        upsert: {
+          args: Prisma.DamageAssessmentDocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DamageAssessmentDocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.DamageAssessmentDocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDamageAssessmentDocument>
+        }
+        groupBy: {
+          args: Prisma.DamageAssessmentDocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DamageAssessmentDocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DamageAssessmentDocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DamageAssessmentDocumentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1469,6 +1544,7 @@ export const CitizenProfileScalarFieldEnum = {
   user_id: 'user_id',
   date_of_birth: 'date_of_birth',
   verification_document: 'verification_document',
+  id_selfie: 'id_selfie',
   rejection_reason: 'rejection_reason',
   verified_at: 'verified_at',
   created_at: 'created_at',
@@ -1622,6 +1698,21 @@ export const DamageAssessmentScalarFieldEnum = {
 } as const
 
 export type DamageAssessmentScalarFieldEnum = (typeof DamageAssessmentScalarFieldEnum)[keyof typeof DamageAssessmentScalarFieldEnum]
+
+
+export const DamageAssessmentDocumentScalarFieldEnum = {
+  id: 'id',
+  assessment_id: 'assessment_id',
+  name: 'name',
+  file_type: 'file_type',
+  file_url: 'file_url',
+  file_id: 'file_id',
+  file_path: 'file_path',
+  uploaded_at: 'uploaded_at',
+  created_at: 'created_at'
+} as const
+
+export type DamageAssessmentDocumentScalarFieldEnum = (typeof DamageAssessmentDocumentScalarFieldEnum)[keyof typeof DamageAssessmentDocumentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2034,6 +2125,7 @@ export type GlobalOmitConfig = {
   requiredDocument?: Prisma.RequiredDocumentOmit
   requestDocument?: Prisma.RequestDocumentOmit
   damageAssessment?: Prisma.DamageAssessmentOmit
+  damageAssessmentDocument?: Prisma.DamageAssessmentDocumentOmit
 }
 
 /* Types for Logging */

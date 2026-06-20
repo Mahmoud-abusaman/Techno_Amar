@@ -104,3 +104,8 @@ export type RequestDocument = Prisma.RequestDocumentModel
  * 
  */
 export type DamageAssessment = Prisma.DamageAssessmentModel
+/**
+ * Model DamageAssessmentDocument
+ * 
+ */
+export type DamageAssessmentDocument = Prisma.DamageAssessmentDocumentModel

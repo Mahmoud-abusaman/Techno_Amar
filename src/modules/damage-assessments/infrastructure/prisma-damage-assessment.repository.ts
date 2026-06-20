@@ -8,6 +8,7 @@ import {
 import {
   DamageAssessmentEntity,
   DamageAssessmentWithCitizen,
+  DamageAssessmentWithDocuments,
 } from '@damage-assessments/domain/entities/damage-assessment.entity';
 
 const citizenSelect = {
@@ -16,28 +17,49 @@ const citizenSelect = {
   phone: true,
 } as const;
 
+const documentsInclude = {
+  documents: { orderBy: { uploaded_at: 'asc' as const } },
+};
+
 @Injectable()
 export class PrismaDamageAssessmentRepository
   implements IDamageAssessmentRepository
 {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: CreateDamageAssessmentData): Promise<DamageAssessmentEntity> {
+  create(data: CreateDamageAssessmentData): Promise<DamageAssessmentWithDocuments> {
+    const { documents, ...assessmentData } = data;
     return this.prisma.damageAssessment.create({
-      data,
-    }) as Promise<DamageAssessmentEntity>;
+      data: {
+        ...assessmentData,
+        documents: {
+          create: documents.map((doc) => ({
+            name: doc.name,
+            file_type: doc.file_type,
+            file_url: doc.file_url,
+            file_id: doc.file_id,
+            file_path: doc.file_path ?? null,
+          })),
+        },
+      },
+      include: documentsInclude,
+    }) as Promise<DamageAssessmentWithDocuments>;
   }
 
-  findByCitizenId(citizenId: bigint): Promise<DamageAssessmentEntity | null> {
+  findByCitizenId(
+    citizenId: bigint,
+  ): Promise<DamageAssessmentWithDocuments | null> {
     return this.prisma.damageAssessment.findUnique({
       where: { citizen_id: citizenId },
-    }) as Promise<DamageAssessmentEntity | null>;
+      include: documentsInclude,
+    }) as Promise<DamageAssessmentWithDocuments | null>;
   }
 
-  findById(id: bigint): Promise<DamageAssessmentEntity | null> {
+  findById(id: bigint): Promise<DamageAssessmentWithDocuments | null> {
     return this.prisma.damageAssessment.findUnique({
       where: { id },
-    }) as Promise<DamageAssessmentEntity | null>;
+      include: documentsInclude,
+    }) as Promise<DamageAssessmentWithDocuments | null>;
   }
 
   findByIdWithCitizen(
@@ -45,7 +67,10 @@ export class PrismaDamageAssessmentRepository
   ): Promise<DamageAssessmentWithCitizen | null> {
     return this.prisma.damageAssessment.findUnique({
       where: { id },
-      include: { citizen: { select: citizenSelect } },
+      include: {
+        citizen: { select: citizenSelect },
+        ...documentsInclude,
+      },
     }) as Promise<DamageAssessmentWithCitizen | null>;
   }
 
@@ -65,7 +90,10 @@ export class PrismaDamageAssessmentRepository
 
     return this.prisma.damageAssessment.findMany({
       where,
-      include: { citizen: { select: citizenSelect } },
+      include: {
+        citizen: { select: citizenSelect },
+        ...documentsInclude,
+      },
       orderBy: { submitted_at: 'desc' },
     }) as Promise<DamageAssessmentWithCitizen[]>;
   }

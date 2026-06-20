@@ -73,7 +73,9 @@ export const SignupDocs = () =>
     ApiOperation({
       summary: 'Register as a citizen (public)',
       description:
-        'Open to all. Creates a CITIZEN account in PENDING_VERIFICATION status. No tokens are issued until an admin approves the account.',
+        'Open to all. Creates a CITIZEN account in PENDING_VERIFICATION status. ' +
+        'Upload the national ID PDF and a selfie holding the ID to ImageKit first (see GET /auth/imagekit/upload-auth), ' +
+        'then include both in verification_documents. No tokens are issued until an admin approves the account.',
     }),
     ApiBody({
       type: SignupDto,
@@ -88,6 +90,20 @@ export const SignupDocs = () =>
             phone: '+970591234567',
             address: 'Al-Rimal, Gaza City',
             city: 'GAZA',
+            verification_documents: {
+              id_document: {
+                file_name: 'National ID Copy.pdf',
+                file_type: 'application/pdf',
+                file_url: 'https://ik.imagekit.io/TechnoAmar/citizens/id.pdf',
+                file_id: 'file_abc123',
+              },
+              id_selfie: {
+                file_name: 'Selfie with ID.jpg',
+                file_type: 'image/jpeg',
+                file_url: 'https://ik.imagekit.io/TechnoAmar/citizens/selfie.jpg',
+                file_id: 'file_selfie123',
+              },
+            },
           },
         },
       },
@@ -97,6 +113,17 @@ export const SignupDocs = () =>
       status: 409,
       description: 'A user with this national_id already exists',
     }),
+  );
+
+export const ImageKitUploadAuthDocs = () =>
+  applyDecorators(
+    ApiOperation({
+      summary: 'Get ImageKit upload auth for registration (public)',
+      description:
+        'Public endpoint for citizen registration. Upload PDF and image files directly to ImageKit ' +
+        'from the client, then pass the returned file metadata in POST /auth/signup.',
+    }),
+    ApiResponse({ status: 200, description: 'ImageKit upload authentication parameters' }),
   );
 
 export const RefreshDocs = () =>

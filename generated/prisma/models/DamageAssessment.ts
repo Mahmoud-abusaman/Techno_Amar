@@ -253,6 +253,7 @@ export type DamageAssessmentWhereInput = {
   created_at?: Prisma.DateTimeFilter<"DamageAssessment"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"DamageAssessment"> | Date | string
   citizen?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  documents?: Prisma.DamageAssessmentDocumentListRelationFilter
 }
 
 export type DamageAssessmentOrderByWithRelationInput = {
@@ -266,6 +267,7 @@ export type DamageAssessmentOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   citizen?: Prisma.UserOrderByWithRelationInput
+  documents?: Prisma.DamageAssessmentDocumentOrderByRelationAggregateInput
 }
 
 export type DamageAssessmentWhereUniqueInput = Prisma.AtLeast<{
@@ -282,6 +284,7 @@ export type DamageAssessmentWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"DamageAssessment"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"DamageAssessment"> | Date | string
   citizen?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  documents?: Prisma.DamageAssessmentDocumentListRelationFilter
 }, "id" | "citizen_id">
 
 export type DamageAssessmentOrderByWithAggregationInput = {
@@ -326,6 +329,7 @@ export type DamageAssessmentCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   citizen: Prisma.UserCreateNestedOneWithoutDamage_assessmentsInput
+  documents?: Prisma.DamageAssessmentDocumentCreateNestedManyWithoutAssessmentInput
 }
 
 export type DamageAssessmentUncheckedCreateInput = {
@@ -338,6 +342,7 @@ export type DamageAssessmentUncheckedCreateInput = {
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  documents?: Prisma.DamageAssessmentDocumentUncheckedCreateNestedManyWithoutAssessmentInput
 }
 
 export type DamageAssessmentUpdateInput = {
@@ -350,6 +355,7 @@ export type DamageAssessmentUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   citizen?: Prisma.UserUpdateOneRequiredWithoutDamage_assessmentsNestedInput
+  documents?: Prisma.DamageAssessmentDocumentUpdateManyWithoutAssessmentNestedInput
 }
 
 export type DamageAssessmentUncheckedUpdateInput = {
@@ -362,6 +368,7 @@ export type DamageAssessmentUncheckedUpdateInput = {
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DamageAssessmentDocumentUncheckedUpdateManyWithoutAssessmentNestedInput
 }
 
 export type DamageAssessmentCreateManyInput = {
@@ -455,6 +462,11 @@ export type DamageAssessmentSumOrderByAggregateInput = {
   citizen_id?: Prisma.SortOrder
 }
 
+export type DamageAssessmentScalarRelationFilter = {
+  is?: Prisma.DamageAssessmentWhereInput
+  isNot?: Prisma.DamageAssessmentWhereInput
+}
+
 export type DamageAssessmentCreateNestedManyWithoutCitizenInput = {
   create?: Prisma.XOR<Prisma.DamageAssessmentCreateWithoutCitizenInput, Prisma.DamageAssessmentUncheckedCreateWithoutCitizenInput> | Prisma.DamageAssessmentCreateWithoutCitizenInput[] | Prisma.DamageAssessmentUncheckedCreateWithoutCitizenInput[]
   connectOrCreate?: Prisma.DamageAssessmentCreateOrConnectWithoutCitizenInput | Prisma.DamageAssessmentCreateOrConnectWithoutCitizenInput[]
@@ -505,6 +517,20 @@ export type EnumDamageAssessmentStatusFieldUpdateOperationsInput = {
   set?: $Enums.DamageAssessmentStatus
 }
 
+export type DamageAssessmentCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.DamageAssessmentCreateWithoutDocumentsInput, Prisma.DamageAssessmentUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.DamageAssessmentCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.DamageAssessmentWhereUniqueInput
+}
+
+export type DamageAssessmentUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.DamageAssessmentCreateWithoutDocumentsInput, Prisma.DamageAssessmentUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.DamageAssessmentCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.DamageAssessmentUpsertWithoutDocumentsInput
+  connect?: Prisma.DamageAssessmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DamageAssessmentUpdateToOneWithWhereWithoutDocumentsInput, Prisma.DamageAssessmentUpdateWithoutDocumentsInput>, Prisma.DamageAssessmentUncheckedUpdateWithoutDocumentsInput>
+}
+
 export type DamageAssessmentCreateWithoutCitizenInput = {
   id?: bigint | number
   location: string
@@ -514,6 +540,7 @@ export type DamageAssessmentCreateWithoutCitizenInput = {
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  documents?: Prisma.DamageAssessmentDocumentCreateNestedManyWithoutAssessmentInput
 }
 
 export type DamageAssessmentUncheckedCreateWithoutCitizenInput = {
@@ -525,6 +552,7 @@ export type DamageAssessmentUncheckedCreateWithoutCitizenInput = {
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  documents?: Prisma.DamageAssessmentDocumentUncheckedCreateNestedManyWithoutAssessmentInput
 }
 
 export type DamageAssessmentCreateOrConnectWithoutCitizenInput = {
@@ -568,6 +596,70 @@ export type DamageAssessmentScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"DamageAssessment"> | Date | string
 }
 
+export type DamageAssessmentCreateWithoutDocumentsInput = {
+  id?: bigint | number
+  location: string
+  description: string
+  damage_severity: $Enums.DamageSeverity
+  status?: $Enums.DamageAssessmentStatus
+  submitted_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  citizen: Prisma.UserCreateNestedOneWithoutDamage_assessmentsInput
+}
+
+export type DamageAssessmentUncheckedCreateWithoutDocumentsInput = {
+  id?: bigint | number
+  citizen_id: bigint | number
+  location: string
+  description: string
+  damage_severity: $Enums.DamageSeverity
+  status?: $Enums.DamageAssessmentStatus
+  submitted_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type DamageAssessmentCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.DamageAssessmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.DamageAssessmentCreateWithoutDocumentsInput, Prisma.DamageAssessmentUncheckedCreateWithoutDocumentsInput>
+}
+
+export type DamageAssessmentUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.DamageAssessmentUpdateWithoutDocumentsInput, Prisma.DamageAssessmentUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.DamageAssessmentCreateWithoutDocumentsInput, Prisma.DamageAssessmentUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.DamageAssessmentWhereInput
+}
+
+export type DamageAssessmentUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.DamageAssessmentWhereInput
+  data: Prisma.XOR<Prisma.DamageAssessmentUpdateWithoutDocumentsInput, Prisma.DamageAssessmentUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type DamageAssessmentUpdateWithoutDocumentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  damage_severity?: Prisma.EnumDamageSeverityFieldUpdateOperationsInput | $Enums.DamageSeverity
+  status?: Prisma.EnumDamageAssessmentStatusFieldUpdateOperationsInput | $Enums.DamageAssessmentStatus
+  submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  citizen?: Prisma.UserUpdateOneRequiredWithoutDamage_assessmentsNestedInput
+}
+
+export type DamageAssessmentUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  citizen_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  damage_severity?: Prisma.EnumDamageSeverityFieldUpdateOperationsInput | $Enums.DamageSeverity
+  status?: Prisma.EnumDamageAssessmentStatusFieldUpdateOperationsInput | $Enums.DamageAssessmentStatus
+  submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type DamageAssessmentCreateManyCitizenInput = {
   id?: bigint | number
   location: string
@@ -588,6 +680,7 @@ export type DamageAssessmentUpdateWithoutCitizenInput = {
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DamageAssessmentDocumentUpdateManyWithoutAssessmentNestedInput
 }
 
 export type DamageAssessmentUncheckedUpdateWithoutCitizenInput = {
@@ -599,6 +692,7 @@ export type DamageAssessmentUncheckedUpdateWithoutCitizenInput = {
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DamageAssessmentDocumentUncheckedUpdateManyWithoutAssessmentNestedInput
 }
 
 export type DamageAssessmentUncheckedUpdateManyWithoutCitizenInput = {
@@ -613,6 +707,35 @@ export type DamageAssessmentUncheckedUpdateManyWithoutCitizenInput = {
 }
 
 
+/**
+ * Count Type DamageAssessmentCountOutputType
+ */
+
+export type DamageAssessmentCountOutputType = {
+  documents: number
+}
+
+export type DamageAssessmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  documents?: boolean | DamageAssessmentCountOutputTypeCountDocumentsArgs
+}
+
+/**
+ * DamageAssessmentCountOutputType without action
+ */
+export type DamageAssessmentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DamageAssessmentCountOutputType
+   */
+  select?: Prisma.DamageAssessmentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * DamageAssessmentCountOutputType without action
+ */
+export type DamageAssessmentCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DamageAssessmentDocumentWhereInput
+}
+
 
 export type DamageAssessmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -625,6 +748,8 @@ export type DamageAssessmentSelect<ExtArgs extends runtime.Types.Extensions.Inte
   created_at?: boolean
   updated_at?: boolean
   citizen?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  documents?: boolean | Prisma.DamageAssessment$documentsArgs<ExtArgs>
+  _count?: boolean | Prisma.DamageAssessmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["damageAssessment"]>
 
 export type DamageAssessmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -668,6 +793,8 @@ export type DamageAssessmentSelectScalar = {
 export type DamageAssessmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "citizen_id" | "location" | "description" | "damage_severity" | "status" | "submitted_at" | "created_at" | "updated_at", ExtArgs["result"]["damageAssessment"]>
 export type DamageAssessmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   citizen?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  documents?: boolean | Prisma.DamageAssessment$documentsArgs<ExtArgs>
+  _count?: boolean | Prisma.DamageAssessmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DamageAssessmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   citizen?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -680,6 +807,7 @@ export type $DamageAssessmentPayload<ExtArgs extends runtime.Types.Extensions.In
   name: "DamageAssessment"
   objects: {
     citizen: Prisma.$UserPayload<ExtArgs>
+    documents: Prisma.$DamageAssessmentDocumentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1086,6 +1214,7 @@ readonly fields: DamageAssessmentFieldRefs;
 export interface Prisma__DamageAssessmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   citizen<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  documents<T extends Prisma.DamageAssessment$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DamageAssessment$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DamageAssessmentDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1522,6 +1651,30 @@ export type DamageAssessmentDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many DamageAssessments to delete.
    */
   limit?: number
+}
+
+/**
+ * DamageAssessment.documents
+ */
+export type DamageAssessment$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DamageAssessmentDocument
+   */
+  select?: Prisma.DamageAssessmentDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DamageAssessmentDocument
+   */
+  omit?: Prisma.DamageAssessmentDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DamageAssessmentDocumentInclude<ExtArgs> | null
+  where?: Prisma.DamageAssessmentDocumentWhereInput
+  orderBy?: Prisma.DamageAssessmentDocumentOrderByWithRelationInput | Prisma.DamageAssessmentDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.DamageAssessmentDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DamageAssessmentDocumentScalarFieldEnum | Prisma.DamageAssessmentDocumentScalarFieldEnum[]
 }
 
 /**

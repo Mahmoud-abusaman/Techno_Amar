@@ -43,12 +43,16 @@ describe('GetDamageAssessmentUseCase', () => {
   });
 
   it('returns assessment when citizen is the owner', async () => {
-    repo.findById.mockResolvedValue(makeAssessment({ citizen_id: 10n }));
+    repo.findById.mockResolvedValue({
+      ...makeAssessment({ citizen_id: 10n }),
+      documents: [],
+    });
 
     const result = await useCase.execute(10n, 1n);
 
     expect(result.id).toBe('1');
     expect(result.citizen_id).toBe('10');
+    expect(result.images).toEqual([]);
   });
 
   it('throws NotFoundException when assessment does not exist', async () => {
@@ -60,7 +64,10 @@ describe('GetDamageAssessmentUseCase', () => {
   });
 
   it('throws ForbiddenException when citizen is not the owner', async () => {
-    repo.findById.mockResolvedValue(makeAssessment({ citizen_id: 20n }));
+    repo.findById.mockResolvedValue({
+      ...makeAssessment({ citizen_id: 20n }),
+      documents: [],
+    });
 
     await expect(useCase.execute(10n, 1n)).rejects.toThrow(
       new ForbiddenException(

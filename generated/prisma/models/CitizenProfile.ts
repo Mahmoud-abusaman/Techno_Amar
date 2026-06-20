@@ -41,6 +41,7 @@ export type CitizenProfileMinAggregateOutputType = {
   user_id: bigint | null
   date_of_birth: Date | null
   verification_document: string | null
+  id_selfie: string | null
   rejection_reason: string | null
   verified_at: Date | null
   created_at: Date | null
@@ -52,6 +53,7 @@ export type CitizenProfileMaxAggregateOutputType = {
   user_id: bigint | null
   date_of_birth: Date | null
   verification_document: string | null
+  id_selfie: string | null
   rejection_reason: string | null
   verified_at: Date | null
   created_at: Date | null
@@ -63,6 +65,7 @@ export type CitizenProfileCountAggregateOutputType = {
   user_id: number
   date_of_birth: number
   verification_document: number
+  id_selfie: number
   rejection_reason: number
   verified_at: number
   created_at: number
@@ -86,6 +89,7 @@ export type CitizenProfileMinAggregateInputType = {
   user_id?: true
   date_of_birth?: true
   verification_document?: true
+  id_selfie?: true
   rejection_reason?: true
   verified_at?: true
   created_at?: true
@@ -97,6 +101,7 @@ export type CitizenProfileMaxAggregateInputType = {
   user_id?: true
   date_of_birth?: true
   verification_document?: true
+  id_selfie?: true
   rejection_reason?: true
   verified_at?: true
   created_at?: true
@@ -108,6 +113,7 @@ export type CitizenProfileCountAggregateInputType = {
   user_id?: true
   date_of_birth?: true
   verification_document?: true
+  id_selfie?: true
   rejection_reason?: true
   verified_at?: true
   created_at?: true
@@ -206,6 +212,7 @@ export type CitizenProfileGroupByOutputType = {
   user_id: bigint
   date_of_birth: Date | null
   verification_document: string | null
+  id_selfie: string | null
   rejection_reason: string | null
   verified_at: Date | null
   created_at: Date
@@ -240,6 +247,7 @@ export type CitizenProfileWhereInput = {
   user_id?: Prisma.BigIntFilter<"CitizenProfile"> | bigint | number
   date_of_birth?: Prisma.DateTimeNullableFilter<"CitizenProfile"> | Date | string | null
   verification_document?: Prisma.StringNullableFilter<"CitizenProfile"> | string | null
+  id_selfie?: Prisma.StringNullableFilter<"CitizenProfile"> | string | null
   rejection_reason?: Prisma.StringNullableFilter<"CitizenProfile"> | string | null
   verified_at?: Prisma.DateTimeNullableFilter<"CitizenProfile"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"CitizenProfile"> | Date | string
@@ -252,6 +260,7 @@ export type CitizenProfileOrderByWithRelationInput = {
   user_id?: Prisma.SortOrder
   date_of_birth?: Prisma.SortOrderInput | Prisma.SortOrder
   verification_document?: Prisma.SortOrderInput | Prisma.SortOrder
+  id_selfie?: Prisma.SortOrderInput | Prisma.SortOrder
   rejection_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   verified_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -267,6 +276,7 @@ export type CitizenProfileWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CitizenProfileWhereInput | Prisma.CitizenProfileWhereInput[]
   date_of_birth?: Prisma.DateTimeNullableFilter<"CitizenProfile"> | Date | string | null
   verification_document?: Prisma.StringNullableFilter<"CitizenProfile"> | string | null
+  id_selfie?: Prisma.StringNullableFilter<"CitizenProfile"> | string | null
   rejection_reason?: Prisma.StringNullableFilter<"CitizenProfile"> | string | null
   verified_at?: Prisma.DateTimeNullableFilter<"CitizenProfile"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"CitizenProfile"> | Date | string
@@ -279,6 +289,7 @@ export type CitizenProfileOrderByWithAggregationInput = {
   user_id?: Prisma.SortOrder
   date_of_birth?: Prisma.SortOrderInput | Prisma.SortOrder
   verification_document?: Prisma.SortOrderInput | Prisma.SortOrder
+  id_selfie?: Prisma.SortOrderInput | Prisma.SortOrder
   rejection_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   verified_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -298,6 +309,7 @@ export type CitizenProfileScalarWhereWithAggregatesInput = {
   user_id?: Prisma.BigIntWithAggregatesFilter<"CitizenProfile"> | bigint | number
   date_of_birth?: Prisma.DateTimeNullableWithAggregatesFilter<"CitizenProfile"> | Date | string | null
   verification_document?: Prisma.StringNullableWithAggregatesFilter<"CitizenProfile"> | string | null
+  id_selfie?: Prisma.StringNullableWithAggregatesFilter<"CitizenProfile"> | string | null
   rejection_reason?: Prisma.StringNullableWithAggregatesFilter<"CitizenProfile"> | string | null
   verified_at?: Prisma.DateTimeNullableWithAggregatesFilter<"CitizenProfile"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"CitizenProfile"> | Date | string
@@ -308,6 +320,7 @@ export type CitizenProfileCreateInput = {
   id?: bigint | number
   date_of_birth?: Date | string | null
   verification_document?: string | null
+  id_selfie?: string | null
   rejection_reason?: string | null
   verified_at?: Date | string | null
   created_at?: Date | string
@@ -320,6 +333,7 @@ export type CitizenProfileUncheckedCreateInput = {
   user_id: bigint | number
   date_of_birth?: Date | string | null
   verification_document?: string | null
+  id_selfie?: string | null
   rejection_reason?: string | null
   verified_at?: Date | string | null
   created_at?: Date | string
@@ -330,6 +344,7 @@ export type CitizenProfileUpdateInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   verification_document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  id_selfie?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejection_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -342,6 +357,7 @@ export type CitizenProfileUncheckedUpdateInput = {
   user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   verification_document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  id_selfie?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejection_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -353,6 +369,7 @@ export type CitizenProfileCreateManyInput = {
   user_id: bigint | number
   date_of_birth?: Date | string | null
   verification_document?: string | null
+  id_selfie?: string | null
   rejection_reason?: string | null
   verified_at?: Date | string | null
   created_at?: Date | string
@@ -363,6 +380,7 @@ export type CitizenProfileUpdateManyMutationInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   verification_document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  id_selfie?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejection_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,6 +392,7 @@ export type CitizenProfileUncheckedUpdateManyInput = {
   user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   verification_document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  id_selfie?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejection_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -390,6 +409,7 @@ export type CitizenProfileCountOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   date_of_birth?: Prisma.SortOrder
   verification_document?: Prisma.SortOrder
+  id_selfie?: Prisma.SortOrder
   rejection_reason?: Prisma.SortOrder
   verified_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -406,6 +426,7 @@ export type CitizenProfileMaxOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   date_of_birth?: Prisma.SortOrder
   verification_document?: Prisma.SortOrder
+  id_selfie?: Prisma.SortOrder
   rejection_reason?: Prisma.SortOrder
   verified_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -417,6 +438,7 @@ export type CitizenProfileMinOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   date_of_birth?: Prisma.SortOrder
   verification_document?: Prisma.SortOrder
+  id_selfie?: Prisma.SortOrder
   rejection_reason?: Prisma.SortOrder
   verified_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -468,6 +490,7 @@ export type CitizenProfileCreateWithoutUserInput = {
   id?: bigint | number
   date_of_birth?: Date | string | null
   verification_document?: string | null
+  id_selfie?: string | null
   rejection_reason?: string | null
   verified_at?: Date | string | null
   created_at?: Date | string
@@ -478,6 +501,7 @@ export type CitizenProfileUncheckedCreateWithoutUserInput = {
   id?: bigint | number
   date_of_birth?: Date | string | null
   verification_document?: string | null
+  id_selfie?: string | null
   rejection_reason?: string | null
   verified_at?: Date | string | null
   created_at?: Date | string
@@ -504,6 +528,7 @@ export type CitizenProfileUpdateWithoutUserInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   verification_document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  id_selfie?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejection_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -514,6 +539,7 @@ export type CitizenProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   verification_document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  id_selfie?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejection_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -527,6 +553,7 @@ export type CitizenProfileSelect<ExtArgs extends runtime.Types.Extensions.Intern
   user_id?: boolean
   date_of_birth?: boolean
   verification_document?: boolean
+  id_selfie?: boolean
   rejection_reason?: boolean
   verified_at?: boolean
   created_at?: boolean
@@ -539,6 +566,7 @@ export type CitizenProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   user_id?: boolean
   date_of_birth?: boolean
   verification_document?: boolean
+  id_selfie?: boolean
   rejection_reason?: boolean
   verified_at?: boolean
   created_at?: boolean
@@ -551,6 +579,7 @@ export type CitizenProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   user_id?: boolean
   date_of_birth?: boolean
   verification_document?: boolean
+  id_selfie?: boolean
   rejection_reason?: boolean
   verified_at?: boolean
   created_at?: boolean
@@ -563,13 +592,14 @@ export type CitizenProfileSelectScalar = {
   user_id?: boolean
   date_of_birth?: boolean
   verification_document?: boolean
+  id_selfie?: boolean
   rejection_reason?: boolean
   verified_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type CitizenProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "date_of_birth" | "verification_document" | "rejection_reason" | "verified_at" | "created_at" | "updated_at", ExtArgs["result"]["citizenProfile"]>
+export type CitizenProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "user_id" | "date_of_birth" | "verification_document" | "id_selfie" | "rejection_reason" | "verified_at" | "created_at" | "updated_at", ExtArgs["result"]["citizenProfile"]>
 export type CitizenProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -590,6 +620,7 @@ export type $CitizenProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
     user_id: bigint
     date_of_birth: Date | null
     verification_document: string | null
+    id_selfie: string | null
     rejection_reason: string | null
     verified_at: Date | null
     created_at: Date
@@ -1022,6 +1053,7 @@ export interface CitizenProfileFieldRefs {
   readonly user_id: Prisma.FieldRef<"CitizenProfile", 'BigInt'>
   readonly date_of_birth: Prisma.FieldRef<"CitizenProfile", 'DateTime'>
   readonly verification_document: Prisma.FieldRef<"CitizenProfile", 'String'>
+  readonly id_selfie: Prisma.FieldRef<"CitizenProfile", 'String'>
   readonly rejection_reason: Prisma.FieldRef<"CitizenProfile", 'String'>
   readonly verified_at: Prisma.FieldRef<"CitizenProfile", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"CitizenProfile", 'DateTime'>

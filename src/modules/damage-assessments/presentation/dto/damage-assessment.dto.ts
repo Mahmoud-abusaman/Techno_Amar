@@ -1,15 +1,20 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsArray,
   IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
   MaxLength,
+  ValidateNested,
+  ArrayMinSize,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import {
   DamageAssessmentStatus,
   DamageSeverity,
 } from '@/generated/prisma/enums';
+import { ImageKitImageFileDto } from '@uploads/presentation/dto/imagekit-file.dto';
 
 export class SubmitDamageAssessmentDto {
   @ApiProperty({ example: 'Al-Rimal Street, Gaza City' })
@@ -29,6 +34,16 @@ export class SubmitDamageAssessmentDto {
   @ApiProperty({ enum: DamageSeverity, example: DamageSeverity.MODERATE })
   @IsEnum(DamageSeverity)
   damage_severity: DamageSeverity;
+
+  @ApiProperty({
+    type: [ImageKitImageFileDto],
+    description: 'Photos of the damage (JPEG, PNG, or WebP)',
+  })
+  @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested({ each: true })
+  @Type(() => ImageKitImageFileDto)
+  images: ImageKitImageFileDto[];
 }
 
 export class DamageAssessmentFiltersDto {

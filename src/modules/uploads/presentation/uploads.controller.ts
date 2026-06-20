@@ -22,7 +22,7 @@ export class UploadsController {
   @ApiOperation({
     summary: 'Get ImageKit client-side upload authentication parameters',
     description:
-      'Upload files directly to ImageKit from the client. Only PDF files are accepted. ' +
+      'Upload files directly to ImageKit from the client. PDFs and images (JPEG, PNG, WebP) are accepted depending on the use case. ' +
       'POST to https://upload.imagekit.io/api/v1/files/upload with file, fileName, publicKey, signature, token, and expire.',
   })
   auth() {

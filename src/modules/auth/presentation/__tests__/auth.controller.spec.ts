@@ -8,6 +8,7 @@ import { RefreshTokensUseCase } from '@auth/application/refresh-tokens.use-case'
 import { ForgotPasswordUseCase } from '@auth/application/forgot-password.use-case';
 import { VerifyOtpUseCase } from '@auth/application/verify-otp.use-case';
 import { ResetPasswordUseCase } from '@auth/application/reset-password.use-case';
+import { GetImageKitUploadAuthUseCase } from '@uploads/application/get-imagekit-upload-auth.use-case';
 import { ResponseInterceptor } from '@shared/common/interceptors/response.interceptor';
 import {
   UnauthorizedException,
@@ -57,6 +58,7 @@ describe('AuthController (integration)', () => {
   >;
   let verifyOtpUseCase: jest.Mocked<Pick<VerifyOtpUseCase, 'execute'>>;
   let resetPasswordUseCase: jest.Mocked<Pick<ResetPasswordUseCase, 'execute'>>;
+  let getUploadAuthUseCase: jest.Mocked<Pick<GetImageKitUploadAuthUseCase, 'execute'>>;
 
   beforeEach(async () => {
     loginUseCase = { execute: jest.fn() };
@@ -65,6 +67,7 @@ describe('AuthController (integration)', () => {
     forgotPasswordUseCase = { execute: jest.fn() };
     verifyOtpUseCase = { execute: jest.fn() };
     resetPasswordUseCase = { execute: jest.fn() };
+    getUploadAuthUseCase = { execute: jest.fn() };
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
@@ -75,6 +78,7 @@ describe('AuthController (integration)', () => {
         { provide: ForgotPasswordUseCase, useValue: forgotPasswordUseCase },
         { provide: VerifyOtpUseCase, useValue: verifyOtpUseCase },
         { provide: ResetPasswordUseCase, useValue: resetPasswordUseCase },
+        { provide: GetImageKitUploadAuthUseCase, useValue: getUploadAuthUseCase },
       ],
     }).compile();
 
@@ -190,6 +194,20 @@ describe('AuthController (integration)', () => {
       national_id: '123456789',
       phone: '+970591234567',
       city: 'GAZA',
+      verification_documents: {
+        id_document: {
+          file_name: 'National ID Copy.pdf',
+          file_type: 'application/pdf',
+          file_url: 'https://ik.imagekit.io/TechnoAmar/citizens/id.pdf',
+          file_id: 'file_abc123',
+        },
+        id_selfie: {
+          file_name: 'Selfie with ID.jpg',
+          file_type: 'image/jpeg',
+          file_url: 'https://ik.imagekit.io/TechnoAmar/citizens/selfie.jpg',
+          file_id: 'file_selfie123',
+        },
+      },
     };
 
     it('201 — returns pending user without tokens on successful registration', async () => {
@@ -272,6 +290,31 @@ describe('AuthController (integration)', () => {
 
       const callArg = signupUseCase.execute.mock.calls[0][0];
       expect(callArg).not.toHaveProperty('employee_id');
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // GET /auth/imagekit/upload-auth
+  // -------------------------------------------------------------------------
+
+  describe('GET /auth/imagekit/upload-auth', () => {
+    it('200 — returns ImageKit upload auth parameters', async () => {
+      getUploadAuthUseCase.execute.mockReturnValue({
+        token: 'token',
+        expire: 1234567890,
+        signature: 'sig',
+        publicKey: 'pk',
+        urlEndpoint: 'https://ik.imagekit.io/TechnoAmar',
+      });
+
+      const { body } = await request(app.getHttpServer())
+        .get('/auth/imagekit/upload-auth')
+        .expect(200);
+
+      expect(body.data).toMatchObject({
+        token: 'token',
+        publicKey: 'pk',
+      });
     });
   });
 

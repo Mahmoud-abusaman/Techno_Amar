@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-const ALLOWED_MIME_TYPES = new Set(['application/pdf']);
+const ALLOWED_PDF_MIME_TYPES = new Set(['application/pdf']);
+const ALLOWED_IMAGE_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+]);
 
 @Injectable()
 export class ImageKitFileValidator {
@@ -19,6 +24,14 @@ export class ImageKitFileValidator {
   }
 
   isAllowedMimeType(fileType: string): boolean {
-    return ALLOWED_MIME_TYPES.has(fileType.toLowerCase());
+    return this.isAllowedPdfMimeType(fileType);
+  }
+
+  isAllowedPdfMimeType(fileType: string): boolean {
+    return ALLOWED_PDF_MIME_TYPES.has(fileType.toLowerCase());
+  }
+
+  isAllowedImageMimeType(fileType: string): boolean {
+    return ALLOWED_IMAGE_MIME_TYPES.has(fileType.toLowerCase());
   }
 }
