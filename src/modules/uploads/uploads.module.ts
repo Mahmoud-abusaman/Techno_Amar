@@ -12,6 +12,10 @@ import { UploadsController } from '@uploads/presentation/uploads.controller';
     GetImageKitUploadAuthUseCase,
     ImageKitFileValidator,
   ],
-  exports: [IImageKitAuthPort, ImageKitFileValidator],
+  exports: [
+    IImageKitAuthPort,
+    ImageKitFileValidator,
+    GetImageKitUploadAuthUseCase,
+  ],
 })
 export class UploadsModule {}
