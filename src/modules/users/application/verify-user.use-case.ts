@@ -5,7 +5,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
-import { AccountStatus } from '@/generated/prisma/enums';
+import { AccountStatus, UserRole } from '@/generated/prisma/enums';
 import { toPublicUserWithProfile } from '@users/application/user-response.mapper';
 
 @Injectable()
@@ -20,6 +20,16 @@ export class VerifyUserUseCase {
 
     if (user.account_status === AccountStatus.ACTIVE && user.is_verified) {
       throw new BadRequestException('User is already verified');
+    }
+
+    if (
+      user.role === UserRole.CITIZEN &&
+      (!user.citizen_profile?.verification_document ||
+        !user.citizen_profile?.id_selfie)
+    ) {
+      throw new BadRequestException(
+        'Citizen must upload an ID document and selfie before approval',
+      );
     }
 
     const updated = await this.userRepo.update(id, {

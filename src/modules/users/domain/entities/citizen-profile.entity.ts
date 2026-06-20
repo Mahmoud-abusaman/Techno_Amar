@@ -3,6 +3,7 @@ export class CitizenProfileEntity {
   user_id: bigint;
   date_of_birth: Date | null;
   verification_document: string | null;
+  id_selfie: string | null;
   rejection_reason: string | null;
   verified_at: Date | null;
   created_at: Date;

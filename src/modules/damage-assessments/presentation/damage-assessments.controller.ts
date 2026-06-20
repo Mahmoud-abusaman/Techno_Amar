@@ -44,7 +44,11 @@ export class DamageAssessmentsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Submit a damage assessment (one per citizen)' })
+  @ApiOperation({
+    summary: 'Submit a damage assessment (one per citizen)',
+    description:
+      'Upload damage photos to ImageKit first (GET /uploads/imagekit/auth), then include image metadata in the images array.',
+  })
   create(
     @ActiveUser('sub') userId: string,
     @Body() dto: SubmitDamageAssessmentDto,

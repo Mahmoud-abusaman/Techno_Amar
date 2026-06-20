@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
   HttpCode,
@@ -32,6 +33,8 @@ import {
   ResetPasswordDocs,
 } from './auth.controller.doc';
 import { Public } from './decorators/public.decorator';
+import { GetImageKitUploadAuthUseCase } from '@uploads/application/get-imagekit-upload-auth.use-case';
+import { ImageKitUploadAuthDocs } from './auth.controller.doc';
 
 @ApiTags('auth')
 @Public()
@@ -48,7 +51,14 @@ export class AuthController {
     private readonly verifyOtpUseCase: VerifyOtpUseCase,
     @Inject(ResetPasswordUseCase)
     private readonly resetPasswordUseCase: ResetPasswordUseCase,
+    private readonly getUploadAuth: GetImageKitUploadAuthUseCase,
   ) {}
+
+  @Get('imagekit/upload-auth')
+  @ImageKitUploadAuthDocs()
+  imagekitUploadAuth() {
+    return this.getUploadAuth.execute();
+  }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)

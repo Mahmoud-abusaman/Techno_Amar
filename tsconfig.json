@@ -18,7 +18,9 @@
       "@services/*": ["./src/modules/services/*"],
       "@service-tasks/*": ["./src/modules/service-tasks/*"],
       "@damage-assessments/*": ["./src/modules/damage-assessments/*"],
-      "@service-requests/*": ["./src/modules/service-requests/*"]
+      "@service-requests/*": ["./src/modules/service-requests/*"],
+      "@uploads/*": ["./src/modules/uploads/*"],
+      "@required-documents/*": ["./src/modules/required-documents/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

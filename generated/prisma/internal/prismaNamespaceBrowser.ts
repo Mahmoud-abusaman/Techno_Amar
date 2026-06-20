@@ -61,7 +61,10 @@ export const ModelName = {
   ServiceRequest: 'ServiceRequest',
   RequestTask: 'RequestTask',
   RequestActivity: 'RequestActivity',
-  DamageAssessment: 'DamageAssessment'
+  RequiredDocument: 'RequiredDocument',
+  RequestDocument: 'RequestDocument',
+  DamageAssessment: 'DamageAssessment',
+  DamageAssessmentDocument: 'DamageAssessmentDocument'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -132,6 +135,7 @@ export const CitizenProfileScalarFieldEnum = {
   user_id: 'user_id',
   date_of_birth: 'date_of_birth',
   verification_document: 'verification_document',
+  id_selfie: 'id_selfie',
   rejection_reason: 'rejection_reason',
   verified_at: 'verified_at',
   created_at: 'created_at',
@@ -239,6 +243,39 @@ export const RequestActivityScalarFieldEnum = {
 export type RequestActivityScalarFieldEnum = (typeof RequestActivityScalarFieldEnum)[keyof typeof RequestActivityScalarFieldEnum]
 
 
+export const RequiredDocumentScalarFieldEnum = {
+  id: 'id',
+  service_id: 'service_id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RequiredDocumentScalarFieldEnum = (typeof RequiredDocumentScalarFieldEnum)[keyof typeof RequiredDocumentScalarFieldEnum]
+
+
+export const RequestDocumentScalarFieldEnum = {
+  id: 'id',
+  request_id: 'request_id',
+  required_document_id: 'required_document_id',
+  task_id: 'task_id',
+  name: 'name',
+  file_type: 'file_type',
+  file_url: 'file_url',
+  file_id: 'file_id',
+  file_path: 'file_path',
+  category: 'category',
+  uploaded_by: 'uploaded_by',
+  uploaded_at: 'uploaded_at',
+  created_at: 'created_at'
+} as const
+
+export type RequestDocumentScalarFieldEnum = (typeof RequestDocumentScalarFieldEnum)[keyof typeof RequestDocumentScalarFieldEnum]
+
+
 export const DamageAssessmentScalarFieldEnum = {
   id: 'id',
   citizen_id: 'citizen_id',
@@ -252,6 +289,21 @@ export const DamageAssessmentScalarFieldEnum = {
 } as const
 
 export type DamageAssessmentScalarFieldEnum = (typeof DamageAssessmentScalarFieldEnum)[keyof typeof DamageAssessmentScalarFieldEnum]
+
+
+export const DamageAssessmentDocumentScalarFieldEnum = {
+  id: 'id',
+  assessment_id: 'assessment_id',
+  name: 'name',
+  file_type: 'file_type',
+  file_url: 'file_url',
+  file_id: 'file_id',
+  file_path: 'file_path',
+  uploaded_at: 'uploaded_at',
+  created_at: 'created_at'
+} as const
+
+export type DamageAssessmentDocumentScalarFieldEnum = (typeof DamageAssessmentDocumentScalarFieldEnum)[keyof typeof DamageAssessmentDocumentScalarFieldEnum]
 
 
 export const SortOrder = {

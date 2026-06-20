@@ -94,6 +94,17 @@ enum RequestActivityAction {
   REQUEST_REJECTED
 }
 
+enum DocumentRequirementType {
+  MANDATORY
+  OPTIONAL
+}
+
+enum RequestDocumentCategory {
+  CITIZEN_UPLOADED
+  INTERNAL
+  RESULT
+}
+
 // ======================
 // ORGANIZATION
 // ======================
@@ -167,6 +178,7 @@ model User {
   citizen_requests      ServiceRequest[]  @relation("CitizenRequests")
   assigned_request_tasks RequestTask[]    @relation("AssignedTasks")
   request_activities    RequestActivity[]
+  uploaded_documents    RequestDocument[]
 
   @@map("users")
 }
@@ -180,8 +192,8 @@ model CitizenProfile {
   user_id       BigInt    @unique
   user          User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
   date_of_birth DateTime?
-  // path to the uploaded verification document on disk
   verification_document String?
+  id_selfie             String?
   rejection_reason      String?
   verified_at           DateTime?
   created_at            DateTime  @default(now())
@@ -232,8 +244,9 @@ model Service {
   created_at                DateTime      @default(now())
   updated_at                DateTime      @updatedAt
 
-  workflow_tasks  ServiceTask[]
-  service_requests ServiceRequest[]
+  workflow_tasks     ServiceTask[]
+  service_requests   ServiceRequest[]
+  required_documents RequiredDocument[]
 
   @@map("services")
 }
@@ -279,6 +292,7 @@ model ServiceRequest {
 
   tasks      RequestTask[]
   activities RequestActivity[]
+  documents  RequestDocument[]
 
   @@index([citizen_id])
   @@index([service_id])
@@ -327,6 +341,45 @@ model RequestActivity {
   @@map("request_activities")
 }
 
+model RequiredDocument {
+  id          BigInt                  @id @default(autoincrement())
+  service_id  BigInt
+  service     Service                 @relation(fields: [service_id], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  type        DocumentRequirementType @default(MANDATORY)
+  is_active   Boolean                 @default(true)
+  created_at  DateTime                @default(now())
+  updated_at  DateTime                @updatedAt
+
+  request_documents RequestDocument[]
+
+  @@unique([service_id, name])
+  @@map("required_documents")
+}
+
+model RequestDocument {
+  id                   BigInt                  @id @default(autoincrement())
+  request_id           BigInt
+  request              ServiceRequest          @relation(fields: [request_id], references: [id], onDelete: Cascade)
+  required_document_id BigInt?
+  required_document    RequiredDocument?       @relation(fields: [required_document_id], references: [id], onDelete: SetNull)
+  task_id              BigInt?
+  name                 String
+  file_type            String
+  file_url             String
+  file_id              String
+  file_path            String?
+  category             RequestDocumentCategory @default(CITIZEN_UPLOADED)
+  uploaded_by          BigInt
+  uploader             User                    @relation(fields: [uploaded_by], references: [id])
+  uploaded_at          DateTime                @default(now())
+  created_at           DateTime                @default(now())
+
+  @@index([request_id])
+  @@map("request_documents")
+}
+
 // ======================
 // DAMAGE ASSESSMENT
 // ======================
@@ -343,5 +396,23 @@ model DamageAssessment {
   created_at      DateTime               @default(now())
   updated_at      DateTime               @updatedAt
 
+  documents DamageAssessmentDocument[]
+
   @@map("damage_assessments")
+}
+
+model DamageAssessmentDocument {
+  id            BigInt           @id @default(autoincrement())
+  assessment_id BigInt
+  assessment    DamageAssessment @relation(fields: [assessment_id], references: [id], onDelete: Cascade)
+  name          String
+  file_type     String
+  file_url      String
+  file_id       String
+  file_path     String?
+  uploaded_at   DateTime         @default(now())
+  created_at    DateTime         @default(now())
+
+  @@index([assessment_id])
+  @@map("damage_assessment_documents")
 }

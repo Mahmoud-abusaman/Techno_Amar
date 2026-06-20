@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { UploadsModule } from '@uploads/uploads.module';
 import { IDamageAssessmentRepository } from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
 import { PrismaDamageAssessmentRepository } from '@damage-assessments/infrastructure/prisma-damage-assessment.repository';
 import { SubmitDamageAssessmentUseCase } from '@damage-assessments/application/submit-damage-assessment.use-case';
@@ -11,6 +12,7 @@ import { DamageAssessmentsController } from '@damage-assessments/presentation/da
 import { AdminDamageAssessmentsController } from '@damage-assessments/presentation/admin-damage-assessments.controller';
 
 @Module({
+  imports: [UploadsModule],
   controllers: [DamageAssessmentsController, AdminDamageAssessmentsController],
   providers: [
     {

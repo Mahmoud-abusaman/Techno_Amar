@@ -2,6 +2,7 @@ import { ServiceRequestDetailEntity } from '@service-requests/domain/entities/se
 import { ServiceRequestEntity } from '@service-requests/domain/entities/service-request.entity';
 import { RequestTaskEntity } from '@service-requests/domain/entities/request-task.entity';
 import { RequestActivityEntity } from '@service-requests/domain/entities/request-activity.entity';
+import { RequestDocumentEntity } from '@service-requests/domain/entities/request-document.entity';
 import { RequestTaskWithRequestEntity } from '@service-requests/domain/entities/request-task-with-request.entity';
 
 export type PublicServiceRequest = {
@@ -19,6 +20,21 @@ export type PublicServiceRequest = {
 export type PublicServiceRequestDetail = PublicServiceRequest & {
   service_name: string;
   tasks: PublicRequestTask[];
+  documents: PublicRequestDocument[];
+};
+
+export type PublicRequestDocument = {
+  id: string;
+  request_id: string;
+  required_document_id: string | null;
+  name: string;
+  file_type: string;
+  file_url: string;
+  file_id: string;
+  file_path: string | null;
+  category: string;
+  uploaded_by: string;
+  uploaded_at: Date;
 };
 
 export type PublicRequestTask = {
@@ -97,6 +113,25 @@ export function toPublicServiceRequestDetail(
     ...toPublicServiceRequest(request, request.service_name),
     service_name: request.service_name,
     tasks: request.tasks.map(toPublicRequestTask),
+    documents: (request.documents ?? []).map(toPublicRequestDocument),
+  };
+}
+
+export function toPublicRequestDocument(
+  document: RequestDocumentEntity,
+): PublicRequestDocument {
+  return {
+    id: document.id.toString(),
+    request_id: document.request_id.toString(),
+    required_document_id: document.required_document_id?.toString() ?? null,
+    name: document.name,
+    file_type: document.file_type,
+    file_url: document.file_url,
+    file_id: document.file_id,
+    file_path: document.file_path,
+    category: document.category,
+    uploaded_by: document.uploaded_by.toString(),
+    uploaded_at: document.uploaded_at,
   };
 }
 

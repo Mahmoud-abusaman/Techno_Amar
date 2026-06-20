@@ -20,4 +20,10 @@ export default registerAs('app', () => ({
     length: Number(process.env.OTP_LENGTH || 4),
     expireMinutes: Number(process.env.OTP_EXPIRE_MINUTES || 10),
   },
+  imagekit: {
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+    authExpireSeconds: Number(process.env.IMAGEKIT_AUTH_EXPIRE_SECONDS || 1800),
+  },
 }));

@@ -117,3 +117,20 @@ export const RequestActivityAction = {
 } as const
 
 export type RequestActivityAction = (typeof RequestActivityAction)[keyof typeof RequestActivityAction]
+
+
+export const DocumentRequirementType = {
+  MANDATORY: 'MANDATORY',
+  OPTIONAL: 'OPTIONAL'
+} as const
+
+export type DocumentRequirementType = (typeof DocumentRequirementType)[keyof typeof DocumentRequirementType]
+
+
+export const RequestDocumentCategory = {
+  CITIZEN_UPLOADED: 'CITIZEN_UPLOADED',
+  INTERNAL: 'INTERNAL',
+  RESULT: 'RESULT'
+} as const
+
+export type RequestDocumentCategory = (typeof RequestDocumentCategory)[keyof typeof RequestDocumentCategory]

@@ -47,7 +47,10 @@ describe('GetDamageAssessmentSubmissionStatusUseCase', () => {
   });
 
   it('returns has_submitted true with assessment_id when assessment exists', async () => {
-    repo.findByCitizenId.mockResolvedValue(makeAssessment({ id: 5n }));
+    repo.findByCitizenId.mockResolvedValue({
+      ...makeAssessment({ id: 5n }),
+      documents: [],
+    });
 
     const result = await useCase.execute(10n);
 

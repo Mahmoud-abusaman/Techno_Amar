@@ -13,6 +13,8 @@ import { ServiceRequestEntity } from '@service-requests/domain/entities/service-
 import { ServiceRequestDetailEntity } from '@service-requests/domain/entities/service-request-detail.entity';
 import { RequestActivityEntity } from '@service-requests/domain/entities/request-activity.entity';
 import { RequestTaskEntity } from '@service-requests/domain/entities/request-task.entity';
+import { RequestDocumentEntity } from '@service-requests/domain/entities/request-document.entity';
+import { RequestDocumentCategory } from '@/generated/prisma/enums';
 
 @Injectable()
 export class PrismaServiceRequestRepository implements IServiceRequestRepository {
@@ -64,9 +66,30 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
         },
       });
 
+      const documents = data.documents?.length
+        ? await Promise.all(
+            data.documents.map((doc) =>
+              tx.requestDocument.create({
+                data: {
+                  request_id: request.id,
+                  required_document_id: doc.required_document_id,
+                  name: doc.name,
+                  file_type: doc.file_type,
+                  file_url: doc.file_url,
+                  file_id: doc.file_id,
+                  file_path: doc.file_path ?? null,
+                  category: RequestDocumentCategory.CITIZEN_UPLOADED,
+                  uploaded_by: doc.uploaded_by,
+                },
+              }),
+            ),
+          )
+        : [];
+
       return this.toDetail({
         ...updatedRequest,
         tasks,
+        documents,
         service_name: updatedRequest.service.name,
       });
     });
@@ -87,6 +110,7 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
         include: {
           service: { select: { name: true } },
           tasks: { orderBy: { task_order: 'asc' } },
+          documents: { orderBy: { created_at: 'asc' } },
         },
       })
       .then((row) =>
@@ -94,6 +118,7 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
           ? this.toDetail({
               ...row,
               service_name: row.service.name,
+              documents: row.documents,
             })
           : null,
       );
@@ -170,6 +195,15 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
     };
   }
 
+  findDocuments(requestId: bigint): Promise<RequestDocumentEntity[]> {
+    return this.prisma.requestDocument
+      .findMany({
+        where: { request_id: requestId },
+        orderBy: { created_at: 'asc' },
+      })
+      .then((rows) => rows.map((row) => this.toDocument(row)));
+  }
+
   private toTask(row: {
     id: bigint;
     request_id: bigint;
@@ -201,6 +235,38 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
       rejection_reason: row.rejection_reason,
       created_at: row.created_at,
       updated_at: row.updated_at,
+    };
+  }
+
+  private toDocument(row: {
+    id: bigint;
+    request_id: bigint;
+    required_document_id: bigint | null;
+    task_id: bigint | null;
+    name: string;
+    file_type: string;
+    file_url: string;
+    file_id: string;
+    file_path: string | null;
+    category: string;
+    uploaded_by: bigint;
+    uploaded_at: Date;
+    created_at: Date;
+  }): RequestDocumentEntity {
+    return {
+      id: row.id,
+      request_id: row.request_id,
+      required_document_id: row.required_document_id,
+      task_id: row.task_id,
+      name: row.name,
+      file_type: row.file_type,
+      file_url: row.file_url,
+      file_id: row.file_id,
+      file_path: row.file_path,
+      category: row.category as RequestDocumentEntity['category'],
+      uploaded_by: row.uploaded_by,
+      uploaded_at: row.uploaded_at,
+      created_at: row.created_at,
     };
   }
 
@@ -253,11 +319,27 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
       created_at: Date;
       updated_at: Date;
     }>;
+    documents?: Array<{
+      id: bigint;
+      request_id: bigint;
+      required_document_id: bigint | null;
+      task_id: bigint | null;
+      name: string;
+      file_type: string;
+      file_url: string;
+      file_id: string;
+      file_path: string | null;
+      category: string;
+      uploaded_by: bigint;
+      uploaded_at: Date;
+      created_at: Date;
+    }>;
   }): ServiceRequestDetailEntity {
     return {
       ...this.toEntity(row),
       service_name: row.service_name,
       tasks: row.tasks.map((task) => this.toTask(task)),
+      documents: row.documents?.map((doc) => this.toDocument(doc)) ?? [],
     };
   }
 }

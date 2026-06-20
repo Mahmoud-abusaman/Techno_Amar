@@ -17,6 +17,7 @@ import { SubmitServiceRequestUseCase } from '@service-requests/application/submi
 import { ListMyServiceRequestsUseCase } from '@service-requests/application/list-my-service-requests.use-case';
 import { GetServiceRequestUseCase } from '@service-requests/application/get-service-request.use-case';
 import { GetServiceRequestHistoryUseCase } from '@service-requests/application/get-service-request-history.use-case';
+import { GetServiceRequestDocumentsUseCase } from '@service-requests/application/get-service-request-documents.use-case';
 
 @ApiTags('service-requests')
 @ApiBearerAuth()
@@ -28,6 +29,7 @@ export class ServiceRequestsController {
     private readonly listMyRequests: ListMyServiceRequestsUseCase,
     private readonly getRequest: GetServiceRequestUseCase,
     private readonly getRequestHistory: GetServiceRequestHistoryUseCase,
+    private readonly getRequestDocuments: GetServiceRequestDocumentsUseCase,
   ) {}
 
   @Post()
@@ -37,7 +39,7 @@ export class ServiceRequestsController {
     @ActiveUser('sub') userId: string,
     @Body() dto: SubmitServiceRequestDto,
   ) {
-    return this.submitRequest.execute(BigInt(userId), BigInt(dto.service_id));
+    return this.submitRequest.execute(BigInt(userId), dto);
   }
 
   @Get()
@@ -53,6 +55,15 @@ export class ServiceRequestsController {
     @Param('id', ParseIntPipe) id: number,
   ) {
     return this.getRequest.execute(BigInt(userId), BigInt(id));
+  }
+
+  @Get(':id/documents')
+  @ApiOperation({ summary: 'Get uploaded documents for a service request' })
+  documents(
+    @ActiveUser('sub') userId: string,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.getRequestDocuments.execute(BigInt(userId), BigInt(id));
   }
 
   @Get(':id/history')

@@ -9,6 +9,8 @@ import { ServicesModule } from '@services/services.module';
 import { ServiceTasksModule } from '@service-tasks/service-tasks.module';
 import { DamageAssessmentsModule } from '@damage-assessments/damage-assessments.module';
 import { ServiceRequestsModule } from '@service-requests/service-requests.module';
+import { UploadsModule } from '@uploads/uploads.module';
+import { RequiredDocumentsModule } from '@required-documents/required-documents.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { ServiceRequestsModule } from '@service-requests/service-requests.module
     ServiceTasksModule,
     DamageAssessmentsModule,
     ServiceRequestsModule,
+    UploadsModule,
+    RequiredDocumentsModule,
   ],
 })
 export class AppModule {}

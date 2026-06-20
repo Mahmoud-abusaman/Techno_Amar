@@ -8,6 +8,9 @@ import {
 import { IServiceRepository } from '@services/domain/repositories/service-repository.interface';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
 import { IServiceRequestRepository } from '@service-requests/domain/repositories/service-request-repository.interface';
+import { IRequiredDocumentRepository } from '@required-documents/domain/repositories/required-document-repository.interface';
+import { ImageKitFileValidator } from '@uploads/application/imagekit-file.validator';
+import { SubmitServiceRequestDto } from '@service-requests/presentation/dto/submit-service-request.dto';
 import {
   AccountStatus,
   RequestActivityAction,
@@ -29,12 +32,17 @@ export class SubmitServiceRequestUseCase {
     private readonly serviceRepo: IServiceRepository,
     @Inject(IUserRepository)
     private readonly userRepo: IUserRepository,
+    @Inject(IRequiredDocumentRepository)
+    private readonly requiredDocRepo: IRequiredDocumentRepository,
+    private readonly fileValidator: ImageKitFileValidator,
   ) {}
 
   async execute(
     citizenId: bigint,
-    serviceId: bigint,
+    dto: SubmitServiceRequestDto,
   ): Promise<PublicServiceRequestDetail> {
+    const serviceId = BigInt(dto.service_id);
+
     const citizen = await this.userRepo.findById(citizenId);
     if (!citizen) throw new NotFoundException('User not found');
     if (citizen.role !== UserRole.CITIZEN) {
@@ -67,6 +75,56 @@ export class SubmitServiceRequestUseCase {
       );
     }
 
+    const requiredDocs = await this.requiredDocRepo.findByService(
+      serviceId,
+      true,
+    );
+    const mandatoryDocs = requiredDocs.filter((doc) => doc.type === 'MANDATORY');
+    const submittedDocs = dto.documents ?? [];
+
+    if (mandatoryDocs.length > 0 && submittedDocs.length === 0) {
+      throw new BadRequestException(
+        'Mandatory documents must be uploaded before submitting this request',
+      );
+    }
+
+    const requiredDocIds = new Set(requiredDocs.map((doc) => doc.id.toString()));
+    const seenRequiredIds = new Set<string>();
+
+    for (const doc of submittedDocs) {
+      const requiredId = BigInt(doc.required_document_id);
+      const requiredIdKey = requiredId.toString();
+
+      if (!requiredDocIds.has(requiredIdKey)) {
+        throw new BadRequestException(
+          `Required document ${doc.required_document_id} does not belong to this service`,
+        );
+      }
+      if (seenRequiredIds.has(requiredIdKey)) {
+        throw new BadRequestException(
+          `Duplicate upload for required document ${doc.required_document_id}`,
+        );
+      }
+      seenRequiredIds.add(requiredIdKey);
+
+      if (!this.fileValidator.isValidFileUrl(doc.file_url)) {
+        throw new BadRequestException(
+          'Document file URL must be hosted on the configured ImageKit endpoint',
+        );
+      }
+      if (!this.fileValidator.isAllowedMimeType(doc.file_type)) {
+        throw new BadRequestException('Only PDF files are allowed');
+      }
+    }
+
+    for (const mandatory of mandatoryDocs) {
+      if (!seenRequiredIds.has(mandatory.id.toString())) {
+        throw new BadRequestException(
+          `Missing mandatory document: ${mandatory.name}`,
+        );
+      }
+    }
+
     const detail = await this.requestRepo.createWithTasks({
       citizen_id: citizenId,
       service_id: serviceId,
@@ -77,6 +135,15 @@ export class SubmitServiceRequestUseCase {
         name: task.name,
         task_order: task.task_order,
         estimated_time_hours: task.estimated_time_hours,
+      })),
+      documents: submittedDocs.map((doc) => ({
+        required_document_id: BigInt(doc.required_document_id),
+        name: doc.file_name,
+        file_type: doc.file_type,
+        file_url: doc.file_url,
+        file_id: doc.file_id,
+        file_path: doc.file_path ?? null,
+        uploaded_by: citizenId,
       })),
       activity: {
         actor_id: citizenId,

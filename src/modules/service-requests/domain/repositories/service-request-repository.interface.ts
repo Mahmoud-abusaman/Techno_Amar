@@ -1,6 +1,7 @@
 import { ServiceRequestEntity } from '../entities/service-request.entity';
 import { ServiceRequestDetailEntity } from '../entities/service-request-detail.entity';
 import { RequestActivityEntity } from '../entities/request-activity.entity';
+import { RequestDocumentEntity } from '../entities/request-document.entity';
 import {
   RequestPaymentStatus,
   RequestStatus,
@@ -25,11 +26,22 @@ export type CreateRequestActivityData = {
   description?: string | null;
 };
 
+export type CreateRequestDocumentData = {
+  required_document_id: bigint;
+  name: string;
+  file_type: string;
+  file_url: string;
+  file_id: string;
+  file_path?: string | null;
+  uploaded_by: bigint;
+};
+
 export type CreateServiceRequestData = {
   citizen_id: bigint;
   service_id: bigint;
   payment_status: RequestPaymentStatus;
   tasks: CreateRequestTaskData[];
+  documents?: CreateRequestDocumentData[];
   activity: Omit<CreateRequestActivityData, 'request_id'>;
 };
 
@@ -53,4 +65,5 @@ export interface IServiceRequestRepository {
   countActiveByServiceId(serviceId: bigint): Promise<number>;
   findActivities(requestId: bigint): Promise<RequestActivityEntity[]>;
   addActivity(data: CreateRequestActivityData): Promise<RequestActivityEntity>;
+  findDocuments(requestId: bigint): Promise<RequestDocumentEntity[]>;
 }

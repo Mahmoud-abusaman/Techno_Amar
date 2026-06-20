@@ -28,6 +28,7 @@
     "db:studio:prod": "dotenv -e .env -- prisma studio"
   },
   "dependencies": {
+    "@imagekit/nodejs": "^7.8.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",
@@ -110,7 +111,9 @@
       "^@services/(.*)$": "<rootDir>/src/modules/services/$1",
       "^@service-tasks/(.*)$": "<rootDir>/src/modules/service-tasks/$1",
       "^@damage-assessments/(.*)$": "<rootDir>/src/modules/damage-assessments/$1",
-      "^@service-requests/(.*)$": "<rootDir>/src/modules/service-requests/$1"
+      "^@service-requests/(.*)$": "<rootDir>/src/modules/service-requests/$1",
+      "^@uploads/(.*)$": "<rootDir>/src/modules/uploads/$1",
+      "^@required-documents/(.*)$": "<rootDir>/src/modules/required-documents/$1"
     },
     "collectCoverageFrom": [
       "src/**/*.(t|j)s"

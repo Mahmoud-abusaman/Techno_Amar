@@ -1,12 +1,20 @@
-import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { ValidateNested } from 'class-validator';
 import { CreateUserDto } from '@users/presentation/dto/create-user.dto';
 import { SEED } from '@shared/common/constants/seed-examples';
 import { AccountStatus } from '@/generated/prisma/enums';
+import { CitizenVerificationDocumentsDto } from '@uploads/presentation/dto/citizen-verification-documents.dto';
 
 export class SignupDto extends OmitType(CreateUserDto, [
   'role',
   'employee_id',
-] as const) {}
+] as const) {
+  @ApiProperty({ type: CitizenVerificationDocumentsDto })
+  @ValidateNested()
+  @Type(() => CitizenVerificationDocumentsDto)
+  verification_documents: CitizenVerificationDocumentsDto;
+}
 
 class SignupUserResponseDto {
   @ApiProperty({ example: SEED.citizen.id }) id: string;

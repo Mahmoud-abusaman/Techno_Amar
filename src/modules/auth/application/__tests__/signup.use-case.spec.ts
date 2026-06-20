@@ -1,9 +1,25 @@
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, BadRequestException } from '@nestjs/common';
 import { SignupUseCase, SignupInput } from '../signup.use-case';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
 import { IHashPort } from '@auth/domain/ports/hash.port';
 import { UserEntity } from '@users/domain/entities/user.entity';
 import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
+import { ImageKitFileValidator } from '@uploads/application/imagekit-file.validator';
+
+const verificationDocuments = {
+  id_document: {
+    file_name: 'National ID Copy.pdf',
+    file_type: 'application/pdf',
+    file_url: 'https://ik.imagekit.io/TechnoAmar/citizens/id.pdf',
+    file_id: 'file_abc123',
+  },
+  id_selfie: {
+    file_name: 'Selfie with ID.jpg',
+    file_type: 'image/jpeg',
+    file_url: 'https://ik.imagekit.io/TechnoAmar/citizens/selfie.jpg',
+    file_id: 'file_selfie123',
+  },
+};
 
 const makeUser = (overrides: Partial<UserEntity> = {}): UserEntity =>
   ({
@@ -36,6 +52,7 @@ const makeSignupInput = (
   phone: '+970591234567',
   address: 'Gaza City',
   city: GazaCities.GAZA,
+  verification_documents: verificationDocuments,
   ...overrides,
 });
 
@@ -43,6 +60,12 @@ describe('SignupUseCase', () => {
   let useCase: SignupUseCase;
   let userRepo: jest.Mocked<IUserRepository>;
   let hashPort: jest.Mocked<IHashPort>;
+  let fileValidator: jest.Mocked<
+    Pick<
+      ImageKitFileValidator,
+      'isValidFileUrl' | 'isAllowedPdfMimeType' | 'isAllowedImageMimeType'
+    >
+  >;
 
   beforeEach(() => {
     userRepo = {
@@ -65,7 +88,17 @@ describe('SignupUseCase', () => {
       compare: jest.fn(),
     };
 
-    useCase = new SignupUseCase(userRepo, hashPort);
+    fileValidator = {
+      isValidFileUrl: jest.fn().mockReturnValue(true),
+      isAllowedPdfMimeType: jest.fn().mockReturnValue(true),
+      isAllowedImageMimeType: jest.fn().mockReturnValue(true),
+    };
+
+    useCase = new SignupUseCase(
+      userRepo,
+      hashPort,
+      fileValidator as unknown as ImageKitFileValidator,
+    );
   });
 
   describe('execute', () => {
@@ -88,6 +121,10 @@ describe('SignupUseCase', () => {
       });
       expect(result.message).toContain('pending admin verification');
       expect(userRepo.createCitizenProfile).toHaveBeenCalledWith(user.id);
+      expect(userRepo.updateCitizenProfile).toHaveBeenCalledWith(user.id, {
+        verification_document: verificationDocuments.id_document.file_url,
+        id_selfie: verificationDocuments.id_selfie.file_url,
+      });
     });
 
     it('always creates the user with CITIZEN role and PENDING_VERIFICATION status', async () => {
@@ -168,6 +205,33 @@ describe('SignupUseCase', () => {
       await expect(useCase.execute(dto)).rejects.toThrow(
         'Database connection lost',
       );
+    });
+
+    it('throws BadRequestException when ID document URL is invalid', async () => {
+      fileValidator.isValidFileUrl.mockReturnValue(false);
+
+      await expect(useCase.execute(makeSignupInput())).rejects.toThrow(
+        BadRequestException,
+      );
+      expect(userRepo.create).not.toHaveBeenCalled();
+    });
+
+    it('throws BadRequestException when ID document is not a PDF', async () => {
+      fileValidator.isAllowedPdfMimeType.mockReturnValue(false);
+
+      await expect(useCase.execute(makeSignupInput())).rejects.toThrow(
+        BadRequestException,
+      );
+      expect(userRepo.create).not.toHaveBeenCalled();
+    });
+
+    it('throws BadRequestException when selfie is not an image', async () => {
+      fileValidator.isAllowedImageMimeType.mockReturnValue(false);
+
+      await expect(useCase.execute(makeSignupInput())).rejects.toThrow(
+        BadRequestException,
+      );
+      expect(userRepo.create).not.toHaveBeenCalled();
     });
   });
 });

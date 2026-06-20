@@ -1,8 +1,15 @@
-import { Injectable, Inject, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  ConflictException,
+} from '@nestjs/common';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
 import { IHashPort } from '@auth/domain/ports/hash.port';
 import { UserEntity } from '@users/domain/entities/user.entity';
 import { UserRole, GazaCities, AccountStatus } from '@/generated/prisma/enums';
+import { ImageKitFileValidator } from '@uploads/application/imagekit-file.validator';
+import { CitizenVerificationDocumentsInput } from '@uploads/presentation/dto/imagekit-file.dto';
+import { validateCitizenVerificationDocuments } from '@uploads/application/citizen-verification-file.validator';
 
 export interface SignupInput {
   full_name: string;
@@ -12,6 +19,7 @@ export interface SignupInput {
   phone?: string;
   address?: string;
   city: GazaCities;
+  verification_documents: CitizenVerificationDocumentsInput;
 }
 
 export interface SignupResult {
@@ -27,16 +35,22 @@ export class SignupUseCase {
   constructor(
     @Inject(IUserRepository) private readonly userRepo: IUserRepository,
     @Inject(IHashPort) private readonly hashPort: IHashPort,
+    private readonly fileValidator: ImageKitFileValidator,
   ) {}
 
   async execute(input: SignupInput): Promise<SignupResult> {
+    validateCitizenVerificationDocuments(
+      input.verification_documents,
+      this.fileValidator,
+    );
+
     const password_hash = await this.hashPort.hash(input.password);
-    const { password, ...rest } = input;
+    const { password, verification_documents, ...userFields } = input;
 
     let user: UserEntity;
     try {
       user = await this.userRepo.create({
-        ...rest,
+        ...userFields,
         role: UserRole.CITIZEN,
         password_hash,
         account_status: AccountStatus.PENDING_VERIFICATION,
@@ -55,6 +69,10 @@ export class SignupUseCase {
     }
 
     await this.userRepo.createCitizenProfile(user.id);
+    await this.userRepo.updateCitizenProfile(user.id, {
+      verification_document: verification_documents.id_document.file_url,
+      id_selfie: verification_documents.id_selfie.file_url,
+    });
 
     return {
       user: {
