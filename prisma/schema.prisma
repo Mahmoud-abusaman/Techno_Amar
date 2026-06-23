@@ -94,6 +94,27 @@ enum RequestActivityAction {
   REQUEST_REJECTED
 }
 
+enum ComplaintCategory {
+  SERVICE_QUALITY
+  EMPLOYEE_CONDUCT
+  BILLING
+  FACILITY
+  OTHER
+}
+
+enum ComplaintPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ComplaintStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  RESOLVED
+  CLOSED
+}
+
 enum DocumentRequirementType {
   MANDATORY
   OPTIONAL
@@ -175,6 +196,7 @@ model User {
   citizen_profile       CitizenProfile?
   created_services      Service[]
   damage_assessments    DamageAssessment[]
+  complaints            Complaint[]
   citizen_requests      ServiceRequest[]  @relation("CitizenRequests")
   assigned_request_tasks RequestTask[]    @relation("AssignedTasks")
   request_activities    RequestActivity[]
@@ -415,4 +437,32 @@ model DamageAssessmentDocument {
 
   @@index([assessment_id])
   @@map("damage_assessment_documents")
+}
+
+// ======================
+// COMPLAINTS
+// ======================
+
+model Complaint {
+  id              BigInt            @id @default(autoincrement())
+  citizen_id      BigInt
+  citizen         User              @relation(fields: [citizen_id], references: [id])
+  title           String
+  category        ComplaintCategory
+  priority        ComplaintPriority @default(MEDIUM)
+  location        String?
+  description     String
+  photo_name      String?
+  photo_file_type String?
+  photo_url       String?
+  photo_file_id   String?
+  photo_file_path String?
+  status          ComplaintStatus   @default(SUBMITTED)
+  submitted_at    DateTime          @default(now())
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+
+  @@index([citizen_id])
+  @@index([status])
+  @@map("complaints")
 }

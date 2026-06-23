@@ -8,6 +8,7 @@ import { OrgModule } from '@org/org.module';
 import { ServicesModule } from '@services/services.module';
 import { ServiceTasksModule } from '@service-tasks/service-tasks.module';
 import { DamageAssessmentsModule } from '@damage-assessments/damage-assessments.module';
+import { ComplaintsModule } from '@complaints/complaints.module';
 import { ServiceRequestsModule } from '@service-requests/service-requests.module';
 import { UploadsModule } from '@uploads/uploads.module';
 import { RequiredDocumentsModule } from '@required-documents/required-documents.module';
@@ -28,6 +29,7 @@ import { RequiredDocumentsModule } from '@required-documents/required-documents.
     ServicesModule,
     ServiceTasksModule,
     DamageAssessmentsModule,
+    ComplaintsModule,
     ServiceRequestsModule,
     UploadsModule,
     RequiredDocumentsModule,

@@ -64,7 +64,8 @@ export const ModelName = {
   RequiredDocument: 'RequiredDocument',
   RequestDocument: 'RequestDocument',
   DamageAssessment: 'DamageAssessment',
-  DamageAssessmentDocument: 'DamageAssessmentDocument'
+  DamageAssessmentDocument: 'DamageAssessmentDocument',
+  Complaint: 'Complaint'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -304,6 +305,28 @@ export const DamageAssessmentDocumentScalarFieldEnum = {
 } as const
 
 export type DamageAssessmentDocumentScalarFieldEnum = (typeof DamageAssessmentDocumentScalarFieldEnum)[keyof typeof DamageAssessmentDocumentScalarFieldEnum]
+
+
+export const ComplaintScalarFieldEnum = {
+  id: 'id',
+  citizen_id: 'citizen_id',
+  title: 'title',
+  category: 'category',
+  priority: 'priority',
+  location: 'location',
+  description: 'description',
+  photo_name: 'photo_name',
+  photo_file_type: 'photo_file_type',
+  photo_url: 'photo_url',
+  photo_file_id: 'photo_file_id',
+  photo_file_path: 'photo_file_path',
+  status: 'status',
+  submitted_at: 'submitted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ComplaintScalarFieldEnum = (typeof ComplaintScalarFieldEnum)[keyof typeof ComplaintScalarFieldEnum]
 
 
 export const SortOrder = {

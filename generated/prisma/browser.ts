@@ -87,3 +87,8 @@ export type DamageAssessment = Prisma.DamageAssessmentModel
  * 
  */
 export type DamageAssessmentDocument = Prisma.DamageAssessmentDocumentModel
+/**
+ * Model Complaint
+ * 
+ */
+export type Complaint = Prisma.ComplaintModel

@@ -111,6 +111,7 @@
       "^@services/(.*)$": "<rootDir>/src/modules/services/$1",
       "^@service-tasks/(.*)$": "<rootDir>/src/modules/service-tasks/$1",
       "^@damage-assessments/(.*)$": "<rootDir>/src/modules/damage-assessments/$1",
+      "^@complaints/(.*)$": "<rootDir>/src/modules/complaints/$1",
       "^@service-requests/(.*)$": "<rootDir>/src/modules/service-requests/$1",
       "^@uploads/(.*)$": "<rootDir>/src/modules/uploads/$1",
       "^@required-documents/(.*)$": "<rootDir>/src/modules/required-documents/$1"
