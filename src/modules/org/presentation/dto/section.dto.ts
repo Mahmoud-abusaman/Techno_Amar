@@ -19,7 +19,6 @@ export class CreateSectionDto {
     description: 'Department ID',
   })
   @IsNotEmpty()
-  @IsString()
   @Transform(({ value }) => BigInt(value))
   department_id: bigint;
 
