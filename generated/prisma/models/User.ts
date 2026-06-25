@@ -313,6 +313,7 @@ export type UserWhereInput = {
   citizen_profile?: Prisma.XOR<Prisma.CitizenProfileNullableScalarRelationFilter, Prisma.CitizenProfileWhereInput> | null
   created_services?: Prisma.ServiceListRelationFilter
   damage_assessments?: Prisma.DamageAssessmentListRelationFilter
+  complaints?: Prisma.ComplaintListRelationFilter
   citizen_requests?: Prisma.ServiceRequestListRelationFilter
   assigned_request_tasks?: Prisma.RequestTaskListRelationFilter
   request_activities?: Prisma.RequestActivityListRelationFilter
@@ -341,6 +342,7 @@ export type UserOrderByWithRelationInput = {
   citizen_profile?: Prisma.CitizenProfileOrderByWithRelationInput
   created_services?: Prisma.ServiceOrderByRelationAggregateInput
   damage_assessments?: Prisma.DamageAssessmentOrderByRelationAggregateInput
+  complaints?: Prisma.ComplaintOrderByRelationAggregateInput
   citizen_requests?: Prisma.ServiceRequestOrderByRelationAggregateInput
   assigned_request_tasks?: Prisma.RequestTaskOrderByRelationAggregateInput
   request_activities?: Prisma.RequestActivityOrderByRelationAggregateInput
@@ -372,6 +374,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   citizen_profile?: Prisma.XOR<Prisma.CitizenProfileNullableScalarRelationFilter, Prisma.CitizenProfileWhereInput> | null
   created_services?: Prisma.ServiceListRelationFilter
   damage_assessments?: Prisma.DamageAssessmentListRelationFilter
+  complaints?: Prisma.ComplaintListRelationFilter
   citizen_requests?: Prisma.ServiceRequestListRelationFilter
   assigned_request_tasks?: Prisma.RequestTaskListRelationFilter
   request_activities?: Prisma.RequestActivityListRelationFilter
@@ -445,6 +448,7 @@ export type UserCreateInput = {
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
@@ -472,6 +476,7 @@ export type UserUncheckedCreateInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
@@ -499,6 +504,7 @@ export type UserUpdateInput = {
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
@@ -526,6 +532,7 @@ export type UserUncheckedUpdateInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -851,6 +858,20 @@ export type UserUpdateOneRequiredWithoutDamage_assessmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDamage_assessmentsInput, Prisma.UserUpdateWithoutDamage_assessmentsInput>, Prisma.UserUncheckedUpdateWithoutDamage_assessmentsInput>
 }
 
+export type UserCreateNestedOneWithoutComplaintsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutComplaintsInput, Prisma.UserUncheckedCreateWithoutComplaintsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutComplaintsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutComplaintsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutComplaintsInput, Prisma.UserUncheckedCreateWithoutComplaintsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutComplaintsInput
+  upsert?: Prisma.UserUpsertWithoutComplaintsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutComplaintsInput, Prisma.UserUpdateWithoutComplaintsInput>, Prisma.UserUncheckedUpdateWithoutComplaintsInput>
+}
+
 export type UserCreateWithoutSectionInput = {
   id?: bigint | number
   full_name: string
@@ -871,6 +892,7 @@ export type UserCreateWithoutSectionInput = {
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
@@ -897,6 +919,7 @@ export type UserUncheckedCreateWithoutSectionInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
@@ -971,6 +994,7 @@ export type UserCreateWithoutCitizen_profileInput = {
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
@@ -997,6 +1021,7 @@ export type UserUncheckedCreateWithoutCitizen_profileInput = {
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
@@ -1039,6 +1064,7 @@ export type UserUpdateWithoutCitizen_profileInput = {
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
@@ -1065,6 +1091,7 @@ export type UserUncheckedUpdateWithoutCitizen_profileInput = {
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -1091,6 +1118,7 @@ export type UserCreateWithoutOtpCodesInput = {
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
@@ -1117,6 +1145,7 @@ export type UserUncheckedCreateWithoutOtpCodesInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
@@ -1159,6 +1188,7 @@ export type UserUpdateWithoutOtpCodesInput = {
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
@@ -1185,6 +1215,7 @@ export type UserUncheckedUpdateWithoutOtpCodesInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -1211,6 +1242,7 @@ export type UserCreateWithoutCreated_servicesInput = {
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
@@ -1237,6 +1269,7 @@ export type UserUncheckedCreateWithoutCreated_servicesInput = {
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
@@ -1279,6 +1312,7 @@ export type UserUpdateWithoutCreated_servicesInput = {
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
@@ -1305,6 +1339,7 @@ export type UserUncheckedUpdateWithoutCreated_servicesInput = {
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -1332,6 +1367,7 @@ export type UserCreateWithoutCitizen_requestsInput = {
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
@@ -1358,6 +1394,7 @@ export type UserUncheckedCreateWithoutCitizen_requestsInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
@@ -1400,6 +1437,7 @@ export type UserUpdateWithoutCitizen_requestsInput = {
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
@@ -1426,6 +1464,7 @@ export type UserUncheckedUpdateWithoutCitizen_requestsInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
@@ -1452,6 +1491,7 @@ export type UserCreateWithoutAssigned_request_tasksInput = {
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
@@ -1478,6 +1518,7 @@ export type UserUncheckedCreateWithoutAssigned_request_tasksInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
@@ -1520,6 +1561,7 @@ export type UserUpdateWithoutAssigned_request_tasksInput = {
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
@@ -1546,6 +1588,7 @@ export type UserUncheckedUpdateWithoutAssigned_request_tasksInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
@@ -1572,6 +1615,7 @@ export type UserCreateWithoutRequest_activitiesInput = {
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
@@ -1598,6 +1642,7 @@ export type UserUncheckedCreateWithoutRequest_activitiesInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
@@ -1640,6 +1685,7 @@ export type UserUpdateWithoutRequest_activitiesInput = {
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
@@ -1666,6 +1712,7 @@ export type UserUncheckedUpdateWithoutRequest_activitiesInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
@@ -1692,6 +1739,7 @@ export type UserCreateWithoutUploaded_documentsInput = {
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
@@ -1718,6 +1766,7 @@ export type UserUncheckedCreateWithoutUploaded_documentsInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
@@ -1760,6 +1809,7 @@ export type UserUpdateWithoutUploaded_documentsInput = {
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
@@ -1786,6 +1836,7 @@ export type UserUncheckedUpdateWithoutUploaded_documentsInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -1811,6 +1862,7 @@ export type UserCreateWithoutDamage_assessmentsInput = {
   otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
@@ -1837,6 +1889,7 @@ export type UserUncheckedCreateWithoutDamage_assessmentsInput = {
   otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
   citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
   created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
@@ -1879,6 +1932,7 @@ export type UserUpdateWithoutDamage_assessmentsInput = {
   otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
@@ -1905,6 +1959,131 @@ export type UserUncheckedUpdateWithoutDamage_assessmentsInput = {
   otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
+  citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
+  assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
+  request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
+  uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+}
+
+export type UserCreateWithoutComplaintsInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  section?: Prisma.SectionCreateNestedOneWithoutUsersInput
+  otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
+  assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
+  request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
+  uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+}
+
+export type UserUncheckedCreateWithoutComplaintsInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  section_id?: bigint | number | null
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
+  assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
+  request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
+  uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+}
+
+export type UserCreateOrConnectWithoutComplaintsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutComplaintsInput, Prisma.UserUncheckedCreateWithoutComplaintsInput>
+}
+
+export type UserUpsertWithoutComplaintsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutComplaintsInput, Prisma.UserUncheckedUpdateWithoutComplaintsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutComplaintsInput, Prisma.UserUncheckedCreateWithoutComplaintsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutComplaintsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutComplaintsInput, Prisma.UserUncheckedUpdateWithoutComplaintsInput>
+}
+
+export type UserUpdateWithoutComplaintsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
+  otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
+  citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
+  assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
+  request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
+  uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutComplaintsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  section_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
+  citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -1949,6 +2128,7 @@ export type UserUpdateWithoutSectionInput = {
   citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
@@ -1975,6 +2155,7 @@ export type UserUncheckedUpdateWithoutSectionInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -2008,6 +2189,7 @@ export type UserCountOutputType = {
   otpCodes: number
   created_services: number
   damage_assessments: number
+  complaints: number
   citizen_requests: number
   assigned_request_tasks: number
   request_activities: number
@@ -2018,6 +2200,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   otpCodes?: boolean | UserCountOutputTypeCountOtpCodesArgs
   created_services?: boolean | UserCountOutputTypeCountCreated_servicesArgs
   damage_assessments?: boolean | UserCountOutputTypeCountDamage_assessmentsArgs
+  complaints?: boolean | UserCountOutputTypeCountComplaintsArgs
   citizen_requests?: boolean | UserCountOutputTypeCountCitizen_requestsArgs
   assigned_request_tasks?: boolean | UserCountOutputTypeCountAssigned_request_tasksArgs
   request_activities?: boolean | UserCountOutputTypeCountRequest_activitiesArgs
@@ -2053,6 +2236,13 @@ export type UserCountOutputTypeCountCreated_servicesArgs<ExtArgs extends runtime
  */
 export type UserCountOutputTypeCountDamage_assessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.DamageAssessmentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountComplaintsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComplaintWhereInput
 }
 
 /**
@@ -2106,6 +2296,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   citizen_profile?: boolean | Prisma.User$citizen_profileArgs<ExtArgs>
   created_services?: boolean | Prisma.User$created_servicesArgs<ExtArgs>
   damage_assessments?: boolean | Prisma.User$damage_assessmentsArgs<ExtArgs>
+  complaints?: boolean | Prisma.User$complaintsArgs<ExtArgs>
   citizen_requests?: boolean | Prisma.User$citizen_requestsArgs<ExtArgs>
   assigned_request_tasks?: boolean | Prisma.User$assigned_request_tasksArgs<ExtArgs>
   request_activities?: boolean | Prisma.User$request_activitiesArgs<ExtArgs>
@@ -2179,6 +2370,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   citizen_profile?: boolean | Prisma.User$citizen_profileArgs<ExtArgs>
   created_services?: boolean | Prisma.User$created_servicesArgs<ExtArgs>
   damage_assessments?: boolean | Prisma.User$damage_assessmentsArgs<ExtArgs>
+  complaints?: boolean | Prisma.User$complaintsArgs<ExtArgs>
   citizen_requests?: boolean | Prisma.User$citizen_requestsArgs<ExtArgs>
   assigned_request_tasks?: boolean | Prisma.User$assigned_request_tasksArgs<ExtArgs>
   request_activities?: boolean | Prisma.User$request_activitiesArgs<ExtArgs>
@@ -2200,6 +2392,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     citizen_profile: Prisma.$CitizenProfilePayload<ExtArgs> | null
     created_services: Prisma.$ServicePayload<ExtArgs>[]
     damage_assessments: Prisma.$DamageAssessmentPayload<ExtArgs>[]
+    complaints: Prisma.$ComplaintPayload<ExtArgs>[]
     citizen_requests: Prisma.$ServiceRequestPayload<ExtArgs>[]
     assigned_request_tasks: Prisma.$RequestTaskPayload<ExtArgs>[]
     request_activities: Prisma.$RequestActivityPayload<ExtArgs>[]
@@ -2621,6 +2814,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   citizen_profile<T extends Prisma.User$citizen_profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$citizen_profileArgs<ExtArgs>>): Prisma.Prisma__CitizenProfileClient<runtime.Types.Result.GetResult<Prisma.$CitizenProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   created_services<T extends Prisma.User$created_servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   damage_assessments<T extends Prisma.User$damage_assessmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$damage_assessmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DamageAssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complaints<T extends Prisma.User$complaintsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$complaintsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplaintPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   citizen_requests<T extends Prisma.User$citizen_requestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$citizen_requestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assigned_request_tasks<T extends Prisma.User$assigned_request_tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assigned_request_tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   request_activities<T extends Prisma.User$request_activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$request_activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3178,6 +3372,30 @@ export type User$damage_assessmentsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.DamageAssessmentScalarFieldEnum | Prisma.DamageAssessmentScalarFieldEnum[]
+}
+
+/**
+ * User.complaints
+ */
+export type User$complaintsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Complaint
+   */
+  select?: Prisma.ComplaintSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Complaint
+   */
+  omit?: Prisma.ComplaintOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ComplaintInclude<ExtArgs> | null
+  where?: Prisma.ComplaintWhereInput
+  orderBy?: Prisma.ComplaintOrderByWithRelationInput | Prisma.ComplaintOrderByWithRelationInput[]
+  cursor?: Prisma.ComplaintWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ComplaintScalarFieldEnum | Prisma.ComplaintScalarFieldEnum[]
 }
 
 /**

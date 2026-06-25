@@ -119,6 +119,36 @@ export const RequestActivityAction = {
 export type RequestActivityAction = (typeof RequestActivityAction)[keyof typeof RequestActivityAction]
 
 
+export const ComplaintCategory = {
+  SERVICE_QUALITY: 'SERVICE_QUALITY',
+  EMPLOYEE_CONDUCT: 'EMPLOYEE_CONDUCT',
+  BILLING: 'BILLING',
+  FACILITY: 'FACILITY',
+  OTHER: 'OTHER'
+} as const
+
+export type ComplaintCategory = (typeof ComplaintCategory)[keyof typeof ComplaintCategory]
+
+
+export const ComplaintPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+} as const
+
+export type ComplaintPriority = (typeof ComplaintPriority)[keyof typeof ComplaintPriority]
+
+
+export const ComplaintStatus = {
+  SUBMITTED: 'SUBMITTED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type ComplaintStatus = (typeof ComplaintStatus)[keyof typeof ComplaintStatus]
+
+
 export const DocumentRequirementType = {
   MANDATORY: 'MANDATORY',
   OPTIONAL: 'OPTIONAL'
