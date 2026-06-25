@@ -32,7 +32,11 @@ export class AdminUpdateUserDto extends PartialType(CreateUserDto) {
   @IsOptional()
   account_status?: AccountStatus;
 
-  @ApiPropertyOptional({ description: 'Section ID for employees/managers' })
+  @ApiPropertyOptional({
+    description: 'Section ID for employees/managers',
+    example: '1',
+    type: String,
+  })
   @IsString()
   @IsOptional()
   section_id?: string;

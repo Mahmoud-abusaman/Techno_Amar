@@ -1,5 +1,6 @@
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import { ApiProperty, ApiPropertyOptional, OmitType, PartialType } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { BigIntId, BigIntIdOptional } from '@shared/common/decorators/bigint-id.decorator';
 import {
   IsString,
   IsNotEmpty,
@@ -23,8 +24,12 @@ export class CreateServiceTaskDto {
   @MaxLength(2000)
   description?: string;
 
-  @ApiProperty({ example: '2', description: 'Section that handles this task' })
-  @Transform(({ value }) => BigInt(value))
+  @ApiProperty({
+    example: '2',
+    type: String,
+    description: 'Section ID (numeric string)',
+  })
+  @BigIntId()
   section_id: bigint;
 
   @ApiPropertyOptional({
@@ -44,7 +49,17 @@ export class CreateServiceTaskDto {
   estimated_time_hours: number;
 }
 
-export class UpdateServiceTaskDto extends PartialType(CreateServiceTaskDto) {
+export class UpdateServiceTaskDto extends PartialType(
+  OmitType(CreateServiceTaskDto, ['section_id'] as const),
+) {
+  @ApiPropertyOptional({
+    example: '2',
+    type: String,
+    description: 'Section ID (numeric string)',
+  })
+  @BigIntIdOptional()
+  section_id?: bigint;
+
   @ApiPropertyOptional({ example: true })
   @IsOptional()
   @IsBoolean()

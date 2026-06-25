@@ -56,6 +56,7 @@ export class CreateUserDto {
   @ApiPropertyOptional({
     description: 'Section ID for employees and department managers',
     example: '1',
+    type: String,
   })
   @IsString()
   @IsOptional()

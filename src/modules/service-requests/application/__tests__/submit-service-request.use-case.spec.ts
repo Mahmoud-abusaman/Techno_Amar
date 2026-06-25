@@ -189,7 +189,7 @@ describe('SubmitServiceRequestUseCase', () => {
     requiredDocRepo.findByService.mockResolvedValue([]);
     requestRepo.createWithTasks.mockResolvedValue(detail);
 
-    const result = await useCase.execute(1n, { service_id: 1 });
+    const result = await useCase.execute(1n, { service_id: 1n });
 
     expect(requestRepo.createWithTasks).toHaveBeenCalled();
     expect(result.id).toBe('100');
@@ -215,10 +215,10 @@ describe('SubmitServiceRequestUseCase', () => {
     requestRepo.createWithTasks.mockResolvedValue(detail);
 
     await useCase.execute(1n, {
-      service_id: 1,
+      service_id: 1n,
       documents: [
         {
-          required_document_id: 5,
+          required_document_id: 5n,
           file_name: 'id.pdf',
           file_type: 'application/pdf',
           file_url: 'https://ik.imagekit.io/TechnoAmar/id.pdf',
@@ -248,10 +248,10 @@ describe('SubmitServiceRequestUseCase', () => {
 
     await expect(
       useCase.execute(1n, {
-        service_id: 1,
+        service_id: 1n,
         documents: [
           {
-            required_document_id: 5,
+            required_document_id: 5n,
             file_name: 'photo.png',
             file_type: 'image/png',
             file_url: 'https://ik.imagekit.io/TechnoAmar/photo.png',
@@ -278,7 +278,7 @@ describe('SubmitServiceRequestUseCase', () => {
       },
     ]);
 
-    await expect(useCase.execute(1n, { service_id: 1 })).rejects.toThrow(
+    await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
       BadRequestException,
     );
   });
@@ -288,7 +288,7 @@ describe('SubmitServiceRequestUseCase', () => {
       makeUser({ is_verified: false, account_status: AccountStatus.PENDING_VERIFICATION }),
     );
 
-    await expect(useCase.execute(1n, { service_id: 1 })).rejects.toThrow(
+    await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
       BadRequestException,
     );
   });
@@ -299,7 +299,7 @@ describe('SubmitServiceRequestUseCase', () => {
       makeService({ status: ServiceStatus.DRAFT }),
     );
 
-    await expect(useCase.execute(1n, { service_id: 1 })).rejects.toThrow(
+    await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
       BadRequestException,
     );
   });
@@ -308,7 +308,7 @@ describe('SubmitServiceRequestUseCase', () => {
     userRepo.findById.mockResolvedValue(makeUser());
     serviceRepo.findByIdWithTasks.mockResolvedValue(makeService({ fee: 50 }));
 
-    await expect(useCase.execute(1n, { service_id: 1 })).rejects.toThrow(
+    await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
       BadRequestException,
     );
   });
@@ -319,7 +319,7 @@ describe('SubmitServiceRequestUseCase', () => {
       makeService({ workflow_tasks: [] }),
     );
 
-    await expect(useCase.execute(1n, { service_id: 1 })).rejects.toThrow(
+    await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
       ConflictException,
     );
   });
@@ -327,7 +327,7 @@ describe('SubmitServiceRequestUseCase', () => {
   it('throws when user is not a citizen', async () => {
     userRepo.findById.mockResolvedValue(makeUser({ role: UserRole.EMPLOYEE }));
 
-    await expect(useCase.execute(1n, { service_id: 1 })).rejects.toThrow(
+    await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
       BadRequestException,
     );
   });
@@ -336,7 +336,7 @@ describe('SubmitServiceRequestUseCase', () => {
     userRepo.findById.mockResolvedValue(makeUser());
     serviceRepo.findByIdWithTasks.mockResolvedValue(null);
 
-    await expect(useCase.execute(1n, { service_id: 1 })).rejects.toThrow(
+    await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
       NotFoundException,
     );
   });

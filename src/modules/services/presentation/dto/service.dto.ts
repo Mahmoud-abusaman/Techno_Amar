@@ -1,5 +1,11 @@
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  OmitType,
+  PartialType,
+} from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { BigIntId } from '@shared/common/decorators/bigint-id.decorator';
 import {
   IsString,
   IsNotEmpty,
@@ -29,8 +35,12 @@ export class CreateServiceWorkflowTaskDto {
   @MaxLength(2000)
   description?: string;
 
-  @ApiProperty({ example: '2', description: 'Section that handles this task' })
-  @Transform(({ value }) => BigInt(value))
+  @ApiProperty({
+    example: '2',
+    type: String,
+    description: 'Section ID (numeric string)',
+  })
+  @BigIntId()
   section_id: bigint;
 
   @ApiProperty({ example: 4 })
@@ -53,8 +63,12 @@ export class CreateServiceDto {
   @MaxLength(2000)
   description?: string;
 
-  @ApiProperty({ example: '1', description: 'Responsible department ID' })
-  @Transform(({ value }) => BigInt(value))
+  @ApiProperty({
+    example: '1',
+    type: String,
+    description: 'Responsible department ID (numeric string)',
+  })
+  @BigIntId()
   department_id: bigint;
 
   @ApiProperty({ example: 50.0 })
@@ -80,7 +94,9 @@ export class CreateServiceDto {
   workflow_tasks: CreateServiceWorkflowTaskDto[];
 }
 
-export class UpdateServiceDto extends PartialType(CreateServiceDto) {
+export class UpdateServiceDto extends PartialType(
+  OmitType(CreateServiceDto, ['workflow_tasks'] as const),
+) {
   @ApiPropertyOptional({ example: true })
   @IsOptional()
   @IsBoolean()
