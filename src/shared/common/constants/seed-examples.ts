@@ -1,5 +1,5 @@
 /**
- * Swagger / API examples aligned with prisma/seed.ts (insert order → typical ids 1–4).
+ * Swagger / API examples aligned with prisma/seed.ts (typical insert order).
  */
 export const SEED = {
   admin: {
@@ -41,5 +41,32 @@ export const SEED = {
     phone: '+970599000004',
     city: 'NORTH',
     role: 'DEPARTMENT_MANAGER',
+  },
+  pendingCitizen: {
+    id: '5',
+    full_name: 'Fatima Pending',
+    email: 'pending@technoamar.ps',
+    password: 'Pending@1234',
+    national_id: '987654321',
+    phone: '+970599000005',
+    city: 'RAFAH',
+    role: 'CITIZEN',
+  },
+  department: {
+    municipalServices: { id: '1', name: 'Municipal Services' },
+    publicWorks: { id: '2', name: 'Public Works' },
+    urbanPlanning: { id: '3', name: 'Urban Planning' },
+  },
+  section: {
+    permitsDesk: { id: '1', name: 'Permits Desk' },
+    licensingOffice: { id: '2', name: 'Licensing Office' },
+    roadMaintenance: { id: '3', name: 'Road Maintenance' },
+    zoningBoard: { id: '5', name: 'Zoning Board' },
+  },
+  service: {
+    buildingPermit: { id: '1', name: 'Building Permit' },
+    tradeLicense: { id: '2', name: 'Trade License' },
+    zoningCertificate: { id: '3', name: 'Zoning Certificate' },
+    roadRepairRequest: { id: '4', name: 'Road Repair Request' },
   },
 } as const;
