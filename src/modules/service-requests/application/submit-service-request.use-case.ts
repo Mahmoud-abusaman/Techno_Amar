@@ -41,7 +41,7 @@ export class SubmitServiceRequestUseCase {
     citizenId: bigint,
     dto: SubmitServiceRequestDto,
   ): Promise<PublicServiceRequestDetail> {
-    const serviceId = BigInt(dto.service_id);
+    const serviceId = dto.service_id;
 
     const citizen = await this.userRepo.findById(citizenId);
     if (!citizen) throw new NotFoundException('User not found');
@@ -92,7 +92,7 @@ export class SubmitServiceRequestUseCase {
     const seenRequiredIds = new Set<string>();
 
     for (const doc of submittedDocs) {
-      const requiredId = BigInt(doc.required_document_id);
+      const requiredId = doc.required_document_id;
       const requiredIdKey = requiredId.toString();
 
       if (!requiredDocIds.has(requiredIdKey)) {
@@ -137,7 +137,7 @@ export class SubmitServiceRequestUseCase {
         estimated_time_hours: task.estimated_time_hours,
       })),
       documents: submittedDocs.map((doc) => ({
-        required_document_id: BigInt(doc.required_document_id),
+        required_document_id: doc.required_document_id,
         name: doc.file_name,
         file_type: doc.file_type,
         file_url: doc.file_url,

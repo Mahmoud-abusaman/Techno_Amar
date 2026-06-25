@@ -4,7 +4,6 @@ import {
   PartialType,
   OmitType,
 } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
 import {
   IsString,
   IsNotEmpty,
@@ -12,14 +11,15 @@ import {
   MaxLength,
   IsBoolean,
 } from 'class-validator';
+import { BigIntId } from '@shared/common/decorators/bigint-id.decorator';
 
 export class CreateSectionDto {
   @ApiProperty({
     example: '1',
-    description: 'Department ID',
+    type: String,
+    description: 'Department ID (numeric string)',
   })
-  @IsNotEmpty()
-  @Transform(({ value }) => BigInt(value))
+  @BigIntId()
   department_id: bigint;
 
 

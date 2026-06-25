@@ -32,6 +32,7 @@ export class CreateServiceUseCase {
       throw new ConflictException(`Service "${data.name}" already exists`);
 
     const dept = await this.deptRepo.findById(data.department_id);
+
     if (!dept)
       throw new NotFoundException(`Department ${data.department_id} not found`);
     if (!dept.is_active)

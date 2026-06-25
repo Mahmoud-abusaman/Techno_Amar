@@ -2,24 +2,21 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
   IsIn,
-  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUrl,
   Matches,
   MaxLength,
-  Min,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { BigIntId } from '@shared/common/decorators/bigint-id.decorator';
 
 export class SubmitRequestDocumentDto {
-  @ApiProperty({ example: 1 })
-  @Type(() => Number)
-  @IsInt()
-  @Min(1)
-  required_document_id: number;
+  @ApiProperty({ example: '1', type: String, description: 'Required document ID (numeric string)' })
+  @BigIntId()
+  required_document_id: bigint;
 
   @ApiProperty({ example: 'National ID Copy.pdf' })
   @IsString()
@@ -53,11 +50,9 @@ export class SubmitRequestDocumentDto {
 }
 
 export class SubmitServiceRequestDto {
-  @ApiProperty({ example: 1 })
-  @Type(() => Number)
-  @IsInt()
-  @Min(1)
-  service_id: number;
+  @ApiProperty({ example: '1', type: String, description: 'Service ID (numeric string)' })
+  @BigIntId()
+  service_id: bigint;
 
   @ApiPropertyOptional({ type: [SubmitRequestDocumentDto] })
   @IsOptional()
