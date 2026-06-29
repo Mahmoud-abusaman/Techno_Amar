@@ -24,6 +24,11 @@ export type CreateComplaintData = {
   photo_file_path?: string | null;
 };
 
+export type UpdateComplaintData = {
+  status?: ComplaintStatus;
+  adminResult?: string;
+};
+
 export type ComplaintFilters = {
   status?: ComplaintStatus;
   category?: ComplaintCategory;
@@ -31,6 +36,8 @@ export type ComplaintFilters = {
 };
 
 export interface IComplaintRepository {
+  updateComplaint(id: bigint, data: UpdateComplaintData): Promise<ComplaintEntity>;
+
   create(data: CreateComplaintData): Promise<ComplaintEntity>;
   findByCitizenId(citizenId: bigint): Promise<ComplaintEntity[]>;
   findById(id: bigint): Promise<ComplaintEntity | null>;

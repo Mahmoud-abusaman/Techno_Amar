@@ -1879,6 +1879,7 @@ export const ComplaintScalarFieldEnum = {
   photo_file_id: 'photo_file_id',
   photo_file_path: 'photo_file_path',
   status: 'status',
+  admin_result: 'admin_result',
   submitted_at: 'submitted_at',
   created_at: 'created_at',
   updated_at: 'updated_at'

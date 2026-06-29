@@ -460,6 +460,7 @@ model Complaint {
   photo_file_id   String?
   photo_file_path String?
   status          ComplaintStatus   @default(SUBMITTED)
+  admin_result    String?   @db.Text
   submitted_at    DateTime          @default(now())
   created_at      DateTime          @default(now())
   updated_at      DateTime          @updatedAt

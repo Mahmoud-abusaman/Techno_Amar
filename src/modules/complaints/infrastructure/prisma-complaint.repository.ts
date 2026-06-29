@@ -4,11 +4,9 @@ import {
   IComplaintRepository,
   CreateComplaintData,
   ComplaintFilters,
+  UpdateComplaintData,
 } from '@complaints/domain/repositories/complaint-repository.interface';
-import {
-  ComplaintEntity,
-  ComplaintWithCitizen,
-} from '@complaints/domain/entities/complaint.entity';
+import { ComplaintEntity, ComplaintWithCitizen } from '@complaints/domain/entities/complaint.entity';
 
 const citizenSelect = {
   full_name: true,
@@ -54,25 +52,29 @@ export class PrismaComplaintRepository implements IComplaintRepository {
   findByIdWithCitizen(id: bigint): Promise<ComplaintWithCitizen | null> {
     return this.prisma.complaint.findUnique({
       where: { id },
-      include: {
-        citizen: { select: citizenSelect },
-      },
+      include: { citizen: { select: citizenSelect } },
     }) as Promise<ComplaintWithCitizen | null>;
   }
 
   findAll(filters: ComplaintFilters = {}): Promise<ComplaintWithCitizen[]> {
     const where: Record<string, unknown> = {};
-
     if (filters.status) where.status = filters.status;
     if (filters.category) where.category = filters.category;
     if (filters.priority) where.priority = filters.priority;
-
     return this.prisma.complaint.findMany({
       where,
-      include: {
-        citizen: { select: citizenSelect },
-      },
+      include: { citizen: { select: citizenSelect } },
       orderBy: { submitted_at: 'desc' },
     }) as Promise<ComplaintWithCitizen[]>;
+  }
+
+  async updateComplaint(id: bigint, data: UpdateComplaintData): Promise<ComplaintEntity> {
+    return this.prisma.complaint.update({
+      where: { id },
+      data: {
+        status: data.status,
+        admin_result: data.adminResult,
+      },
+    }) as Promise<ComplaintEntity>;
   }
 }

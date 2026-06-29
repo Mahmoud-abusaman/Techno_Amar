@@ -50,6 +50,7 @@ export type ComplaintMinAggregateOutputType = {
   photo_file_id: string | null
   photo_file_path: string | null
   status: $Enums.ComplaintStatus | null
+  admin_result: string | null
   submitted_at: Date | null
   created_at: Date | null
   updated_at: Date | null
@@ -69,6 +70,7 @@ export type ComplaintMaxAggregateOutputType = {
   photo_file_id: string | null
   photo_file_path: string | null
   status: $Enums.ComplaintStatus | null
+  admin_result: string | null
   submitted_at: Date | null
   created_at: Date | null
   updated_at: Date | null
@@ -88,6 +90,7 @@ export type ComplaintCountAggregateOutputType = {
   photo_file_id: number
   photo_file_path: number
   status: number
+  admin_result: number
   submitted_at: number
   created_at: number
   updated_at: number
@@ -119,6 +122,7 @@ export type ComplaintMinAggregateInputType = {
   photo_file_id?: true
   photo_file_path?: true
   status?: true
+  admin_result?: true
   submitted_at?: true
   created_at?: true
   updated_at?: true
@@ -138,6 +142,7 @@ export type ComplaintMaxAggregateInputType = {
   photo_file_id?: true
   photo_file_path?: true
   status?: true
+  admin_result?: true
   submitted_at?: true
   created_at?: true
   updated_at?: true
@@ -157,6 +162,7 @@ export type ComplaintCountAggregateInputType = {
   photo_file_id?: true
   photo_file_path?: true
   status?: true
+  admin_result?: true
   submitted_at?: true
   created_at?: true
   updated_at?: true
@@ -263,6 +269,7 @@ export type ComplaintGroupByOutputType = {
   photo_file_id: string | null
   photo_file_path: string | null
   status: $Enums.ComplaintStatus
+  admin_result: string | null
   submitted_at: Date
   created_at: Date
   updated_at: Date
@@ -305,6 +312,7 @@ export type ComplaintWhereInput = {
   photo_file_id?: Prisma.StringNullableFilter<"Complaint"> | string | null
   photo_file_path?: Prisma.StringNullableFilter<"Complaint"> | string | null
   status?: Prisma.EnumComplaintStatusFilter<"Complaint"> | $Enums.ComplaintStatus
+  admin_result?: Prisma.StringNullableFilter<"Complaint"> | string | null
   submitted_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   created_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
@@ -325,6 +333,7 @@ export type ComplaintOrderByWithRelationInput = {
   photo_file_id?: Prisma.SortOrderInput | Prisma.SortOrder
   photo_file_path?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  admin_result?: Prisma.SortOrderInput | Prisma.SortOrder
   submitted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -348,6 +357,7 @@ export type ComplaintWhereUniqueInput = Prisma.AtLeast<{
   photo_file_id?: Prisma.StringNullableFilter<"Complaint"> | string | null
   photo_file_path?: Prisma.StringNullableFilter<"Complaint"> | string | null
   status?: Prisma.EnumComplaintStatusFilter<"Complaint"> | $Enums.ComplaintStatus
+  admin_result?: Prisma.StringNullableFilter<"Complaint"> | string | null
   submitted_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   created_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
@@ -368,6 +378,7 @@ export type ComplaintOrderByWithAggregationInput = {
   photo_file_id?: Prisma.SortOrderInput | Prisma.SortOrder
   photo_file_path?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  admin_result?: Prisma.SortOrderInput | Prisma.SortOrder
   submitted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -395,6 +406,7 @@ export type ComplaintScalarWhereWithAggregatesInput = {
   photo_file_id?: Prisma.StringNullableWithAggregatesFilter<"Complaint"> | string | null
   photo_file_path?: Prisma.StringNullableWithAggregatesFilter<"Complaint"> | string | null
   status?: Prisma.EnumComplaintStatusWithAggregatesFilter<"Complaint"> | $Enums.ComplaintStatus
+  admin_result?: Prisma.StringNullableWithAggregatesFilter<"Complaint"> | string | null
   submitted_at?: Prisma.DateTimeWithAggregatesFilter<"Complaint"> | Date | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Complaint"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Complaint"> | Date | string
@@ -413,6 +425,7 @@ export type ComplaintCreateInput = {
   photo_file_id?: string | null
   photo_file_path?: string | null
   status?: $Enums.ComplaintStatus
+  admin_result?: string | null
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
@@ -433,6 +446,7 @@ export type ComplaintUncheckedCreateInput = {
   photo_file_id?: string | null
   photo_file_path?: string | null
   status?: $Enums.ComplaintStatus
+  admin_result?: string | null
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
@@ -451,6 +465,7 @@ export type ComplaintUpdateInput = {
   photo_file_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_file_path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
+  admin_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -471,6 +486,7 @@ export type ComplaintUncheckedUpdateInput = {
   photo_file_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_file_path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
+  admin_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -490,6 +506,7 @@ export type ComplaintCreateManyInput = {
   photo_file_id?: string | null
   photo_file_path?: string | null
   status?: $Enums.ComplaintStatus
+  admin_result?: string | null
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
@@ -508,6 +525,7 @@ export type ComplaintUpdateManyMutationInput = {
   photo_file_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_file_path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
+  admin_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -527,6 +545,7 @@ export type ComplaintUncheckedUpdateManyInput = {
   photo_file_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_file_path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
+  admin_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -556,6 +575,7 @@ export type ComplaintCountOrderByAggregateInput = {
   photo_file_id?: Prisma.SortOrder
   photo_file_path?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  admin_result?: Prisma.SortOrder
   submitted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -580,6 +600,7 @@ export type ComplaintMaxOrderByAggregateInput = {
   photo_file_id?: Prisma.SortOrder
   photo_file_path?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  admin_result?: Prisma.SortOrder
   submitted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -599,6 +620,7 @@ export type ComplaintMinOrderByAggregateInput = {
   photo_file_id?: Prisma.SortOrder
   photo_file_path?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  admin_result?: Prisma.SortOrder
   submitted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -676,6 +698,7 @@ export type ComplaintCreateWithoutCitizenInput = {
   photo_file_id?: string | null
   photo_file_path?: string | null
   status?: $Enums.ComplaintStatus
+  admin_result?: string | null
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
@@ -694,6 +717,7 @@ export type ComplaintUncheckedCreateWithoutCitizenInput = {
   photo_file_id?: string | null
   photo_file_path?: string | null
   status?: $Enums.ComplaintStatus
+  admin_result?: string | null
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
@@ -742,6 +766,7 @@ export type ComplaintScalarWhereInput = {
   photo_file_id?: Prisma.StringNullableFilter<"Complaint"> | string | null
   photo_file_path?: Prisma.StringNullableFilter<"Complaint"> | string | null
   status?: Prisma.EnumComplaintStatusFilter<"Complaint"> | $Enums.ComplaintStatus
+  admin_result?: Prisma.StringNullableFilter<"Complaint"> | string | null
   submitted_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   created_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Complaint"> | Date | string
@@ -760,6 +785,7 @@ export type ComplaintCreateManyCitizenInput = {
   photo_file_id?: string | null
   photo_file_path?: string | null
   status?: $Enums.ComplaintStatus
+  admin_result?: string | null
   submitted_at?: Date | string
   created_at?: Date | string
   updated_at?: Date | string
@@ -778,6 +804,7 @@ export type ComplaintUpdateWithoutCitizenInput = {
   photo_file_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_file_path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
+  admin_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -796,6 +823,7 @@ export type ComplaintUncheckedUpdateWithoutCitizenInput = {
   photo_file_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_file_path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
+  admin_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -814,6 +842,7 @@ export type ComplaintUncheckedUpdateManyWithoutCitizenInput = {
   photo_file_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo_file_path?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumComplaintStatusFieldUpdateOperationsInput | $Enums.ComplaintStatus
+  admin_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submitted_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -835,6 +864,7 @@ export type ComplaintSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   photo_file_id?: boolean
   photo_file_path?: boolean
   status?: boolean
+  admin_result?: boolean
   submitted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -855,6 +885,7 @@ export type ComplaintSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   photo_file_id?: boolean
   photo_file_path?: boolean
   status?: boolean
+  admin_result?: boolean
   submitted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -875,6 +906,7 @@ export type ComplaintSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   photo_file_id?: boolean
   photo_file_path?: boolean
   status?: boolean
+  admin_result?: boolean
   submitted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -895,12 +927,13 @@ export type ComplaintSelectScalar = {
   photo_file_id?: boolean
   photo_file_path?: boolean
   status?: boolean
+  admin_result?: boolean
   submitted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type ComplaintOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "citizen_id" | "title" | "category" | "priority" | "location" | "description" | "photo_name" | "photo_file_type" | "photo_url" | "photo_file_id" | "photo_file_path" | "status" | "submitted_at" | "created_at" | "updated_at", ExtArgs["result"]["complaint"]>
+export type ComplaintOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "citizen_id" | "title" | "category" | "priority" | "location" | "description" | "photo_name" | "photo_file_type" | "photo_url" | "photo_file_id" | "photo_file_path" | "status" | "admin_result" | "submitted_at" | "created_at" | "updated_at", ExtArgs["result"]["complaint"]>
 export type ComplaintInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   citizen?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -930,6 +963,7 @@ export type $ComplaintPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     photo_file_id: string | null
     photo_file_path: string | null
     status: $Enums.ComplaintStatus
+    admin_result: string | null
     submitted_at: Date
     created_at: Date
     updated_at: Date
@@ -1370,6 +1404,7 @@ export interface ComplaintFieldRefs {
   readonly photo_file_id: Prisma.FieldRef<"Complaint", 'String'>
   readonly photo_file_path: Prisma.FieldRef<"Complaint", 'String'>
   readonly status: Prisma.FieldRef<"Complaint", 'ComplaintStatus'>
+  readonly admin_result: Prisma.FieldRef<"Complaint", 'String'>
   readonly submitted_at: Prisma.FieldRef<"Complaint", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"Complaint", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Complaint", 'DateTime'>
