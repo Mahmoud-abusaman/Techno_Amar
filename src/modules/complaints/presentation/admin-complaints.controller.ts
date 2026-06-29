@@ -25,6 +25,7 @@ import { ComplaintFiltersDto } from './dto/complaint.dto';
 import { ResolveComplaintDto } from './dto/resolve-complaint.dto';
 import { GetAllComplaintsUseCase } from '@complaints/application/get-all-complaints.use-case';
 import { GetComplaintAdminUseCase } from '@complaints/application/get-complaint-admin.use-case';
+import { MarkComplaintUnderReviewUseCase } from '@complaints/application/mark-complaint-under-review.use-case';
 import { ResolveComplaintUseCase } from '@complaints/application/resolve-complaint.use-case';
 
 @ApiTags('admin-complaints')
@@ -35,6 +36,7 @@ export class AdminComplaintsController {
   constructor(
     private readonly getAllComplaints: GetAllComplaintsUseCase,
     private readonly getComplaintAdmin: GetComplaintAdminUseCase,
+    private readonly markUnderReview: MarkComplaintUnderReviewUseCase,
     private readonly resolveComplaint: ResolveComplaintUseCase,
   ) {}
 
@@ -54,6 +56,13 @@ export class AdminComplaintsController {
     return this.getComplaintAdmin.execute(BigInt(id));
   }
 
+  @Patch(':id/under-review')
+  @ApiOperation({ summary: 'Mark a complaint as under review (Admin only)' })
+  @ApiParam({ name: 'id', type: 'number' })
+  markAsUnderReview(@Param('id', ParseIntPipe) id: number) {
+    return this.markUnderReview.execute(BigInt(id));
+  }
+
   @Patch(':id/resolve')
   @ApiOperation({ summary: 'Resolve or close a complaint (Admin only)' })
   @ApiParam({ name: 'id', type: 'number' })
@@ -68,4 +77,3 @@ export class AdminComplaintsController {
     });
   }
 }
-
