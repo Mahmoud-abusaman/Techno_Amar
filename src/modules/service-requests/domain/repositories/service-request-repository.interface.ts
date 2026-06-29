@@ -27,12 +27,14 @@ export type CreateRequestActivityData = {
 };
 
 export type CreateRequestDocumentData = {
-  required_document_id: bigint;
+  required_document_id?: bigint | null;
+  task_id?: bigint | null;
   name: string;
   file_type: string;
   file_url: string;
   file_id: string;
   file_path?: string | null;
+  category?: RequestDocumentEntity['category'];
   uploaded_by: bigint;
 };
 
@@ -74,4 +76,8 @@ export interface IServiceRequestRepository {
   findActivities(requestId: bigint): Promise<RequestActivityEntity[]>;
   addActivity(data: CreateRequestActivityData): Promise<RequestActivityEntity>;
   findDocuments(requestId: bigint): Promise<RequestDocumentEntity[]>;
+  addDocument(
+    requestId: bigint,
+    data: CreateRequestDocumentData,
+  ): Promise<RequestDocumentEntity>;
 }

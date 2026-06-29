@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Post,
   Put,
   Body,
   Param,
@@ -11,11 +12,13 @@ import { Roles } from '@auth/presentation/decorators/roles.decorator';
 import { ActiveUser } from '@auth/presentation/decorators/active-user.decorator';
 import { UserRole } from '@/generated/prisma/enums';
 import { RejectRequestTaskDto } from './dto/reject-request-task.dto';
+import { AttachTaskDocumentDto } from './dto/attach-task-document.dto';
 import { GetSectionTaskBoardUseCase } from '@service-requests/application/get-section-task-board.use-case';
 import { GetRequestTaskUseCase } from '@service-requests/application/get-request-task.use-case';
 import { AssignRequestTaskUseCase } from '@service-requests/application/assign-request-task.use-case';
 import { CompleteRequestTaskUseCase } from '@service-requests/application/complete-request-task.use-case';
 import { RejectRequestTaskUseCase } from '@service-requests/application/reject-request-task.use-case';
+import { AttachTaskDocumentUseCase } from '@service-requests/application/attach-task-document.use-case';
 
 @ApiTags('request-tasks')
 @ApiBearerAuth()
@@ -28,6 +31,7 @@ export class RequestTasksController {
     private readonly assignTask: AssignRequestTaskUseCase,
     private readonly completeTask: CompleteRequestTaskUseCase,
     private readonly rejectTask: RejectRequestTaskUseCase,
+    private readonly attachTaskDocument: AttachTaskDocumentUseCase,
   ) {}
 
   @Get('board')
@@ -75,5 +79,15 @@ export class RequestTasksController {
       BigInt(id),
       dto.rejection_reason,
     );
+  }
+
+  @Post(':id/documents')
+  @ApiOperation({ summary: 'Attach a document to the active task' })
+  attachDocument(
+    @ActiveUser('sub') userId: string,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: AttachTaskDocumentDto,
+  ) {
+    return this.attachTaskDocument.execute(BigInt(userId), BigInt(id), dto);
   }
 }

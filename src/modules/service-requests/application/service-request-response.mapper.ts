@@ -27,6 +27,7 @@ export type PublicRequestDocument = {
   id: string;
   request_id: string;
   required_document_id: string | null;
+  task_id: string | null;
   name: string;
   file_type: string;
   file_url: string;
@@ -127,6 +128,7 @@ export function toPublicRequestDocument(
     id: document.id.toString(),
     request_id: document.request_id.toString(),
     required_document_id: document.required_document_id?.toString() ?? null,
+    task_id: document.task_id?.toString() ?? null,
     name: document.name,
     file_type: document.file_type,
     file_url: document.file_url,

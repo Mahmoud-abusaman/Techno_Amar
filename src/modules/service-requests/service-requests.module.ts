@@ -18,6 +18,7 @@ import { GetRequestTaskUseCase } from '@service-requests/application/get-request
 import { AssignRequestTaskUseCase } from '@service-requests/application/assign-request-task.use-case';
 import { CompleteRequestTaskUseCase } from '@service-requests/application/complete-request-task.use-case';
 import { RejectRequestTaskUseCase } from '@service-requests/application/reject-request-task.use-case';
+import { AttachTaskDocumentUseCase } from '@service-requests/application/attach-task-document.use-case';
 import { ServiceRequestsController } from '@service-requests/presentation/service-requests.controller';
 import { RequestTasksController } from '@service-requests/presentation/request-tasks.controller';
 
@@ -46,6 +47,7 @@ import { RequestTasksController } from '@service-requests/presentation/request-t
     AssignRequestTaskUseCase,
     CompleteRequestTaskUseCase,
     RejectRequestTaskUseCase,
+    AttachTaskDocumentUseCase,
   ],
   exports: [IServiceRequestRepository],
 })
