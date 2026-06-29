@@ -6,7 +6,7 @@ import {
 } from '@service-requests/domain/repositories/request-task-repository.interface';
 import { RequestTaskEntity } from '@service-requests/domain/entities/request-task.entity';
 import { RequestTaskWithRequestEntity } from '@service-requests/domain/entities/request-task-with-request.entity';
-import { RequestStatus } from '@/generated/prisma/enums';
+import { RequestPaymentStatus, RequestStatus } from '@/generated/prisma/enums';
 
 @Injectable()
 export class PrismaRequestTaskRepository implements IRequestTaskRepository {
@@ -68,6 +68,15 @@ export class PrismaRequestTaskRepository implements IRequestTaskRepository {
             is_deleted: false,
             status: {
               notIn: [RequestStatus.APPROVED, RequestStatus.REJECTED],
+            },
+            // Only show tasks whose payment is verified or not required.
+            // Tasks from requests with PENDING_VERIFICATION or FAILED payment
+            // are hidden from the board until payment is resolved.
+            payment_status: {
+              in: [
+                RequestPaymentStatus.NOT_REQUIRED,
+                RequestPaymentStatus.PAID,
+              ],
             },
           },
         },
