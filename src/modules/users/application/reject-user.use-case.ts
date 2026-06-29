@@ -45,6 +45,9 @@ export class RejectUserUseCase {
     }
 
     const result = await this.userRepo.findByIdWithProfile(id);
-    return toPublicUserWithProfile({ ...updated, citizen_profile: result?.citizen_profile ?? null });
+    return toPublicUserWithProfile({
+      ...updated,
+      citizen_profile: result?.citizen_profile ?? null,
+    });
   }
 }

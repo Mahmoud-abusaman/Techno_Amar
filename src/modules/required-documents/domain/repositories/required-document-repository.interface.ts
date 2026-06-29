@@ -1,7 +1,9 @@
 import { RequiredDocumentEntity } from '../entities/required-document.entity';
 import { DocumentRequirementType } from '../entities/required-document.entity';
 
-export const IRequiredDocumentRepository = Symbol('IRequiredDocumentRepository');
+export const IRequiredDocumentRepository = Symbol(
+  'IRequiredDocumentRepository',
+);
 
 export type CreateRequiredDocumentData = {
   service_id: bigint;

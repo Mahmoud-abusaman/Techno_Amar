@@ -51,7 +51,10 @@ export class CreateServiceWorkflowTaskDto {
 }
 
 export class CreateServiceDto {
-  @ApiProperty({ example: 'Building Permit', description: 'Unique service name' })
+  @ApiProperty({
+    example: 'Building Permit',
+    description: 'Unique service name',
+  })
   @IsString()
   @IsNotEmpty()
   @MaxLength(200)

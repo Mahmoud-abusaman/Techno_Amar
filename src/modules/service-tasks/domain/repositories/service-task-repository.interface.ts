@@ -32,10 +32,7 @@ export interface IServiceTaskRepository {
   delete(id: bigint): Promise<void>;
   countActiveByServiceId(serviceId: bigint): Promise<number>;
   getMaxOrder(serviceId: bigint): Promise<number>;
-  incrementOrdersFrom(
-    serviceId: bigint,
-    fromOrder: number,
-  ): Promise<void>;
+  incrementOrdersFrom(serviceId: bigint, fromOrder: number): Promise<void>;
   reorderTask(
     serviceId: bigint,
     taskId: bigint,

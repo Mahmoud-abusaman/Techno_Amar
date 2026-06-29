@@ -14,17 +14,12 @@ export class RequestWorkflowService {
     }
   }
 
-  assertTaskAssignable(
-    task: RequestTaskEntity,
-    actorSectionId: bigint,
-  ): void {
+  assertTaskAssignable(task: RequestTaskEntity, actorSectionId: bigint): void {
     if (task.status !== 'BACKLOG') {
       throw new BadRequestException('Task is not available for assignment');
     }
     if (task.section_id !== actorSectionId) {
-      throw new ForbiddenException(
-        'Task does not belong to your section',
-      );
+      throw new ForbiddenException('Task does not belong to your section');
     }
   }
 
@@ -37,9 +32,7 @@ export class RequestWorkflowService {
       throw new BadRequestException('Task is not in progress');
     }
     if (task.section_id !== actorSectionId) {
-      throw new ForbiddenException(
-        'Task does not belong to your section',
-      );
+      throw new ForbiddenException('Task does not belong to your section');
     }
     if (
       task.assigned_employee_id != null &&
@@ -49,10 +42,7 @@ export class RequestWorkflowService {
     }
   }
 
-  isLastTask(
-    task: RequestTaskEntity,
-    allTasks: RequestTaskEntity[],
-  ): boolean {
+  isLastTask(task: RequestTaskEntity, allTasks: RequestTaskEntity[]): boolean {
     const maxOrder = Math.max(...allTasks.map((t) => t.task_order));
     return task.task_order === maxOrder;
   }

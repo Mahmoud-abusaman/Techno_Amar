@@ -201,6 +201,7 @@ model User {
   assigned_request_tasks RequestTask[]    @relation("AssignedTasks")
   request_activities    RequestActivity[]
   uploaded_documents    RequestDocument[]
+  payments              Payment[]
 
   @@map("users")
 }
@@ -315,6 +316,7 @@ model ServiceRequest {
   tasks      RequestTask[]
   activities RequestActivity[]
   documents  RequestDocument[]
+  payments   Payment[]
 
   @@index([citizen_id])
   @@index([service_id])
@@ -466,3 +468,33 @@ model Complaint {
   @@index([status])
   @@map("complaints")
 }
+
+// ======================
+// PAYMENTS
+// ======================
+
+enum PaymentStatus {
+  PENDING_VERIFICATION
+  APPROVED
+  REJECTED
+}
+
+model Payment {
+  id                 BigInt        @id @default(autoincrement())
+  service_request_id BigInt
+  service_request    ServiceRequest @relation(fields: [service_request_id], references: [id], onDelete: Cascade)
+  payer_id           BigInt
+  payer              User          @relation(fields: [payer_id], references: [id])
+  amount             Decimal       @db.Decimal(10, 2)
+  serial_number      String
+  provider           String
+  receipt_url        String
+  receipt_file_id    String
+  status             PaymentStatus @default(PENDING_VERIFICATION)
+  rejection_reason   String?
+  created_at         DateTime      @default(now())
+  updated_at         DateTime      @updatedAt
+
+  @@map("payments")
+}
+

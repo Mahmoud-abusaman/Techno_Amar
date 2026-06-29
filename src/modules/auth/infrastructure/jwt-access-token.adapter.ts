@@ -1,4 +1,9 @@
-import { Injectable, Inject, UnauthorizedException, Global } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  UnauthorizedException,
+  Global,
+} from '@nestjs/common';
 import { type ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import {

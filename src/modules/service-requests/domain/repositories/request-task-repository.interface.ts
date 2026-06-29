@@ -14,9 +14,7 @@ export type UpdateRequestTaskData = {
 
 export interface IRequestTaskRepository {
   findById(id: bigint): Promise<RequestTaskEntity | null>;
-  findByIdWithRequest(
-    id: bigint,
-  ): Promise<RequestTaskWithRequestEntity | null>;
+  findByIdWithRequest(id: bigint): Promise<RequestTaskWithRequestEntity | null>;
   findBySection(sectionId: bigint): Promise<RequestTaskEntity[]>;
   update(id: bigint, data: UpdateRequestTaskData): Promise<RequestTaskEntity>;
   findNextTask(

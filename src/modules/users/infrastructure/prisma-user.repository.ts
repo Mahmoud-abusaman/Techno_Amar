@@ -38,7 +38,9 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   findById(id: bigint): Promise<UserEntity | null> {
-    return this.prisma.user.findUnique({ where: { id } }) as Promise<UserEntity | null>;
+    return this.prisma.user.findUnique({
+      where: { id },
+    }) as Promise<UserEntity | null>;
   }
 
   findByIdWithProfile(id: bigint): Promise<UserWithProfile | null> {
@@ -59,11 +61,15 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   findByEmail(email: string): Promise<UserEntity | null> {
-    return this.prisma.user.findFirst({ where: { email } }) as Promise<UserEntity | null>;
+    return this.prisma.user.findFirst({
+      where: { email },
+    }) as Promise<UserEntity | null>;
   }
 
   findByPhone(phone: string): Promise<UserEntity | null> {
-    return this.prisma.user.findFirst({ where: { phone } }) as Promise<UserEntity | null>;
+    return this.prisma.user.findFirst({
+      where: { phone },
+    }) as Promise<UserEntity | null>;
   }
 
   findByNationalId(nationalId: string): Promise<UserEntity | null> {
@@ -79,7 +85,10 @@ export class PrismaUserRepository implements IUserRepository {
   }
 
   update(id: bigint, data: UpdateUserData): Promise<UserEntity> {
-    return this.prisma.user.update({ where: { id }, data }) as Promise<UserEntity>;
+    return this.prisma.user.update({
+      where: { id },
+      data,
+    }) as Promise<UserEntity>;
   }
 
   delete(id: bigint): Promise<UserEntity> {

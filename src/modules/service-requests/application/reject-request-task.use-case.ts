@@ -8,10 +8,7 @@ import { IUserRepository } from '@users/domain/repositories/user-repository.inte
 import { IServiceRequestRepository } from '@service-requests/domain/repositories/service-request-repository.interface';
 import { IRequestTaskRepository } from '@service-requests/domain/repositories/request-task-repository.interface';
 import { RequestWorkflowService } from '@service-requests/application/request-workflow.service';
-import {
-  RequestActivityAction,
-  RequestStatus,
-} from '@/generated/prisma/enums';
+import { RequestActivityAction, RequestStatus } from '@/generated/prisma/enums';
 import {
   PublicRequestTask,
   toPublicRequestTask,

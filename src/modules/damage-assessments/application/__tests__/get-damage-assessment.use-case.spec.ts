@@ -1,7 +1,4 @@
-import {
-  ForbiddenException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { GetDamageAssessmentUseCase } from '../get-damage-assessment.use-case';
 import { IDamageAssessmentRepository } from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
 import { DamageAssessmentEntity } from '@damage-assessments/domain/entities/damage-assessment.entity';

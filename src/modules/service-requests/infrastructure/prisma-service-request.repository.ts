@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@shared/database/prisma.service';
-import {
-  RequestStatus,
-} from '@/generated/prisma/enums';
+import { RequestStatus } from '@/generated/prisma/enums';
 import {
   IServiceRequestRepository,
   CreateServiceRequestData,
@@ -48,8 +46,7 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
         ),
       );
 
-      const firstTask =
-        tasks.find((t) => t.task_order === 1) ?? tasks[0];
+      const firstTask = tasks.find((t) => t.task_order === 1) ?? tasks[0];
 
       const updatedRequest = await tx.serviceRequest.update({
         where: { id: request.id },
@@ -65,6 +62,21 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
           description: data.activity.description ?? null,
         },
       });
+
+      if (data.payment) {
+        await tx.payment.create({
+          data: {
+            service_request_id: request.id,
+            payer_id: data.citizen_id,
+            amount: data.payment.amount,
+            serial_number: data.payment.serial_number,
+            provider: data.payment.provider,
+            receipt_url: data.payment.receipt_url,
+            receipt_file_id: data.payment.receipt_file_id,
+            status: 'PENDING_VERIFICATION',
+          },
+        });
+      }
 
       const documents = data.documents?.length
         ? await Promise.all(
@@ -185,7 +197,8 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
       citizen_id: row.citizen_id,
       service_id: row.service_id,
       status: row.status as ServiceRequestEntity['status'],
-      payment_status: row.payment_status as ServiceRequestEntity['payment_status'],
+      payment_status:
+        row.payment_status as ServiceRequestEntity['payment_status'],
       current_task_id: row.current_task_id,
       submitted_at: row.submitted_at,
       completed_at: row.completed_at,

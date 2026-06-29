@@ -46,7 +46,9 @@ export class SubmitServiceRequestUseCase {
     const citizen = await this.userRepo.findById(citizenId);
     if (!citizen) throw new NotFoundException('User not found');
     if (citizen.role !== UserRole.CITIZEN) {
-      throw new BadRequestException('Only citizens can submit service requests');
+      throw new BadRequestException(
+        'Only citizens can submit service requests',
+      );
     }
     if (
       citizen.account_status !== AccountStatus.ACTIVE ||
@@ -69,17 +71,35 @@ export class SubmitServiceRequestUseCase {
         'Service has no active workflow tasks configured',
       );
     }
-    if (service.fee > 0) {
-      throw new BadRequestException(
-        'Paid services are not supported yet; only free services can be requested',
-      );
+    if (Number(service.fee) > 0) {
+      if (!dto.payment) {
+        throw new BadRequestException('Payment is required for this service');
+      }
+      if (!this.fileValidator.isValidFileUrl(dto.payment.file_url)) {
+        throw new BadRequestException(
+          'Payment receipt file URL must be hosted on the configured ImageKit endpoint',
+        );
+      }
+      if (!this.fileValidator.isAllowedImageMimeType(dto.payment.file_type)) {
+        throw new BadRequestException(
+          'Payment receipt must be an image (JPEG, PNG, WEBP)',
+        );
+      }
+    } else {
+      if (dto.payment) {
+        throw new BadRequestException(
+          'Payment is not required for this service',
+        );
+      }
     }
 
     const requiredDocs = await this.requiredDocRepo.findByService(
       serviceId,
       true,
     );
-    const mandatoryDocs = requiredDocs.filter((doc) => doc.type === 'MANDATORY');
+    const mandatoryDocs = requiredDocs.filter(
+      (doc) => doc.type === 'MANDATORY',
+    );
     const submittedDocs = dto.documents ?? [];
 
     if (mandatoryDocs.length > 0 && submittedDocs.length === 0) {
@@ -88,7 +108,9 @@ export class SubmitServiceRequestUseCase {
       );
     }
 
-    const requiredDocIds = new Set(requiredDocs.map((doc) => doc.id.toString()));
+    const requiredDocIds = new Set(
+      requiredDocs.map((doc) => doc.id.toString()),
+    );
     const seenRequiredIds = new Set<string>();
 
     for (const doc of submittedDocs) {
@@ -125,10 +147,13 @@ export class SubmitServiceRequestUseCase {
       }
     }
 
+    const isPaid = Number(service.fee) > 0;
     const detail = await this.requestRepo.createWithTasks({
       citizen_id: citizenId,
       service_id: serviceId,
-      payment_status: RequestPaymentStatus.NOT_REQUIRED,
+      payment_status: isPaid
+        ? RequestPaymentStatus.PENDING_VERIFICATION
+        : RequestPaymentStatus.NOT_REQUIRED,
       tasks: service.workflow_tasks.map((task) => ({
         service_task_id: task.id,
         section_id: task.section_id,
@@ -145,6 +170,16 @@ export class SubmitServiceRequestUseCase {
         file_path: doc.file_path ?? null,
         uploaded_by: citizenId,
       })),
+      payment:
+        isPaid && dto.payment
+          ? {
+              serial_number: dto.payment.serial_number,
+              provider: dto.payment.provider,
+              receipt_url: dto.payment.file_url,
+              receipt_file_id: dto.payment.file_id,
+              amount: Number(service.fee),
+            }
+          : undefined,
       activity: {
         actor_id: citizenId,
         action: RequestActivityAction.SUBMITTED,

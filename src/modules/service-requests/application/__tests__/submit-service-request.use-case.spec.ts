@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method, @typescript-eslint/no-unsafe-assignment */
 import {
   BadRequestException,
   ConflictException,
@@ -153,10 +154,14 @@ const makeRequiredDocRepo = (): jest.Mocked<IRequiredDocumentRepository> => ({
 });
 
 const makeFileValidator = (): jest.Mocked<
-  Pick<ImageKitFileValidator, 'isValidFileUrl' | 'isAllowedMimeType'>
+  Pick<
+    ImageKitFileValidator,
+    'isValidFileUrl' | 'isAllowedMimeType' | 'isAllowedImageMimeType'
+  >
 > => ({
   isValidFileUrl: jest.fn().mockReturnValue(true),
   isAllowedMimeType: jest.fn().mockReturnValue(true),
+  isAllowedImageMimeType: jest.fn().mockReturnValue(true),
 });
 
 describe('SubmitServiceRequestUseCase', () => {
@@ -285,7 +290,10 @@ describe('SubmitServiceRequestUseCase', () => {
 
   it('throws when citizen is not verified', async () => {
     userRepo.findById.mockResolvedValue(
-      makeUser({ is_verified: false, account_status: AccountStatus.PENDING_VERIFICATION }),
+      makeUser({
+        is_verified: false,
+        account_status: AccountStatus.PENDING_VERIFICATION,
+      }),
     );
 
     await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
@@ -304,12 +312,73 @@ describe('SubmitServiceRequestUseCase', () => {
     );
   });
 
-  it('throws when service has a fee', async () => {
+  it('throws when service has a fee but payment is missing', async () => {
     userRepo.findById.mockResolvedValue(makeUser());
-    serviceRepo.findByIdWithTasks.mockResolvedValue(makeService({ fee: 50 }));
+    serviceRepo.findByIdWithTasks.mockResolvedValue(
+      makeService({ fee: 50.0 as any }),
+    );
 
     await expect(useCase.execute(1n, { service_id: 1n })).rejects.toThrow(
-      BadRequestException,
+      new BadRequestException('Payment is required for this service'),
+    );
+  });
+
+  it('succeeds when service has a fee and payment is provided', async () => {
+    userRepo.findById.mockResolvedValue(makeUser());
+    serviceRepo.findByIdWithTasks.mockResolvedValue(
+      makeService({ fee: 50.0 as any }),
+    );
+    requiredDocRepo.findByService.mockResolvedValue([]);
+    fileValidator.isValidFileUrl.mockReturnValue(true);
+    fileValidator.isAllowedImageMimeType.mockReturnValue(true);
+    requestRepo.createWithTasks.mockResolvedValue(makeDetail());
+
+    const dto = {
+      service_id: 1n,
+      payment: {
+        serial_number: 'TXN123',
+        provider: 'PalPay',
+        file_type: 'image/png',
+        file_url: 'https://ik.imagekit.io/TechnoAmar/receipts/proof.png',
+        file_id: 'file_id',
+      },
+    };
+
+    const result = await useCase.execute(1n, dto);
+
+    expect(requestRepo.createWithTasks).toHaveBeenCalledWith(
+      expect.objectContaining({
+        payment: {
+          serial_number: 'TXN123',
+          provider: 'PalPay',
+          receipt_url: 'https://ik.imagekit.io/TechnoAmar/receipts/proof.png',
+          receipt_file_id: 'file_id',
+          amount: 50.0,
+        },
+      }),
+    );
+    expect(result).toBeDefined();
+  });
+
+  it('throws when service is free but payment is provided', async () => {
+    userRepo.findById.mockResolvedValue(makeUser());
+    serviceRepo.findByIdWithTasks.mockResolvedValue(
+      makeService({ fee: 0 as any }),
+    );
+
+    const dto = {
+      service_id: 1n,
+      payment: {
+        serial_number: 'TXN123',
+        provider: 'PalPay',
+        file_type: 'image/png',
+        file_url: 'https://ik.imagekit.io/TechnoAmar/receipts/proof.png',
+        file_id: 'file_id',
+      },
+    };
+
+    await expect(useCase.execute(1n, dto)).rejects.toThrow(
+      new BadRequestException('Payment is not required for this service'),
     );
   });
 

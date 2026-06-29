@@ -20,10 +20,7 @@ export class UpdateServiceUseCase {
     private readonly deptRepo: IDepartmentRepository,
   ) {}
 
-  async execute(
-    id: bigint,
-    data: UpdateServiceData,
-  ): Promise<ServiceEntity> {
+  async execute(id: bigint, data: UpdateServiceData): Promise<ServiceEntity> {
     const service = await this.serviceRepo.findById(id);
     if (!service) throw new NotFoundException(`Service ${id} not found`);
 

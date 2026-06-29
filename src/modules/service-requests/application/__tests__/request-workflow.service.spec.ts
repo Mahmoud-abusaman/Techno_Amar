@@ -39,9 +39,7 @@ describe('RequestWorkflowService', () => {
   });
 
   it('allows assignment for backlog task in actor section', () => {
-    expect(() =>
-      service.assertTaskAssignable(makeTask(), 3n),
-    ).not.toThrow();
+    expect(() => service.assertTaskAssignable(makeTask(), 3n)).not.toThrow();
   });
 
   it('blocks assignment for wrong section', () => {

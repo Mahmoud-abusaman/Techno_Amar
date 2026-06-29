@@ -12,8 +12,6 @@ import { IDepartmentRepository } from '@org/domain/repositories/department-repos
 import { SectionEntity } from '@org/domain/entities/section.entity';
 import { CreateSectionDto } from '../../presentation/dto/section.dto';
 
-
-
 @Injectable()
 export class CreateSectionUseCase {
   constructor(
@@ -23,9 +21,7 @@ export class CreateSectionUseCase {
     private readonly deptRepo: IDepartmentRepository,
   ) {}
 
-  async execute(
-    data: CreateSectionDto,
-  ): Promise<SectionEntity> {
+  async execute(data: CreateSectionDto): Promise<SectionEntity> {
     const dept = await this.deptRepo.findById(data.department_id);
     if (!dept)
       throw new NotFoundException(`Department ${data.department_id} not found`);

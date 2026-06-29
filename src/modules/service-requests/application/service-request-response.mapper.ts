@@ -90,7 +90,9 @@ export function toPublicServiceRequest(
   };
 }
 
-export function toPublicRequestTask(task: RequestTaskEntity): PublicRequestTask {
+export function toPublicRequestTask(
+  task: RequestTaskEntity,
+): PublicRequestTask {
   return {
     id: task.id.toString(),
     request_id: task.request_id.toString(),
@@ -149,9 +151,7 @@ export function toPublicRequestActivity(
   };
 }
 
-export function toTaskBoard(
-  tasks: RequestTaskEntity[],
-): TaskBoardResponse {
+export function toTaskBoard(tasks: RequestTaskEntity[]): TaskBoardResponse {
   const mapped = tasks.map(toPublicRequestTask);
   return {
     backlog: mapped.filter((t) => t.status === 'BACKLOG'),

@@ -30,7 +30,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Techno Amar')
-    .setDescription("smart munacapility system")
+    .setDescription('smart munacapility system')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

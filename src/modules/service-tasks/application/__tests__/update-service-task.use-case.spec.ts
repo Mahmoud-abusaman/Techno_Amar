@@ -119,12 +119,8 @@ describe('UpdateServiceTaskUseCase', () => {
     taskRepo.findByIdAndServiceId.mockResolvedValue(task);
     taskRepo.findById.mockResolvedValue(null);
 
-    await expect(
-      useCase.execute(1n, 10n, { task_order: 2 }),
-    ).rejects.toThrow(
-      new NotFoundException(
-        'Workflow task 10 not found for service 1',
-      ),
+    await expect(useCase.execute(1n, 10n, { task_order: 2 })).rejects.toThrow(
+      new NotFoundException('Workflow task 10 not found for service 1'),
     );
   });
 });

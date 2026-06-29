@@ -22,11 +22,17 @@ export class SubmitComplaintDto {
   @MaxLength(200)
   title: string;
 
-  @ApiProperty({ enum: ComplaintCategory, example: ComplaintCategory.SERVICE_QUALITY })
+  @ApiProperty({
+    enum: ComplaintCategory,
+    example: ComplaintCategory.SERVICE_QUALITY,
+  })
   @IsEnum(ComplaintCategory)
   category: ComplaintCategory;
 
-  @ApiPropertyOptional({ enum: ComplaintPriority, example: ComplaintPriority.MEDIUM })
+  @ApiPropertyOptional({
+    enum: ComplaintPriority,
+    example: ComplaintPriority.MEDIUM,
+  })
   @IsOptional()
   @IsEnum(ComplaintPriority)
   priority?: ComplaintPriority;
@@ -38,7 +44,8 @@ export class SubmitComplaintDto {
   location?: string;
 
   @ApiProperty({
-    example: 'I submitted a building permit request 3 weeks ago with no update.',
+    example:
+      'I submitted a building permit request 3 weeks ago with no update.',
   })
   @IsString()
   @IsNotEmpty()

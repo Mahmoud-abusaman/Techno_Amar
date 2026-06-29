@@ -25,7 +25,9 @@ export class CreateRequiredDocumentUseCase {
     const service = await this.serviceRepo.findById(serviceId);
     if (!service) throw new NotFoundException(`Service ${serviceId} not found`);
     if (!service.is_active)
-      throw new ConflictException('Cannot add documents to an inactive service');
+      throw new ConflictException(
+        'Cannot add documents to an inactive service',
+      );
 
     return this.docRepo.create({
       service_id: serviceId,

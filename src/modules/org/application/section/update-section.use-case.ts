@@ -17,10 +17,7 @@ export class UpdateSectionUseCase {
     private readonly sectionRepo: ISectionRepository,
   ) {}
 
-  async execute(
-    id: bigint,
-    data: UpdateSectionData,
-  ): Promise<SectionEntity> {
+  async execute(id: bigint, data: UpdateSectionData): Promise<SectionEntity> {
     const section = await this.sectionRepo.findById(id);
     if (!section) throw new NotFoundException(`Section ${id} not found`);
 

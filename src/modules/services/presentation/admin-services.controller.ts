@@ -48,10 +48,7 @@ export class AdminServicesController {
   @ApiOperation({
     summary: 'Create a service with workflow tasks (Admin only)',
   })
-  create(
-    @Body() dto: CreateServiceDto,
-    @ActiveUser('sub') userId: string,
-  ) {
+  create(@Body() dto: CreateServiceDto, @ActiveUser('sub') userId: string) {
     return this.createService.execute(dto, BigInt(userId));
   }
 
@@ -80,10 +77,7 @@ export class AdminServicesController {
   @Patch(':id')
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Update a service (Admin only)' })
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() dto: UpdateServiceDto,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateServiceDto) {
     return this.updateService.execute(BigInt(id), dto);
   }
 

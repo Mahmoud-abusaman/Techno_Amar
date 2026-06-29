@@ -40,7 +40,11 @@ describe('CompleteRequestTaskUseCase', () => {
 
     userRepo.findById.mockResolvedValue(makeEmployee());
     taskRepo.findByIdWithRequest.mockResolvedValue(task);
-    taskRepo.update.mockResolvedValue({ ...task, status: 'COMPLETED', completed_at: new Date() });
+    taskRepo.update.mockResolvedValue({
+      ...task,
+      status: 'COMPLETED',
+      completed_at: new Date(),
+    });
     taskRepo.findNextTask.mockResolvedValue(nextTask);
 
     const result = await useCase.execute(5n, 1n);
@@ -66,7 +70,11 @@ describe('CompleteRequestTaskUseCase', () => {
 
     userRepo.findById.mockResolvedValue(makeEmployee());
     taskRepo.findByIdWithRequest.mockResolvedValue(task);
-    taskRepo.update.mockResolvedValue({ ...task, status: 'COMPLETED', completed_at: new Date() });
+    taskRepo.update.mockResolvedValue({
+      ...task,
+      status: 'COMPLETED',
+      completed_at: new Date(),
+    });
 
     const result = await useCase.execute(5n, 2n);
 

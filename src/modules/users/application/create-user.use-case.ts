@@ -8,7 +8,10 @@ import { SectionAssignmentValidator } from '@org/application/section-assignment.
 import { AccountStatus, UserRole } from '@/generated/prisma/enums';
 import { toPublicUser } from '@users/application/user-response.mapper';
 
-export type CreateUserInput = Omit<CreateUserData, 'password_hash' | 'section_id'> & {
+export type CreateUserInput = Omit<
+  CreateUserData,
+  'password_hash' | 'section_id'
+> & {
   password: string;
   section_id?: string;
 };

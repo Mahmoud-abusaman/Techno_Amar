@@ -58,7 +58,9 @@ describe('AuthController (integration)', () => {
   >;
   let verifyOtpUseCase: jest.Mocked<Pick<VerifyOtpUseCase, 'execute'>>;
   let resetPasswordUseCase: jest.Mocked<Pick<ResetPasswordUseCase, 'execute'>>;
-  let getUploadAuthUseCase: jest.Mocked<Pick<GetImageKitUploadAuthUseCase, 'execute'>>;
+  let getUploadAuthUseCase: jest.Mocked<
+    Pick<GetImageKitUploadAuthUseCase, 'execute'>
+  >;
 
   beforeEach(async () => {
     loginUseCase = { execute: jest.fn() };
@@ -78,7 +80,10 @@ describe('AuthController (integration)', () => {
         { provide: ForgotPasswordUseCase, useValue: forgotPasswordUseCase },
         { provide: VerifyOtpUseCase, useValue: verifyOtpUseCase },
         { provide: ResetPasswordUseCase, useValue: resetPasswordUseCase },
-        { provide: GetImageKitUploadAuthUseCase, useValue: getUploadAuthUseCase },
+        {
+          provide: GetImageKitUploadAuthUseCase,
+          useValue: getUploadAuthUseCase,
+        },
       ],
     }).compile();
 
@@ -230,7 +235,10 @@ describe('AuthController (integration)', () => {
 
       expect(body.data).toMatchObject({
         message: expect.stringContaining('pending admin verification'),
-        user: { role: UserRole.CITIZEN, account_status: 'PENDING_VERIFICATION' },
+        user: {
+          role: UserRole.CITIZEN,
+          account_status: 'PENDING_VERIFICATION',
+        },
       });
       expect(body.data).not.toHaveProperty('access_token');
     });

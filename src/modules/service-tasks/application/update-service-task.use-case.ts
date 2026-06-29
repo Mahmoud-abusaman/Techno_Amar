@@ -42,7 +42,9 @@ export class UpdateServiceTaskUseCase {
       if (!section)
         throw new NotFoundException(`Section ${data.section_id} not found`);
       if (!section.is_active)
-        throw new ConflictException('Cannot assign task to an inactive section');
+        throw new ConflictException(
+          'Cannot assign task to an inactive section',
+        );
       if (section.department_id !== service.department_id)
         throw new ConflictException(
           'Task section must belong to the same department as the service',

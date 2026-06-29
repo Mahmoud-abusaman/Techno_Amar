@@ -13,7 +13,9 @@ import { ImageKitFileValidator } from '@uploads/application/imagekit-file.valida
 
 const makeAssessment = (
   overrides: Partial<DamageAssessmentEntity> = {},
-): DamageAssessmentEntity & { documents: DamageAssessmentDocumentEntity[] } => ({
+): DamageAssessmentEntity & {
+  documents: DamageAssessmentDocumentEntity[];
+} => ({
   id: 1n,
   citizen_id: 10n,
   location: 'Al-Rimal Street',
@@ -111,9 +113,9 @@ describe('SubmitDamageAssessmentUseCase', () => {
   it('throws BadRequestException when no images are provided', async () => {
     repo.findByCitizenId.mockResolvedValue(null);
 
-    await expect(
-      useCase.execute(10n, { ...dto, images: [] }),
-    ).rejects.toThrow(BadRequestException);
+    await expect(useCase.execute(10n, { ...dto, images: [] })).rejects.toThrow(
+      BadRequestException,
+    );
     expect(repo.create).not.toHaveBeenCalled();
   });
 
@@ -128,7 +130,10 @@ describe('SubmitDamageAssessmentUseCase', () => {
 
   it('throws ConflictException on Prisma P2002 unique violation', async () => {
     repo.findByCitizenId.mockResolvedValue(null);
-    repo.create.mockRejectedValue({ code: 'P2002', meta: { target: ['citizen_id'] } });
+    repo.create.mockRejectedValue({
+      code: 'P2002',
+      meta: { target: ['citizen_id'] },
+    });
 
     await expect(useCase.execute(10n, dto)).rejects.toThrow(
       new ConflictException('You have already submitted a damage assessment'),

@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  Inject,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { IServiceRepository } from '@services/domain/repositories/service-repository.interface';
 import { ServiceWithTasksEntity } from '@services/domain/entities/service-with-tasks.entity';
 import { ServiceStatus } from '@/generated/prisma/enums';
@@ -30,10 +26,7 @@ export class GetServiceUseCase {
     if (!service) throw new NotFoundException(`Service ${id} not found`);
 
     if (options.publishedOnly) {
-      if (
-        service.status !== ServiceStatus.PUBLISHED ||
-        !service.is_active
-      ) {
+      if (service.status !== ServiceStatus.PUBLISHED || !service.is_active) {
         throw new NotFoundException(`Service ${id} not found`);
       }
     }

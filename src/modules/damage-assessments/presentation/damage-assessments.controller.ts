@@ -31,7 +31,9 @@ export class DamageAssessmentsController {
   ) {}
 
   @Get('submission-status')
-  @ApiOperation({ summary: 'Check if citizen has submitted a damage assessment' })
+  @ApiOperation({
+    summary: 'Check if citizen has submitted a damage assessment',
+  })
   getSubmissionStatusEndpoint(@ActiveUser('sub') userId: string) {
     return this.getSubmissionStatus.execute(BigInt(userId));
   }

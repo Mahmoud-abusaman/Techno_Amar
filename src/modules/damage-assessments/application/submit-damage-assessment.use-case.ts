@@ -4,9 +4,7 @@ import {
   ConflictException,
   BadRequestException,
 } from '@nestjs/common';
-import {
-  IDamageAssessmentRepository,
-} from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
+import { IDamageAssessmentRepository } from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
 import { SubmitDamageAssessmentDto } from '@damage-assessments/presentation/dto/damage-assessment.dto';
 import {
   PublicDamageAssessment,

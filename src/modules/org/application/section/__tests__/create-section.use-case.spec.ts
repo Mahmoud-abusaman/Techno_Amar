@@ -1,7 +1,4 @@
-import {
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { NotFoundException, ConflictException } from '@nestjs/common';
 import { CreateSectionUseCase } from '../create-section.use-case';
 import { ISectionRepository } from '@org/domain/repositories/section-repository.interface';
 import { IDepartmentRepository } from '@org/domain/repositories/department-repository.interface';

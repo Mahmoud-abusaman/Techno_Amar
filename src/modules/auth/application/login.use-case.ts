@@ -14,10 +14,9 @@ export interface LoginInput {
 
 export interface LoginResult {
   tokens: TokenPair;
-  user: Pick<
-    UserEntity,
-    'id' | 'email' | 'full_name' | 'role'
-  > & { department_id: bigint | null };
+  user: Pick<UserEntity, 'id' | 'email' | 'full_name' | 'role'> & {
+    department_id: bigint | null;
+  };
 }
 
 @Injectable()
@@ -72,9 +71,7 @@ export class LoginUseCase {
     }
 
     if (user.account_status === AccountStatus.PENDING_VERIFICATION) {
-      throw new UnauthorizedException(
-        'Account is pending admin verification',
-      );
+      throw new UnauthorizedException('Account is pending admin verification');
     }
 
     if (user.account_status === AccountStatus.INACTIVE) {

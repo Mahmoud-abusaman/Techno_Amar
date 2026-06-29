@@ -1,7 +1,5 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
-import {
-  IDamageAssessmentRepository,
-} from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
+import { IDamageAssessmentRepository } from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
 import {
   AdminDamageAssessment,
   toAdminDamageAssessment,

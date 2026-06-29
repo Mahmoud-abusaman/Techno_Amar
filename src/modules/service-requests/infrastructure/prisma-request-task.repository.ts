@@ -42,9 +42,10 @@ export class PrismaRequestTaskRepository implements IRequestTaskRepository {
             id: row.request.id,
             citizen_id: row.request.citizen_id,
             service_id: row.request.service_id,
-            status: row.request.status as RequestTaskWithRequestEntity['request']['status'],
-            payment_status:
-              row.request.payment_status as RequestTaskWithRequestEntity['request']['payment_status'],
+            status: row.request
+              .status as RequestTaskWithRequestEntity['request']['status'],
+            payment_status: row.request
+              .payment_status as RequestTaskWithRequestEntity['request']['payment_status'],
             current_task_id: row.request.current_task_id,
             submitted_at: row.request.submitted_at,
             completed_at: row.request.completed_at,

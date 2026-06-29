@@ -8,9 +8,7 @@ import { GetImageKitUploadAuthUseCase } from '@uploads/application/get-imagekit-
 @ApiBearerAuth()
 @Controller('uploads/imagekit')
 export class UploadsController {
-  constructor(
-    private readonly getUploadAuth: GetImageKitUploadAuthUseCase,
-  ) {}
+  constructor(private readonly getUploadAuth: GetImageKitUploadAuthUseCase) {}
 
   @Get('auth')
   @Roles(

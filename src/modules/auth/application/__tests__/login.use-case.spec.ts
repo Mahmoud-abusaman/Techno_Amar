@@ -76,7 +76,12 @@ describe('LoginUseCase', () => {
       delete: jest.fn(),
     };
 
-    useCase = new LoginUseCase(userRepo, hashPort, tokenPairFactory, sectionRepo);
+    useCase = new LoginUseCase(
+      userRepo,
+      hashPort,
+      tokenPairFactory,
+      sectionRepo,
+    );
   });
 
   describe('execute', () => {

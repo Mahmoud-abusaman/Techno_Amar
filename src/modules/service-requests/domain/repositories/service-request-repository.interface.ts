@@ -43,12 +43,20 @@ export type CreateServiceRequestData = {
   tasks: CreateRequestTaskData[];
   documents?: CreateRequestDocumentData[];
   activity: Omit<CreateRequestActivityData, 'request_id'>;
+  payment?: {
+    serial_number: string;
+    provider: string;
+    receipt_url: string;
+    receipt_file_id: string;
+    amount: number;
+  };
 };
 
 export type UpdateServiceRequestStatusData = {
   status?: RequestStatus;
   current_task_id?: bigint | null;
   completed_at?: Date | null;
+  payment_status?: RequestPaymentStatus;
 };
 
 export interface IServiceRequestRepository {

@@ -1,7 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import {
-  IDamageAssessmentRepository,
-} from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
+import { IDamageAssessmentRepository } from '@damage-assessments/domain/repositories/damage-assessment-repository.interface';
 import {
   PublicDamageAssessment,
   toPublicDamageAssessment,

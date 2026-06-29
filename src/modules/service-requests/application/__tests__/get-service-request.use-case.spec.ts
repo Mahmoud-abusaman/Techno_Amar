@@ -56,9 +56,7 @@ describe('GetServiceRequestUseCase', () => {
       makeDetail({ citizen_id: 99n }),
     );
 
-    await expect(useCase.execute(1n, 100n)).rejects.toThrow(
-      ForbiddenException,
-    );
+    await expect(useCase.execute(1n, 100n)).rejects.toThrow(ForbiddenException);
   });
 
   it('throws when request not found', async () => {
