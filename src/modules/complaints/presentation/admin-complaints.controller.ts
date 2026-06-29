@@ -1,9 +1,18 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  Patch,
+  Body,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
   ApiBearerAuth,
   ApiQuery,
+  ApiParam,
 } from '@nestjs/swagger';
 import { Roles } from '@auth/presentation/decorators/roles.decorator';
 import {
@@ -13,8 +22,10 @@ import {
   ComplaintPriority,
 } from '@/generated/prisma/enums';
 import { ComplaintFiltersDto } from './dto/complaint.dto';
+import { ResolveComplaintDto } from './dto/resolve-complaint.dto';
 import { GetAllComplaintsUseCase } from '@complaints/application/get-all-complaints.use-case';
 import { GetComplaintAdminUseCase } from '@complaints/application/get-complaint-admin.use-case';
+import { ResolveComplaintUseCase } from '@complaints/application/resolve-complaint.use-case';
 
 @ApiTags('admin-complaints')
 @ApiBearerAuth()
@@ -24,6 +35,7 @@ export class AdminComplaintsController {
   constructor(
     private readonly getAllComplaints: GetAllComplaintsUseCase,
     private readonly getComplaintAdmin: GetComplaintAdminUseCase,
+    private readonly resolveComplaint: ResolveComplaintUseCase,
   ) {}
 
   @Get()
@@ -37,7 +49,23 @@ export class AdminComplaintsController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get complaint details (Admin only)' })
+  @ApiParam({ name: 'id', type: 'number' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.getComplaintAdmin.execute(BigInt(id));
   }
+
+  @Patch(':id/resolve')
+  @ApiOperation({ summary: 'Resolve or close a complaint (Admin only)' })
+  @ApiParam({ name: 'id', type: 'number' })
+  resolve(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: ResolveComplaintDto,
+  ) {
+    return this.resolveComplaint.execute({
+      id: BigInt(id),
+      status: dto.status,
+      result: dto.result,
+    });
+  }
 }
+

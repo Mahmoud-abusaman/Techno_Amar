@@ -18,6 +18,7 @@ export class ComplaintEntity {
   photo_file_id: string | null;
   photo_file_path: string | null;
   status: ComplaintStatus;
+  admin_result?: string | null;
   submitted_at: Date;
   created_at: Date;
   updated_at: Date;

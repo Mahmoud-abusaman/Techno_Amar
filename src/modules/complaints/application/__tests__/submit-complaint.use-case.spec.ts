@@ -36,6 +36,7 @@ const makeRepo = (): jest.Mocked<IComplaintRepository> => ({
   findById: jest.fn(),
   findByIdWithCitizen: jest.fn(),
   findAll: jest.fn(),
+  updateComplaint: jest.fn(),
 });
 
 describe('SubmitComplaintUseCase', () => {
