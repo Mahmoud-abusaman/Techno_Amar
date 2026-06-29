@@ -7,6 +7,7 @@ import { GetMyComplaintsUseCase } from '@complaints/application/get-my-complaint
 import { GetComplaintUseCase } from '@complaints/application/get-complaint.use-case';
 import { GetAllComplaintsUseCase } from '@complaints/application/get-all-complaints.use-case';
 import { GetComplaintAdminUseCase } from '@complaints/application/get-complaint-admin.use-case';
+import { MarkComplaintUnderReviewUseCase } from '@complaints/application/mark-complaint-under-review.use-case';
 import { ResolveComplaintUseCase } from '@complaints/application/resolve-complaint.use-case';
 import { ComplaintsController } from '@complaints/presentation/complaints.controller';
 import { AdminComplaintsController } from '@complaints/presentation/admin-complaints.controller';
@@ -24,6 +25,7 @@ import { AdminComplaintsController } from '@complaints/presentation/admin-compla
     GetComplaintUseCase,
     GetAllComplaintsUseCase,
     GetComplaintAdminUseCase,
+    MarkComplaintUnderReviewUseCase,
     ResolveComplaintUseCase,
   ],
   exports: [IComplaintRepository],
