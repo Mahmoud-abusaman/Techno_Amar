@@ -27,6 +27,7 @@ export type PublicRequestDocument = {
   id: string;
   request_id: string;
   required_document_id: string | null;
+  task_id: string | null;
   name: string;
   file_type: string;
   file_url: string;
@@ -71,6 +72,7 @@ export type TaskBoardResponse = {
 export type PublicRequestTaskDetail = PublicRequestTask & {
   request: PublicServiceRequest & { service_name: string };
   sibling_tasks: PublicRequestTask[];
+  documents: PublicRequestDocument[];
 };
 
 export function toPublicServiceRequest(
@@ -126,6 +128,7 @@ export function toPublicRequestDocument(
     id: document.id.toString(),
     request_id: document.request_id.toString(),
     required_document_id: document.required_document_id?.toString() ?? null,
+    task_id: document.task_id?.toString() ?? null,
     name: document.name,
     file_type: document.file_type,
     file_url: document.file_url,
@@ -171,5 +174,6 @@ export function toPublicRequestTaskDetail(
       service_name: task.request.service_name,
     },
     sibling_tasks: task.sibling_tasks.map(toPublicRequestTask),
+    documents: task.documents.map(toPublicRequestDocument),
   };
 }

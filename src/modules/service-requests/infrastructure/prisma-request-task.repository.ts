@@ -29,6 +29,7 @@ export class PrismaRequestTaskRepository implements IRequestTaskRepository {
             include: {
               service: { select: { name: true } },
               tasks: { orderBy: { task_order: 'asc' } },
+              documents: { orderBy: { created_at: 'asc' } },
             },
           },
         },
@@ -55,6 +56,21 @@ export class PrismaRequestTaskRepository implements IRequestTaskRepository {
             service_name: row.request.service.name,
           },
           sibling_tasks: row.request.tasks.map((task) => this.toEntity(task)),
+          documents: row.request.documents.map((document) => ({
+            id: document.id,
+            request_id: document.request_id,
+            required_document_id: document.required_document_id,
+            task_id: document.task_id,
+            name: document.name,
+            file_type: document.file_type,
+            file_url: document.file_url,
+            file_id: document.file_id,
+            file_path: document.file_path,
+            category: document.category,
+            uploaded_by: document.uploaded_by,
+            uploaded_at: document.uploaded_at,
+            created_at: document.created_at,
+          })),
         };
       });
   }

@@ -1,4 +1,5 @@
 import { RequestTaskWithRequestEntity } from '@service-requests/domain/entities/request-task-with-request.entity';
+import { RequestDocumentEntity } from '@service-requests/domain/entities/request-document.entity';
 import { RequestTaskEntity } from '@service-requests/domain/entities/request-task.entity';
 import { UserEntity } from '@users/domain/entities/user.entity';
 import { IRequestTaskRepository } from '@service-requests/domain/repositories/request-task-repository.interface';
@@ -66,12 +67,32 @@ export const makeTask = (
   ...overrides,
 });
 
+export const makeRequestDocument = (
+  overrides: Partial<RequestDocumentEntity> = {},
+): RequestDocumentEntity => ({
+  id: 50n,
+  request_id: 10n,
+  required_document_id: 20n,
+  task_id: null,
+  name: 'National ID',
+  file_type: 'image/jpeg',
+  file_url: 'https://ik.imagekit.io/TechnoAmar/requests/national-id.jpg',
+  file_id: 'file_national_id',
+  file_path: '/requests/national-id.jpg',
+  category: 'CITIZEN_UPLOADED',
+  uploaded_by: 1n,
+  uploaded_at: new Date(),
+  created_at: new Date(),
+  ...overrides,
+});
+
 export const makeTaskWithRequest = (
   overrides: Partial<RequestTaskWithRequestEntity> = {},
 ): RequestTaskWithRequestEntity => ({
   ...makeTask(),
   request: makeRequest(),
   sibling_tasks: [makeTask()],
+  documents: [makeRequestDocument()],
   ...overrides,
 });
 
@@ -93,6 +114,7 @@ export const makeRequestRepo = (): jest.Mocked<IServiceRequestRepository> => ({
   findActivities: jest.fn(),
   addActivity: jest.fn(),
   findDocuments: jest.fn(),
+  addDocument: jest.fn(),
 });
 
 export const makeUserRepo = (): jest.Mocked<IUserRepository> => ({

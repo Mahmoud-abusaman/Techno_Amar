@@ -27,6 +27,14 @@ describe('GetRequestTaskUseCase', () => {
     expect(result.id).toBe('1');
     expect(result.request.service_name).toBe('Permit');
     expect(result.sibling_tasks).toHaveLength(1);
+    expect(result.documents).toHaveLength(1);
+    expect(result.documents[0]).toEqual(
+      expect.objectContaining({
+        id: '50',
+        request_id: '10',
+        file_url: 'https://ik.imagekit.io/TechnoAmar/requests/national-id.jpg',
+      }),
+    );
   });
 
   it('throws when task is outside employee section', async () => {

@@ -6,6 +6,7 @@ import {
   CreateServiceRequestData,
   UpdateServiceRequestStatusData,
   CreateRequestActivityData,
+  CreateRequestDocumentData,
 } from '@service-requests/domain/repositories/service-request-repository.interface';
 import { ServiceRequestEntity } from '@service-requests/domain/entities/service-request.entity';
 import { ServiceRequestDetailEntity } from '@service-requests/domain/entities/service-request-detail.entity';
@@ -215,6 +216,28 @@ export class PrismaServiceRequestRepository implements IServiceRequestRepository
         orderBy: { created_at: 'asc' },
       })
       .then((rows) => rows.map((row) => this.toDocument(row)));
+  }
+
+  addDocument(
+    requestId: bigint,
+    data: CreateRequestDocumentData,
+  ): Promise<RequestDocumentEntity> {
+    return this.prisma.requestDocument
+      .create({
+        data: {
+          request_id: requestId,
+          required_document_id: data.required_document_id ?? null,
+          task_id: data.task_id ?? null,
+          name: data.name,
+          file_type: data.file_type,
+          file_url: data.file_url,
+          file_id: data.file_id,
+          file_path: data.file_path ?? null,
+          category: data.category ?? RequestDocumentCategory.CITIZEN_UPLOADED,
+          uploaded_by: data.uploaded_by,
+        },
+      })
+      .then((row) => this.toDocument(row));
   }
 
   private toTask(row: {
