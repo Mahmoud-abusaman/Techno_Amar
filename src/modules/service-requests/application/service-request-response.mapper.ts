@@ -71,6 +71,7 @@ export type TaskBoardResponse = {
 export type PublicRequestTaskDetail = PublicRequestTask & {
   request: PublicServiceRequest & { service_name: string };
   sibling_tasks: PublicRequestTask[];
+  documents: PublicRequestDocument[];
 };
 
 export function toPublicServiceRequest(
@@ -171,5 +172,6 @@ export function toPublicRequestTaskDetail(
       service_name: task.request.service_name,
     },
     sibling_tasks: task.sibling_tasks.map(toPublicRequestTask),
+    documents: task.documents.map(toPublicRequestDocument),
   };
 }
