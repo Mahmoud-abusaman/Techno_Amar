@@ -44,5 +44,4 @@ describe('DeleteDepartmentUseCase', () => {
     await expect(useCase.execute(99n)).rejects.toThrow(NotFoundException);
     expect(repo.delete).not.toHaveBeenCalled();
   });
-
 });

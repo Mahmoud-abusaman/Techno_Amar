@@ -63,7 +63,9 @@ export function toPublicComplaint(complaint: ComplaintEntity): PublicComplaint {
   };
 }
 
-export function toAdminComplaint(complaint: ComplaintWithCitizen): AdminComplaint {
+export function toAdminComplaint(
+  complaint: ComplaintWithCitizen,
+): AdminComplaint {
   return {
     ...toPublicComplaint(complaint),
     citizen: complaint.citizen,

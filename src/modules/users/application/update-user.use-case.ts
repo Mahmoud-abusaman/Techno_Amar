@@ -1,4 +1,9 @@
-import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import {
   IUserRepository,
   UpdateUserData,
@@ -9,7 +14,7 @@ import { AccountStatus } from '@/generated/prisma/enums';
 import { toPublicUser } from '@users/application/user-response.mapper';
 
 export type AdminUpdateUserInput = Partial<
-  Omit<UpdateUserData, 'section_id'> & {
+  Omit<UpdateUserData, 'section_id' | 'role'> & {
     password?: string;
     is_verified?: boolean;
     is_active?: boolean;
@@ -30,12 +35,18 @@ export class UpdateUserUseCase {
     const user = await this.userRepo.findById(id);
     if (!user) throw new NotFoundException(`User #${id} not found`);
 
+    const inputWithRole = input as { role?: unknown };
+    if (inputWithRole.role !== undefined && inputWithRole.role !== user.role) {
+      throw new BadRequestException('Changing user roles is not supported');
+    }
+
     if (input.section_id != null) {
       await this.sectionAssignment.assertAssignable(BigInt(input.section_id));
     }
 
     const { password, section_id, ...rest } = input;
     const updateData: Record<string, unknown> = { ...rest };
+    delete updateData.role;
 
     if (section_id != null) {
       updateData.section_id = BigInt(section_id);

@@ -8,7 +8,9 @@ import {
   DamageAssessmentWithDocuments,
 } from '@damage-assessments/domain/entities/damage-assessment.entity';
 
-export const IDamageAssessmentRepository = Symbol('IDamageAssessmentRepository');
+export const IDamageAssessmentRepository = Symbol(
+  'IDamageAssessmentRepository',
+);
 
 export type CreateDamageAssessmentDocumentData = {
   name: string;
@@ -33,14 +35,14 @@ export type DamageAssessmentFilters = {
 };
 
 export interface IDamageAssessmentRepository {
-  create(data: CreateDamageAssessmentData): Promise<DamageAssessmentWithDocuments>;
+  create(
+    data: CreateDamageAssessmentData,
+  ): Promise<DamageAssessmentWithDocuments>;
   findByCitizenId(
     citizenId: bigint,
   ): Promise<DamageAssessmentWithDocuments | null>;
   findById(id: bigint): Promise<DamageAssessmentWithDocuments | null>;
-  findByIdWithCitizen(
-    id: bigint,
-  ): Promise<DamageAssessmentWithCitizen | null>;
+  findByIdWithCitizen(id: bigint): Promise<DamageAssessmentWithCitizen | null>;
   findAll(
     filters?: DamageAssessmentFilters,
   ): Promise<DamageAssessmentWithCitizen[]>;

@@ -47,10 +47,7 @@ export class AdminServiceWorkflowController {
     @Param('serviceId', ParseIntPipe) serviceId: number,
     @Query('activeOnly') activeOnly?: string,
   ) {
-    return this.getTasks.execute(
-      BigInt(serviceId),
-      activeOnly === 'true',
-    );
+    return this.getTasks.execute(BigInt(serviceId), activeOnly === 'true');
   }
 
   @Post()

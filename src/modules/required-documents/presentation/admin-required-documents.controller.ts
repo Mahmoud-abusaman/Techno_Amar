@@ -53,10 +53,7 @@ export class AdminRequiredDocumentsController {
     @Param('serviceId', ParseIntPipe) serviceId: number,
     @Query('activeOnly') activeOnly?: string,
   ) {
-    return this.getDocuments.execute(
-      BigInt(serviceId),
-      activeOnly === 'true',
-    );
+    return this.getDocuments.execute(BigInt(serviceId), activeOnly === 'true');
   }
 
   @Get(':documentId')

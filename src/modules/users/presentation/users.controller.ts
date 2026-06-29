@@ -1,4 +1,12 @@
-import { Controller, Get, Patch, Body, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Patch,
+  Body,
+  Post,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Roles } from '@auth/presentation/decorators/roles.decorator';
 import { UserRole } from '@/generated/prisma/enums';

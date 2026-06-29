@@ -4,9 +4,7 @@ import {
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  IServiceRepository,
-} from '@services/domain/repositories/service-repository.interface';
+import { IServiceRepository } from '@services/domain/repositories/service-repository.interface';
 import { IDepartmentRepository } from '@org/domain/repositories/department-repository.interface';
 import { ISectionRepository } from '@org/domain/repositories/section-repository.interface';
 import { ServiceWithTasksEntity } from '@services/domain/entities/service-with-tasks.entity';

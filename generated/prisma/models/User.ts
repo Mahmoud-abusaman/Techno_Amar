@@ -318,6 +318,7 @@ export type UserWhereInput = {
   assigned_request_tasks?: Prisma.RequestTaskListRelationFilter
   request_activities?: Prisma.RequestActivityListRelationFilter
   uploaded_documents?: Prisma.RequestDocumentListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -347,6 +348,7 @@ export type UserOrderByWithRelationInput = {
   assigned_request_tasks?: Prisma.RequestTaskOrderByRelationAggregateInput
   request_activities?: Prisma.RequestActivityOrderByRelationAggregateInput
   uploaded_documents?: Prisma.RequestDocumentOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -379,6 +381,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   assigned_request_tasks?: Prisma.RequestTaskListRelationFilter
   request_activities?: Prisma.RequestActivityListRelationFilter
   uploaded_documents?: Prisma.RequestDocumentListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "national_id" | "employee_id">
 
 export type UserOrderByWithAggregationInput = {
@@ -453,6 +456,7 @@ export type UserCreateInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -481,6 +485,7 @@ export type UserUncheckedCreateInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserUpdateInput = {
@@ -509,6 +514,7 @@ export type UserUpdateInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -537,6 +543,7 @@ export type UserUncheckedUpdateInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -872,6 +879,20 @@ export type UserUpdateOneRequiredWithoutComplaintsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutComplaintsInput, Prisma.UserUpdateWithoutComplaintsInput>, Prisma.UserUncheckedUpdateWithoutComplaintsInput>
 }
 
+export type UserCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type UserCreateWithoutSectionInput = {
   id?: bigint | number
   full_name: string
@@ -897,6 +918,7 @@ export type UserCreateWithoutSectionInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutSectionInput = {
@@ -924,6 +946,7 @@ export type UserUncheckedCreateWithoutSectionInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutSectionInput = {
@@ -999,6 +1022,7 @@ export type UserCreateWithoutCitizen_profileInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutCitizen_profileInput = {
@@ -1026,6 +1050,7 @@ export type UserUncheckedCreateWithoutCitizen_profileInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutCitizen_profileInput = {
@@ -1069,6 +1094,7 @@ export type UserUpdateWithoutCitizen_profileInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCitizen_profileInput = {
@@ -1096,6 +1122,7 @@ export type UserUncheckedUpdateWithoutCitizen_profileInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutOtpCodesInput = {
@@ -1123,6 +1150,7 @@ export type UserCreateWithoutOtpCodesInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutOtpCodesInput = {
@@ -1150,6 +1178,7 @@ export type UserUncheckedCreateWithoutOtpCodesInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutOtpCodesInput = {
@@ -1193,6 +1222,7 @@ export type UserUpdateWithoutOtpCodesInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpCodesInput = {
@@ -1220,6 +1250,7 @@ export type UserUncheckedUpdateWithoutOtpCodesInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutCreated_servicesInput = {
@@ -1247,6 +1278,7 @@ export type UserCreateWithoutCreated_servicesInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutCreated_servicesInput = {
@@ -1274,6 +1306,7 @@ export type UserUncheckedCreateWithoutCreated_servicesInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutCreated_servicesInput = {
@@ -1317,6 +1350,7 @@ export type UserUpdateWithoutCreated_servicesInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_servicesInput = {
@@ -1344,6 +1378,7 @@ export type UserUncheckedUpdateWithoutCreated_servicesInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutCitizen_requestsInput = {
@@ -1371,6 +1406,7 @@ export type UserCreateWithoutCitizen_requestsInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutCitizen_requestsInput = {
@@ -1398,6 +1434,7 @@ export type UserUncheckedCreateWithoutCitizen_requestsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutCitizen_requestsInput = {
@@ -1441,6 +1478,7 @@ export type UserUpdateWithoutCitizen_requestsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCitizen_requestsInput = {
@@ -1468,6 +1506,7 @@ export type UserUncheckedUpdateWithoutCitizen_requestsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutAssigned_request_tasksInput = {
@@ -1495,6 +1534,7 @@ export type UserCreateWithoutAssigned_request_tasksInput = {
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutAssigned_request_tasksInput = {
@@ -1522,6 +1562,7 @@ export type UserUncheckedCreateWithoutAssigned_request_tasksInput = {
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutAssigned_request_tasksInput = {
@@ -1565,6 +1606,7 @@ export type UserUpdateWithoutAssigned_request_tasksInput = {
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssigned_request_tasksInput = {
@@ -1592,6 +1634,7 @@ export type UserUncheckedUpdateWithoutAssigned_request_tasksInput = {
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutRequest_activitiesInput = {
@@ -1619,6 +1662,7 @@ export type UserCreateWithoutRequest_activitiesInput = {
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutRequest_activitiesInput = {
@@ -1646,6 +1690,7 @@ export type UserUncheckedCreateWithoutRequest_activitiesInput = {
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutRequest_activitiesInput = {
@@ -1689,6 +1734,7 @@ export type UserUpdateWithoutRequest_activitiesInput = {
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRequest_activitiesInput = {
@@ -1716,6 +1762,7 @@ export type UserUncheckedUpdateWithoutRequest_activitiesInput = {
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutUploaded_documentsInput = {
@@ -1743,6 +1790,7 @@ export type UserCreateWithoutUploaded_documentsInput = {
   citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutUploaded_documentsInput = {
@@ -1770,6 +1818,7 @@ export type UserUncheckedCreateWithoutUploaded_documentsInput = {
   citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutUploaded_documentsInput = {
@@ -1813,6 +1862,7 @@ export type UserUpdateWithoutUploaded_documentsInput = {
   citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploaded_documentsInput = {
@@ -1840,6 +1890,7 @@ export type UserUncheckedUpdateWithoutUploaded_documentsInput = {
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutDamage_assessmentsInput = {
@@ -1867,6 +1918,7 @@ export type UserCreateWithoutDamage_assessmentsInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutDamage_assessmentsInput = {
@@ -1894,6 +1946,7 @@ export type UserUncheckedCreateWithoutDamage_assessmentsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutDamage_assessmentsInput = {
@@ -1937,6 +1990,7 @@ export type UserUpdateWithoutDamage_assessmentsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDamage_assessmentsInput = {
@@ -1964,6 +2018,7 @@ export type UserUncheckedUpdateWithoutDamage_assessmentsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserCreateWithoutComplaintsInput = {
@@ -1991,6 +2046,7 @@ export type UserCreateWithoutComplaintsInput = {
   assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutPayerInput
 }
 
 export type UserUncheckedCreateWithoutComplaintsInput = {
@@ -2018,6 +2074,7 @@ export type UserUncheckedCreateWithoutComplaintsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
   request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPayerInput
 }
 
 export type UserCreateOrConnectWithoutComplaintsInput = {
@@ -2061,6 +2118,7 @@ export type UserUpdateWithoutComplaintsInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutComplaintsInput = {
@@ -2084,6 +2142,135 @@ export type UserUncheckedUpdateWithoutComplaintsInput = {
   citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
   created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
   damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
+  assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
+  request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
+  uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
+}
+
+export type UserCreateWithoutPaymentsInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  section?: Prisma.SectionCreateNestedOneWithoutUsersInput
+  otpCodes?: Prisma.OtpCodeCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintCreateNestedManyWithoutCitizenInput
+  citizen_requests?: Prisma.ServiceRequestCreateNestedManyWithoutCitizenInput
+  assigned_request_tasks?: Prisma.RequestTaskCreateNestedManyWithoutAssigned_employeeInput
+  request_activities?: Prisma.RequestActivityCreateNestedManyWithoutActorInput
+  uploaded_documents?: Prisma.RequestDocumentCreateNestedManyWithoutUploaderInput
+}
+
+export type UserUncheckedCreateWithoutPaymentsInput = {
+  id?: bigint | number
+  full_name: string
+  email: string
+  password_hash: string
+  national_id?: string | null
+  employee_id?: string | null
+  phone?: string | null
+  address?: string | null
+  city: $Enums.GazaCities
+  is_verified?: boolean
+  role: $Enums.UserRole
+  section_id?: bigint | number | null
+  account_status?: $Enums.AccountStatus
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedCreateNestedManyWithoutUserInput
+  citizen_profile?: Prisma.CitizenProfileUncheckedCreateNestedOneWithoutUserInput
+  created_services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCreatorInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedCreateNestedManyWithoutCitizenInput
+  complaints?: Prisma.ComplaintUncheckedCreateNestedManyWithoutCitizenInput
+  citizen_requests?: Prisma.ServiceRequestUncheckedCreateNestedManyWithoutCitizenInput
+  assigned_request_tasks?: Prisma.RequestTaskUncheckedCreateNestedManyWithoutAssigned_employeeInput
+  request_activities?: Prisma.RequestActivityUncheckedCreateNestedManyWithoutActorInput
+  uploaded_documents?: Prisma.RequestDocumentUncheckedCreateNestedManyWithoutUploaderInput
+}
+
+export type UserCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+}
+
+export type UserUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserUpdateWithoutPaymentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  section?: Prisma.SectionUpdateOneWithoutUsersNestedInput
+  otpCodes?: Prisma.OtpCodeUpdateManyWithoutUserNestedInput
+  citizen_profile?: Prisma.CitizenProfileUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUpdateManyWithoutCitizenNestedInput
+  citizen_requests?: Prisma.ServiceRequestUpdateManyWithoutCitizenNestedInput
+  assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
+  request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
+  uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  full_name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  national_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employee_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.EnumGazaCitiesFieldUpdateOperationsInput | $Enums.GazaCities
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  section_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  account_status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otpCodes?: Prisma.OtpCodeUncheckedUpdateManyWithoutUserNestedInput
+  citizen_profile?: Prisma.CitizenProfileUncheckedUpdateOneWithoutUserNestedInput
+  created_services?: Prisma.ServiceUncheckedUpdateManyWithoutCreatorNestedInput
+  damage_assessments?: Prisma.DamageAssessmentUncheckedUpdateManyWithoutCitizenNestedInput
+  complaints?: Prisma.ComplaintUncheckedUpdateManyWithoutCitizenNestedInput
   citizen_requests?: Prisma.ServiceRequestUncheckedUpdateManyWithoutCitizenNestedInput
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
@@ -2133,6 +2320,7 @@ export type UserUpdateWithoutSectionInput = {
   assigned_request_tasks?: Prisma.RequestTaskUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSectionInput = {
@@ -2160,6 +2348,7 @@ export type UserUncheckedUpdateWithoutSectionInput = {
   assigned_request_tasks?: Prisma.RequestTaskUncheckedUpdateManyWithoutAssigned_employeeNestedInput
   request_activities?: Prisma.RequestActivityUncheckedUpdateManyWithoutActorNestedInput
   uploaded_documents?: Prisma.RequestDocumentUncheckedUpdateManyWithoutUploaderNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPayerNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutSectionInput = {
@@ -2194,6 +2383,7 @@ export type UserCountOutputType = {
   assigned_request_tasks: number
   request_activities: number
   uploaded_documents: number
+  payments: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2205,6 +2395,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   assigned_request_tasks?: boolean | UserCountOutputTypeCountAssigned_request_tasksArgs
   request_activities?: boolean | UserCountOutputTypeCountRequest_activitiesArgs
   uploaded_documents?: boolean | UserCountOutputTypeCountUploaded_documentsArgs
+  payments?: boolean | UserCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -2273,6 +2464,13 @@ export type UserCountOutputTypeCountUploaded_documentsArgs<ExtArgs extends runti
   where?: Prisma.RequestDocumentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2301,6 +2499,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   assigned_request_tasks?: boolean | Prisma.User$assigned_request_tasksArgs<ExtArgs>
   request_activities?: boolean | Prisma.User$request_activitiesArgs<ExtArgs>
   uploaded_documents?: boolean | Prisma.User$uploaded_documentsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2375,6 +2574,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   assigned_request_tasks?: boolean | Prisma.User$assigned_request_tasksArgs<ExtArgs>
   request_activities?: boolean | Prisma.User$request_activitiesArgs<ExtArgs>
   uploaded_documents?: boolean | Prisma.User$uploaded_documentsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2397,6 +2597,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     assigned_request_tasks: Prisma.$RequestTaskPayload<ExtArgs>[]
     request_activities: Prisma.$RequestActivityPayload<ExtArgs>[]
     uploaded_documents: Prisma.$RequestDocumentPayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -2819,6 +3020,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   assigned_request_tasks<T extends Prisma.User$assigned_request_tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assigned_request_tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   request_activities<T extends Prisma.User$request_activitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$request_activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploaded_documents<T extends Prisma.User$uploaded_documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploaded_documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3492,6 +3694,30 @@ export type User$uploaded_documentsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.RequestDocumentScalarFieldEnum | Prisma.RequestDocumentScalarFieldEnum[]
+}
+
+/**
+ * User.payments
+ */
+export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

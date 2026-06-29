@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  Inject,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, Inject, ConflictException } from '@nestjs/common';
 import { IUserRepository } from '@users/domain/repositories/user-repository.interface';
 import { IHashPort } from '@auth/domain/ports/hash.port';
 import { UserEntity } from '@users/domain/entities/user.entity';

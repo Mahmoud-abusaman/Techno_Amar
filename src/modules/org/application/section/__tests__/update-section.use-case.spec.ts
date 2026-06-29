@@ -1,7 +1,4 @@
-import {
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { NotFoundException, ConflictException } from '@nestjs/common';
 import { UpdateSectionUseCase } from '../update-section.use-case';
 import { ISectionRepository } from '@org/domain/repositories/section-repository.interface';
 import { SectionEntity } from '@org/domain/entities/section.entity';
@@ -53,9 +50,9 @@ describe('UpdateSectionUseCase', () => {
   it('throws NotFoundException when section does not exist', async () => {
     repo.findById.mockResolvedValue(null);
 
-    await expect(
-      useCase.execute(99n, { name: 'Updated' }),
-    ).rejects.toThrow(NotFoundException);
+    await expect(useCase.execute(99n, { name: 'Updated' })).rejects.toThrow(
+      NotFoundException,
+    );
   });
 
   it('throws ConflictException when new name already exists in department', async () => {

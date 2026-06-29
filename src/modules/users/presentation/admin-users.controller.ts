@@ -63,8 +63,7 @@ export class AdminUsersController {
     return this.getAllUsers.execute({
       role,
       account_status,
-      is_active:
-        is_active === undefined ? undefined : is_active === 'true',
+      is_active: is_active === undefined ? undefined : is_active === 'true',
     });
   }
 

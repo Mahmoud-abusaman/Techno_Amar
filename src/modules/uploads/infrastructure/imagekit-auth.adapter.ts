@@ -16,7 +16,8 @@ export class ImageKitAuthAdapter implements IImageKitAuthPort {
   constructor(private readonly config: ConfigService) {
     const privateKey = this.config.get<string>('app.imagekit.privateKey');
     this.publicKey = this.config.get<string>('app.imagekit.publicKey') ?? '';
-    this.urlEndpoint = this.config.get<string>('app.imagekit.urlEndpoint') ?? '';
+    this.urlEndpoint =
+      this.config.get<string>('app.imagekit.urlEndpoint') ?? '';
     this.authExpireSeconds = this.config.get<number>(
       'app.imagekit.authExpireSeconds',
     );
@@ -27,8 +28,10 @@ export class ImageKitAuthAdapter implements IImageKitAuthPort {
   getUploadAuth(): ImageKitUploadAuth {
     const expire =
       Math.floor(Date.now() / 1000) + (this.authExpireSeconds || 1800);
-    const { token, signature } =
-      this.client.helper.getAuthenticationParameters(undefined, expire);
+    const { token, signature } = this.client.helper.getAuthenticationParameters(
+      undefined,
+      expire,
+    );
 
     return {
       publicKey: this.publicKey,

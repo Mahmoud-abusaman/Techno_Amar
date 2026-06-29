@@ -41,9 +41,7 @@ export class SectionsController {
   @Post('')
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Create a section in a department (Admin only)' })
-  create(
-    @Body() dto: CreateSectionDto,
-  ) {
+  create(@Body() dto: CreateSectionDto) {
     return this.createSection.execute(dto);
   }
 
@@ -72,10 +70,7 @@ export class SectionsController {
   @Patch(':id')
   @Roles(UserRole.ADMIN)
   @ApiOperation({ summary: 'Update a section (Admin only)' })
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() dto: UpdateSectionDto,
-  ) {
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateSectionDto) {
     return this.updateSection.execute(BigInt(id), dto);
   }
 

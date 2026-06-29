@@ -164,3 +164,12 @@ export const RequestDocumentCategory = {
 } as const
 
 export type RequestDocumentCategory = (typeof RequestDocumentCategory)[keyof typeof RequestDocumentCategory]
+
+
+export const PaymentStatus = {
+  PENDING_VERIFICATION: 'PENDING_VERIFICATION',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

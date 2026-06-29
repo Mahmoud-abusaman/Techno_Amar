@@ -8,10 +8,7 @@ import { IUserRepository } from '@users/domain/repositories/user-repository.inte
 import { IServiceRequestRepository } from '@service-requests/domain/repositories/service-request-repository.interface';
 import { IRequestTaskRepository } from '@service-requests/domain/repositories/request-task-repository.interface';
 import { RequestWorkflowService } from '@service-requests/application/request-workflow.service';
-import {
-  RequestActivityAction,
-  RequestStatus,
-} from '@/generated/prisma/enums';
+import { RequestActivityAction, RequestStatus } from '@/generated/prisma/enums';
 import {
   PublicRequestTask,
   toPublicRequestTask,
@@ -29,10 +26,7 @@ export class CompleteRequestTaskUseCase {
     private readonly workflow: RequestWorkflowService,
   ) {}
 
-  async execute(
-    actorId: bigint,
-    taskId: bigint,
-  ): Promise<PublicRequestTask> {
+  async execute(actorId: bigint, taskId: bigint): Promise<PublicRequestTask> {
     const actor = await this.userRepo.findById(actorId);
     if (!actor) throw new NotFoundException('User not found');
     if (!actor.section_id) {

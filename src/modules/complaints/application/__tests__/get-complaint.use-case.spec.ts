@@ -59,16 +59,12 @@ describe('GetComplaintUseCase', () => {
   it('throws NotFoundException when complaint does not exist', async () => {
     repo.findById.mockResolvedValue(null);
 
-    await expect(useCase.execute(10n, 99n)).rejects.toThrow(
-      NotFoundException,
-    );
+    await expect(useCase.execute(10n, 99n)).rejects.toThrow(NotFoundException);
   });
 
   it('throws ForbiddenException when citizen does not own the complaint', async () => {
     repo.findById.mockResolvedValue(makeComplaint({ citizen_id: 20n }));
 
-    await expect(useCase.execute(10n, 1n)).rejects.toThrow(
-      ForbiddenException,
-    );
+    await expect(useCase.execute(10n, 1n)).rejects.toThrow(ForbiddenException);
   });
 });

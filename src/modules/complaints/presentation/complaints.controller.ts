@@ -41,10 +41,7 @@ export class ComplaintsController {
     description:
       'Citizens can submit unlimited complaints. Upload an optional photo to ImageKit first (GET /uploads/imagekit/auth).',
   })
-  create(
-    @ActiveUser('sub') userId: string,
-    @Body() dto: SubmitComplaintDto,
-  ) {
+  create(@ActiveUser('sub') userId: string, @Body() dto: SubmitComplaintDto) {
     return this.submitComplaint.execute(BigInt(userId), dto);
   }
 

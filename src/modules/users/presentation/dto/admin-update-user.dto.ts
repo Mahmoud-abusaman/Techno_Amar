@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional, OmitType, PartialType } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsEnum,
@@ -6,11 +6,12 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import { AccountStatus } from '@/generated/prisma/enums';
 
-export class AdminUpdateUserDto extends PartialType(CreateUserDto) {
+export class AdminUpdateUserDto extends PartialType(
+  OmitType(CreateUserDto, ['role'] as const),
+) {
   @ApiPropertyOptional()
   @IsString()
   @IsOptional()

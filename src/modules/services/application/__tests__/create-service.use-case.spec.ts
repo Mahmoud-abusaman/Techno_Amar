@@ -208,9 +208,7 @@ describe('CreateServiceUseCase', () => {
   it('throws ConflictException when section department differs from service', async () => {
     serviceRepo.findByName.mockResolvedValue(null);
     deptRepo.findById.mockResolvedValue(makeDept());
-    sectionRepo.findById.mockResolvedValue(
-      makeSection({ department_id: 99n }),
-    );
+    sectionRepo.findById.mockResolvedValue(makeSection({ department_id: 99n }));
 
     await expect(useCase.execute(baseDto, 1n)).rejects.toThrow(
       new ConflictException(

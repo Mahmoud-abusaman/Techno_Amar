@@ -45,10 +45,7 @@ export class PrismaServiceTaskRepository implements IServiceTaskRepository {
     }) as Promise<ServiceTaskEntity | null>;
   }
 
-  update(
-    id: bigint,
-    data: UpdateServiceTaskData,
-  ): Promise<ServiceTaskEntity> {
+  update(id: bigint, data: UpdateServiceTaskData): Promise<ServiceTaskEntity> {
     return this.prisma.serviceTask.update({
       where: { id },
       data,

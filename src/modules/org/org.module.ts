@@ -43,6 +43,10 @@ import { SectionsController } from '@org/presentation/sections.controller';
     DeleteSectionUseCase,
     SectionAssignmentValidator,
   ],
-  exports: [IDepartmentRepository, ISectionRepository, SectionAssignmentValidator],
+  exports: [
+    IDepartmentRepository,
+    ISectionRepository,
+    SectionAssignmentValidator,
+  ],
 })
 export class OrgModule {}

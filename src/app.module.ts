@@ -12,6 +12,7 @@ import { ComplaintsModule } from '@complaints/complaints.module';
 import { ServiceRequestsModule } from '@service-requests/service-requests.module';
 import { UploadsModule } from '@uploads/uploads.module';
 import { RequiredDocumentsModule } from '@required-documents/required-documents.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { RequiredDocumentsModule } from '@required-documents/required-documents.
     ServiceRequestsModule,
     UploadsModule,
     RequiredDocumentsModule,
+    PaymentsModule,
   ],
 })
 export class AppModule {}

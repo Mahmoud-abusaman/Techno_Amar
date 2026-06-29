@@ -52,6 +52,6 @@ export class ResubmitVerificationDocumentsUseCase {
     });
 
     const result = await this.userRepo.findByIdWithProfile(userId);
-    return toPublicUserWithProfile(result!);
+    return toPublicUserWithProfile(result);
   }
 }

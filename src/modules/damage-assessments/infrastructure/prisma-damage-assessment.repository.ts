@@ -22,12 +22,12 @@ const documentsInclude = {
 };
 
 @Injectable()
-export class PrismaDamageAssessmentRepository
-  implements IDamageAssessmentRepository
-{
+export class PrismaDamageAssessmentRepository implements IDamageAssessmentRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: CreateDamageAssessmentData): Promise<DamageAssessmentWithDocuments> {
+  create(
+    data: CreateDamageAssessmentData,
+  ): Promise<DamageAssessmentWithDocuments> {
     const { documents, ...assessmentData } = data;
     return this.prisma.damageAssessment.create({
       data: {
@@ -62,9 +62,7 @@ export class PrismaDamageAssessmentRepository
     }) as Promise<DamageAssessmentWithDocuments | null>;
   }
 
-  findByIdWithCitizen(
-    id: bigint,
-  ): Promise<DamageAssessmentWithCitizen | null> {
+  findByIdWithCitizen(id: bigint): Promise<DamageAssessmentWithCitizen | null> {
     return this.prisma.damageAssessment.findUnique({
       where: { id },
       include: {
@@ -80,7 +78,8 @@ export class PrismaDamageAssessmentRepository
     const where: Record<string, unknown> = {};
 
     if (filters.status) where.status = filters.status;
-    if (filters.damage_severity) where.damage_severity = filters.damage_severity;
+    if (filters.damage_severity)
+      where.damage_severity = filters.damage_severity;
     if (filters.location) {
       where.location = {
         contains: filters.location,

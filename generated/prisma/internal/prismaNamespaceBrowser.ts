@@ -65,7 +65,8 @@ export const ModelName = {
   RequestDocument: 'RequestDocument',
   DamageAssessment: 'DamageAssessment',
   DamageAssessmentDocument: 'DamageAssessmentDocument',
-  Complaint: 'Complaint'
+  Complaint: 'Complaint',
+  Payment: 'Payment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -327,6 +328,24 @@ export const ComplaintScalarFieldEnum = {
 } as const
 
 export type ComplaintScalarFieldEnum = (typeof ComplaintScalarFieldEnum)[keyof typeof ComplaintScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  service_request_id: 'service_request_id',
+  payer_id: 'payer_id',
+  amount: 'amount',
+  serial_number: 'serial_number',
+  provider: 'provider',
+  receipt_url: 'receipt_url',
+  receipt_file_id: 'receipt_file_id',
+  status: 'status',
+  rejection_reason: 'rejection_reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

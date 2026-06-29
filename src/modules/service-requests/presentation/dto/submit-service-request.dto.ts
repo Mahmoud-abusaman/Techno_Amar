@@ -14,7 +14,11 @@ import { Type } from 'class-transformer';
 import { BigIntId } from '@shared/common/decorators/bigint-id.decorator';
 
 export class SubmitRequestDocumentDto {
-  @ApiProperty({ example: '1', type: String, description: 'Required document ID (numeric string)' })
+  @ApiProperty({
+    example: '1',
+    type: String,
+    description: 'Required document ID (numeric string)',
+  })
   @BigIntId()
   required_document_id: bigint;
 
@@ -28,7 +32,9 @@ export class SubmitRequestDocumentDto {
   @ApiProperty({ example: 'application/pdf' })
   @IsString()
   @IsNotEmpty()
-  @IsIn(['application/pdf'], { message: 'Only PDF files (application/pdf) are allowed' })
+  @IsIn(['application/pdf'], {
+    message: 'Only PDF files (application/pdf) are allowed',
+  })
   file_type: string;
 
   @ApiProperty({ example: 'https://ik.imagekit.io/TechnoAmar/docs/id.pdf' })
@@ -49,8 +55,50 @@ export class SubmitRequestDocumentDto {
   file_path?: string;
 }
 
+export class SubmitPaymentDto {
+  @ApiProperty({ example: 'TXN123456789' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  serial_number: string;
+
+  @ApiProperty({ example: 'Jawwal Pay' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  provider: string;
+
+  @ApiProperty({ example: 'image/jpeg' })
+  @IsString()
+  @IsNotEmpty()
+  file_type: string;
+
+  @ApiProperty({
+    example: 'https://ik.imagekit.io/TechnoAmar/receipts/proof.jpg',
+  })
+  @IsUrl()
+  @MaxLength(2000)
+  file_url: string;
+
+  @ApiProperty({ example: 'receipt_abc123' })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(200)
+  file_id: string;
+
+  @ApiPropertyOptional({ example: '/payments/proof.jpg' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  file_path?: string;
+}
+
 export class SubmitServiceRequestDto {
-  @ApiProperty({ example: '1', type: String, description: 'Service ID (numeric string)' })
+  @ApiProperty({
+    example: '1',
+    type: String,
+    description: 'Service ID (numeric string)',
+  })
   @BigIntId()
   service_id: bigint;
 
@@ -60,4 +108,10 @@ export class SubmitServiceRequestDto {
   @ValidateNested({ each: true })
   @Type(() => SubmitRequestDocumentDto)
   documents?: SubmitRequestDocumentDto[];
+
+  @ApiPropertyOptional({ type: SubmitPaymentDto })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => SubmitPaymentDto)
+  payment?: SubmitPaymentDto;
 }

@@ -127,9 +127,7 @@ describe('CreateServiceTaskUseCase', () => {
 
   it('throws ConflictException when section department differs from service', async () => {
     serviceRepo.findById.mockResolvedValue(makeService({ department_id: 1n }));
-    sectionRepo.findById.mockResolvedValue(
-      makeSection({ department_id: 99n }),
-    );
+    sectionRepo.findById.mockResolvedValue(makeSection({ department_id: 99n }));
 
     await expect(
       useCase.execute(1n, {

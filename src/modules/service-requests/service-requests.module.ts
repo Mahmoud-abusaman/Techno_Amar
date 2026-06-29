@@ -30,7 +30,10 @@ import { RequestTasksController } from '@service-requests/presentation/request-t
   ],
   controllers: [ServiceRequestsController, RequestTasksController],
   providers: [
-    { provide: IServiceRequestRepository, useClass: PrismaServiceRequestRepository },
+    {
+      provide: IServiceRequestRepository,
+      useClass: PrismaServiceRequestRepository,
+    },
     { provide: IRequestTaskRepository, useClass: PrismaRequestTaskRepository },
     RequestWorkflowService,
     SubmitServiceRequestUseCase,

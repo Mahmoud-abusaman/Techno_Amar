@@ -45,19 +45,31 @@ export const LoginDocs = () =>
       examples: {
         admin: {
           summary: 'Admin',
-          value: { identifier: SEED.admin.employee_id, password: SEED.admin.password },
+          value: {
+            identifier: SEED.admin.employee_id,
+            password: SEED.admin.password,
+          },
         },
         citizen: {
           summary: 'Citizen',
-          value: { identifier: SEED.citizen.national_id, password: SEED.citizen.password },
+          value: {
+            identifier: SEED.citizen.national_id,
+            password: SEED.citizen.password,
+          },
         },
         employee: {
           summary: 'Employee',
-          value: { identifier: SEED.employee.employee_id, password: SEED.employee.password },
+          value: {
+            identifier: SEED.employee.employee_id,
+            password: SEED.employee.password,
+          },
         },
         manager: {
           summary: 'Manager',
-          value: { identifier: SEED.manager.employee_id, password: SEED.manager.password },
+          value: {
+            identifier: SEED.manager.employee_id,
+            password: SEED.manager.password,
+          },
         },
       },
     }),
@@ -100,7 +112,8 @@ export const SignupDocs = () =>
               id_selfie: {
                 file_name: 'Selfie with ID.jpg',
                 file_type: 'image/jpeg',
-                file_url: 'https://ik.imagekit.io/TechnoAmar/citizens/selfie.jpg',
+                file_url:
+                  'https://ik.imagekit.io/TechnoAmar/citizens/selfie.jpg',
                 file_id: 'file_selfie123',
               },
             },
@@ -123,7 +136,10 @@ export const ImageKitUploadAuthDocs = () =>
         'Public endpoint for citizen registration. Upload PDF and image files directly to ImageKit ' +
         'from the client, then pass the returned file metadata in POST /auth/signup.',
     }),
-    ApiResponse({ status: 200, description: 'ImageKit upload authentication parameters' }),
+    ApiResponse({
+      status: 200,
+      description: 'ImageKit upload authentication parameters',
+    }),
   );
 
 export const RefreshDocs = () =>

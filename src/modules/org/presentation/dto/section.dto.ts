@@ -22,7 +22,6 @@ export class CreateSectionDto {
   @BigIntId()
   department_id: bigint;
 
-
   @ApiProperty({
     example: 'Road Maintenance',
     description: 'Section name (unique within department)',
